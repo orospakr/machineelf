@@ -17,12 +17,12 @@ require 'hpricot'
 require 'uri'
 require 'net/http'
 
-IKARIAM_LOGIN_URI = "http://s3.ikariam.org/index.php"
+IKARIAM_MAIN_URI = "http://s3.ikariam.org/index.php"
 
 cookie = nil
 
 class Scrapriam
-  attr_accessor :cookie, :login_page, :logged_in, :login_page_contents, :gold, :username, :password
+  attr_accessor :cookie, :login_page, :logged_in, :login_page_contents, :gold, :username, :password, :towns
 
   def open_with_post(uri, post_data)
     #   res = Net::HTTP.post_form(URI.parse(uri),
@@ -50,25 +50,56 @@ class Scrapriam
   def login()
     if !@logged_in
       print("logging in with user #{@username}...\n")
-      @login_page_contents = open_with_post(IKARIAM_LOGIN_URI, "name=#{@username}&password=#{@password}&action=loginAvatar&function=login")
+      @login_page_contents = open_with_post(IKARIAM_MAIN_URI, "name=#{@username}&password=#{@password}&action=loginAvatar&function=login")
+      @login_page_contents = open_with_post(IKARIAM_MAIN_URI, "name=#{@username}&password=#{@password}&action=loginAvatar&function=login")
       @login_page = Hpricot(@login_page_contents)
       @logged_in = true
     end
   end
 
   def get_gold()
-    login()
-    @gold = (@login_page/'#value_gold').inner_html
+    @gold = (@login_page/'#value_gold').text
     return gold
+  end
+
+  def get_towns()
+    @towns = []
+    towns_select = (@login_page/'#citySelect')
+    towns_select.each do |t|
+      #print(t.inner_html)
+      #print("\n")
+      town = t.at('option')
+      #print(town.type)
+      value = town.attributes['value']
+      name = town.inner_html
+      print("Town detected: #{name}.  ID number is #{value}\n")
+      @towns << get_town(value)
+    end
+  end
+
+  def get_town(id)
+    town_page_contents = open_with_post(IKARIUM_MAIN_URI, "view=city&id=#{id}")
+    town = Hpricot(town_page_contents)
+    wood = town/('#value_wood').text
+    wine = town/('#value_wine').text
+    marble = town/('#value_marble').text
+    crystal = town/('#value_crystal').text
+    sulphur = town/('#value_sulphur').text
+    name = town/('#city').text
+    return { :wood => wood, :wine => wine, :marble => marble, :crystal => crystal, :sulpur => sulphur}
   end
 
   def print_report()
     print("Gold: #{@gold}\n")
+    @towns.each do |t|
+      print("Town: #{t.name}")
+    end
   end
 
   def scrape()
     login()
     get_gold()
+    get_towns()
   end
 
   def initialize(username, password)
@@ -76,18 +107,6 @@ class Scrapriam
     @password = password
   end
 end
-
-
-
-# contents = open(IKARIAM_LOGIN_URI,
-#                 {
-#                   :method => :post,
-#                   :body => 'username=#{USERNAME}&password=#{PASSWORD}'
-#                 })
-# contents = open_with_post(IKARIAM_LOGIN_URI, "name=#{USERNAME}&password=#{PASSWORD}&action=loginAvatar&function=login")
-# doc = Hpricot(contents)
-# print("My cookie is now: #{cookie}\n")
-# gold = (doc/'#value_gold').inner_html
 
 if ARGV.length != 2
   print("usage: username password\n")
