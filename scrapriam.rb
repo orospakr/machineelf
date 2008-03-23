@@ -89,6 +89,10 @@ end
 # print("My cookie is now: #{cookie}\n")
 # gold = (doc/'#value_gold').inner_html
 
+if ARGV.length != 2
+  print("usage: username password\n")
+  exit(-1)
+end
 s = Scrapriam.new(ARGV[0], ARGV[1])
 s.scrape()
 s.print_report()
