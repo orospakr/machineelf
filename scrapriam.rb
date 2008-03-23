@@ -11,89 +11,106 @@
 #        'Referer'         => "http://www.example.com/"}) do |line|
 #     puts line.read
 # end
-
+require 'rubygems'
 require 'hpricot'
 #require 'open-uri'
 require 'uri'
 require 'net/http'
+require 'mechanize'
 
-IKARIAM_MAIN_URI = "http://s3.ikariam.org/index.php"
+IKARIAM_MAIN_URI = "http://www.ikariam.org/"
+S3_URI = "http://s3.ikariam.org/index.php"
 
 cookie = nil
 
 class Scrapriam
-  attr_accessor :cookie, :login_page, :logged_in, :login_page_contents, :gold, :username, :password, :towns
+  attr_accessor :agent, :cookie, :main_page, :logged_in, :gold, :username, :password, :towns
 
-  def open_with_post(uri, post_data)
-    #   res = Net::HTTP.post_form(URI.parse(uri),
-    #                             post_items)
-    #   return res.body
-    result = ""
-    url = URI.parse(uri)
-    headers = {'Accept' => '*/*'}
-    if !@cookie.nil?
-      headers['Cookie'] = cookie
-    end
-    #'Cookie' => 'PHPSESSID=da168a495d6c015c42b832b0dac0acb6; ikariam=%241%24P0ypxW6A%24ryg1osVg%2FTWNK.%2FdLzlG30'}
-    Net::HTTP.start(url.host) do |http|
-      rez = http.post(url.path, post_data, headers)
-      possible_cookie = rez.get_fields('Set-Cookie')
-      if !possible_cookie.nil?
-        @cookie = possible_cookie
-        print("My cookie is now: #{cookie}\n")
-      end
-      result = rez.body
-    end
-    return result
-  end
+#   def open_with_post(uri, post_data)
+#     #   res = Net::HTTP.post_form(URI.parse(uri),
+#     #                             post_items)
+#     #   return res.body
+#     result = ""
+#     url = URI.parse(uri)
+#     headers = {'Accept' => '*/*'}
+#     if !@cookie.nil?
+#       headers['Cookie'] = cookie
+#     end
+#     #'Cookie' => 'PHPSESSID=da168a495d6c015c42b832b0dac0acb6; ikariam=%241%24P0ypxW6A%24ryg1osVg%2FTWNK.%2FdLzlG30'}
+#     Net::HTTP.start(url.host) do |http|
+#       rez = http.post(url.path, post_data, headers)
+#       possible_cookie = rez.get_fields('Set-Cookie')
+#       if !possible_cookie.nil?
+#         @cookie = possible_cookie
+#         print("My cookie is now: #{cookie}\n")
+#       end
+#       result = rez.body
+#     end
+#     return result
+#   end
 
   def login()
+    # I don't actually navigate through the main page in true mechanize form, because the main page relies on javascript
+    # for the login form.
     if !@logged_in
       print("logging in with user #{@username}...\n")
-      @login_page_contents = open_with_post(IKARIAM_MAIN_URI, "name=#{@username}&password=#{@password}&action=loginAvatar&function=login")
-      @login_page_contents = open_with_post(IKARIAM_MAIN_URI, "name=#{@username}&password=#{@password}&action=loginAvatar&function=login")
-      @login_page = Hpricot(@login_page_contents)
+      # @login_page_contents = open_with_post(IKARIAM_MAIN_URI, "name=#{@username}&password=#{@password}&action=loginAvatar&function=login")
+      # @login_page = Hpricot(@login_page_contents)
+      # @logged_in = true
+      @main_page = @agent.get(S3_URI, {:name => @username, :password => @password, :action => 'loginAvatar', :function => 'login'})
       @logged_in = true
     end
   end
 
   def get_gold()
-    @gold = (@login_page/'#value_gold').text
+    @gold = (@main_page/'#value_gold').text
     return gold
   end
 
   def get_towns()
     @towns = []
-    towns_select = (@login_page/'#citySelect')
-    towns_select.each do |t|
-      #print(t.inner_html)
-      #print("\n")
-      town = t.at('option')
-      #print(town.type)
+    towns_select = (@main_page/'#citySelect')
+#    pp towns_select
+    towns = towns_select/('option')
+    towns.each do |town|
       value = town.attributes['value']
       name = town.inner_html
-      print("Town detected: #{name}.  ID number is #{value}\n")
+      print("Town detected: #{name}.  ID number is #{value}.\n")
       @towns << get_town(value)
     end
+#     towns_select.each do |t|
+#       pp t
+#       #print("\n")
+#       town = t.at('option')
+#       #print(town.type)
+#       value = town.attributes['value']
+#       name = town.inner_html
+#       print("Town detected: #{name}.  ID number is #{value}.\n")
+#       @towns << get_town(value)
+#     end
   end
 
   def get_town(id)
-    town_page_contents = open_with_post(IKARIUM_MAIN_URI, "view=city&id=#{id}")
-    town = Hpricot(town_page_contents)
-    wood = town/('#value_wood').text
-    wine = town/('#value_wine').text
-    marble = town/('#value_marble').text
-    crystal = town/('#value_crystal').text
-    sulphur = town/('#value_sulphur').text
-    name = town/('#city').text
-    return { :wood => wood, :wine => wine, :marble => marble, :crystal => crystal, :sulpur => sulphur}
+    town = @agent.get(S3_URI, {:view => 'city', :id => id})
+    wood = town.at('#value_wood').inner_html
+    wine = town.at('#value_wine').inner_html
+    marble = town.at('#value_marble').inner_html
+    crystal = town.at('#value_crystal').inner_html
+    sulphur = town.at('#value_sulfur').inner_html
+    name = town.at("//span[@class='city']").inner_html
+    return {:name => name, :wood => wood, :wine => wine, :marble => marble, :crystal => crystal, :sulphur => sulphur}
   end
 
   def print_report()
     print("Gold: #{@gold}\n")
-    @towns.each do |t|
-      print("Town: #{t.name}")
-    end
+     @towns.each do |t|
+      print("Town: #{t[:name]}\n")
+      print("... wood: #{t[:wood]}\n")
+      print("... wine: #{t[:wine]}\n")
+      print("... marble: #{t[:marble]}\n")
+      print("... crystal: #{t[:crystal]}\n")
+      print("... sulphur: #{t[:sulphur]}\n")
+     end
   end
 
   def scrape()
@@ -105,6 +122,7 @@ class Scrapriam
   def initialize(username, password)
     @username = username
     @password = password
+    @agent = WWW::Mechanize.new
   end
 end
 
