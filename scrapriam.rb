@@ -23,6 +23,13 @@ S3_URI = "http://s3.ikariam.org/index.php"
 
 cookie = nil
 
+def parse_number(num)
+  stripped = num.gsub(/\,/, '')
+  stripped = num.gsub(/ /, '')
+  stripped = num.split(",").join("")
+  return stripped.to_i
+end
+
 class Scrapriam
   attr_accessor :agent, :cookie, :main_page, :logged_in, :gold, :username, :password, :towns
 
@@ -63,8 +70,8 @@ class Scrapriam
   end
 
   def get_gold()
-    @gold = (@main_page/'#value_gold').text
-    return gold
+    @gold = parse_number((@main_page/'#value_gold').text)
+    return @gold
   end
 
   def get_towns()
@@ -91,12 +98,15 @@ class Scrapriam
   end
 
   def get_town(id)
-    town = @agent.get(S3_URI, {:view => 'city', :id => id})
-    wood = town.at('#value_wood').inner_html
-    wine = town.at('#value_wine').inner_html
-    marble = town.at('#value_marble').inner_html
-    crystal = town.at('#value_crystal').inner_html
-    sulphur = town.at('#value_sulfur').inner_html
+    # change some state on the server, so the top bar also includes
+    # the info about the city we want to inspect.
+    temp_switch = @agent.get(S3_URI, {:action => 'header', :cityId => id, :function => 'changeCurrentCity', :id => id, :oldView => 'city' })
+    town = @agent.get(S3_URI + "?view=city&id=#{id}")
+    wood = parse_number(town.at('#value_wood').inner_html)
+    wine = parse_number(town.at('#value_wine').inner_html)
+    marble = parse_number(town.at('#value_marble').inner_html)
+    crystal = parse_number(town.at('#value_crystal').inner_html)
+    sulphur = parse_number(town.at('#value_sulfur').inner_html)
     name = town.at("//span[@class='city']").inner_html
     return {:name => name, :wood => wood, :wine => wine, :marble => marble, :crystal => crystal, :sulphur => sulphur}
   end
@@ -113,6 +123,14 @@ class Scrapriam
      end
   end
 
+  def write_csv(filename)
+    f = File.new(filename, "w")
+    @towns.each do |t|
+      f.puts("#{t[:name]}, #{t[:wine]}, #{t[:marble]},  #{t[:crystal]}, #{t[:sulphur]}\n")
+    end
+    f.close()
+  end
+
   def scrape()
     login()
     get_gold()
@@ -126,10 +144,11 @@ class Scrapriam
   end
 end
 
-if ARGV.length != 2
-  print("usage: username password\n")
+if ARGV.length != 3
+  print("usage: username password csv_file\n")
   exit(-1)
 end
 s = Scrapriam.new(ARGV[0], ARGV[1])
 s.scrape()
 s.print_report()
+s.write_csv(ARGV[2])
