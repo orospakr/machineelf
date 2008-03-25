@@ -25,13 +25,15 @@ S3_URI = "http://s3.ikariam.org/index.php"
 
 cookie = nil
 
+ISLANDS_WE_CARE_ABOUT = ["Issayos", "Unteos", "Cuhyios"]
+COLONIES_WE_CARE_ABOUT = ["Oropolis", "Genesis", "Tiamatya"]
+
 PARSER_JS = <<-eos
  for (var x in m) {
     for (var y in m[x]) {
         print(m[x][y][3] + "," + m[x][y][0] + "," + x + "," + y);
     }
 }
-
 eos
 
 def parse_number(num)
@@ -124,17 +126,32 @@ class Scrapriam
 
   def print_report()
     print("Gold: #{@gold}\n")
-     @towns.each do |t|
+    @towns.each do |t|
       print("Town: #{t[:name]}\n")
       print("... wood: #{t[:wood]}\n")
       print("... wine: #{t[:wine]}\n")
       print("... marble: #{t[:marble]}\n")
       print("... crystal: #{t[:crystal]}\n")
       print("... sulphur: #{t[:sulphur]}\n")
-     end
+    end
+    print("\nFriends' colonies:\n")
+    @islands.each do |i|
+      if !ISLANDS_WE_CARE_ABOUT.index(i[0]).nil?
+        print "... #{i[0]}, at X: #{i[2]}, Y: #{i[3]}!\n"
+      end
+    end
   end
 
   def get_world_map
+
+    # aargh, all of the below is all wrong!
+    # we have to call this method thing published through "xajax"
+
+    # xajax=getMapData&xajaxr=1206426709706&xajaxargs[]=40&xajaxargs[]=7
+
+
+
+
     world_map = @agent.get(S3_URI, { :view => 'worldmap_iso', })
     # //*[@id="tile_5_8"]
     @islands = []
@@ -158,7 +175,7 @@ class Scrapriam
 
     output = ''
     with_dumper = map_javascript + PARSER_JS
-#    print with_dumper
+    print with_dumper
     IO.popen("smjs", "w+") do |pipe|
       pipe.puts with_dumper
       pipe.close_write  # If other_program process doesn't flush its output, you probably need to use this to send an end-of-file, which tells other_program to give us its output. If you don't do this, the program may hang/block, because other_program is waiting for more input.
@@ -169,7 +186,7 @@ class Scrapriam
       @islands << things
     end
 
-  pp @islands
+  #pp @islands
 
     #map = JSON.parse(map_javascript)
 
