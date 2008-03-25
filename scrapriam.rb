@@ -28,7 +28,7 @@ cookie = nil
 PARSER_JS = <<-eos
  for (var x in m) {
     for (var y in m[x]) {
-        print("Island: " + m[x][y][3] + ", (id#: " + m[x][y][0] + ", x: " + x + ", y: " + y + ")");
+        print(m[x][y][3] + "," + m[x][y][0] + "," + x + "," + y);
     }
 }
 
@@ -42,7 +42,7 @@ def parse_number(num)
 end
 
 class Scrapriam
-  attr_accessor :agent, :cookie, :main_page, :logged_in, :gold, :username, :password, :towns
+  attr_accessor :agent, :cookie, :main_page, :logged_in, :gold, :username, :password, :towns, :islands
 
 #   def open_with_post(uri, post_data)
 #     #   res = Net::HTTP.post_form(URI.parse(uri),
@@ -137,6 +137,7 @@ class Scrapriam
   def get_world_map
     world_map = @agent.get(S3_URI, { :view => 'worldmap_iso', })
     # //*[@id="tile_5_8"]
+    @islands = []
 
     isomap_container = world_map.at('#container2')
     big_javascript = isomap_container.at('script').inner_html
@@ -163,7 +164,12 @@ class Scrapriam
       pipe.close_write  # If other_program process doesn't flush its output, you probably need to use this to send an end-of-file, which tells other_program to give us its output. If you don't do this, the program may hang/block, because other_program is waiting for more input.
       output = pipe.read
     end
-    print output
+    output.split().each do |line|
+      things = line.split(',')
+      @islands << things
+    end
+
+  pp @islands
 
     #map = JSON.parse(map_javascript)
 
