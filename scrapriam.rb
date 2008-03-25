@@ -17,11 +17,22 @@ require 'hpricot'
 require 'uri'
 require 'net/http'
 require 'mechanize'
+require 'json'
+require 'cgi'
 
 IKARIAM_MAIN_URI = "http://www.ikariam.org/"
 S3_URI = "http://s3.ikariam.org/index.php"
 
 cookie = nil
+
+PARSER_JS = <<-eos
+ for (var x in m) {
+    for (var y in m[x]) {
+        print("Island: " + m[x][y][3] + ", (id#: " + m[x][y][0] + ", x: " + x + ", y: " + y + ")");
+    }
+}
+
+eos
 
 def parse_number(num)
   stripped = num.gsub(/\,/, '')
@@ -123,6 +134,44 @@ class Scrapriam
      end
   end
 
+  def get_world_map
+    world_map = @agent.get(S3_URI, { :view => 'worldmap_iso', })
+    # //*[@id="tile_5_8"]
+
+    isomap_container = world_map.at('#container2')
+    big_javascript = isomap_container.at('script').inner_html
+#    print big_javascript
+#    pp JSON.parse(big_javascript)
+
+
+    # get index of "m = new Array;m[0]" for beginning
+    content_begin = big_javascript.index "m = new Array;m["
+    content_end = big_javascript.index "MAXSIZE = 8;"
+    map_javascript = big_javascript[content_begin,content_end-1]
+    #map_json = map_javascript.gsub(/m = new Array;/, " \"map\" '] {")
+    #map_json = map_json.gsub(/m\[.\] = new Array;/, "[")
+
+    f = open('/tmp/wtf.js', "w")
+    f.puts(map_javascript)
+    f.close
+
+    output = ''
+    with_dumper = map_javascript + PARSER_JS
+#    print with_dumper
+    IO.popen("smjs", "w+") do |pipe|
+      pipe.puts with_dumper
+      pipe.close_write  # If other_program process doesn't flush its output, you probably need to use this to send an end-of-file, which tells other_program to give us its output. If you don't do this, the program may hang/block, because other_program is waiting for more input.
+      output = pipe.read
+    end
+    print output
+
+    #map = JSON.parse(map_javascript)
+
+    # get index of "= new Array;MAXSIZE = 8;" for end (plus appropriate subtraction)
+    # process contents thereof as JSON (or similar?)
+
+  end
+
   def write_csv(filename)
     f = File.new(filename, "w")
     @towns.each do |t|
@@ -132,9 +181,10 @@ class Scrapriam
   end
 
   def scrape()
-    login()
-    get_gold()
-    get_towns()
+    login
+    get_gold
+    get_towns
+    get_world_map
   end
 
   def initialize(username, password)
@@ -142,6 +192,7 @@ class Scrapriam
     @password = password
     @agent = WWW::Mechanize.new
   end
+
 end
 
 if ARGV.length != 3
