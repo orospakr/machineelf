@@ -18,6 +18,6 @@ if ARGV.length != 3
   exit(-1)
 end
 s = Scrapriam.new(ARGV[0], ARGV[1])
-s.scrape()
+s.scrape
 print(s.print_report())
 s.write_csv(ARGV[2])
