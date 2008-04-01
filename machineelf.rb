@@ -11,13 +11,13 @@
 #        'Referer'         => "http://www.example.com/"}) do |line|
 #     puts line.read
 # end
-require 'libscrapriam'
+require 'libmachineelf'
 
 if ARGV.length != 3
   print("usage: username password csv_file\n")
   exit(-1)
 end
-s = Scrapriam.new(ARGV[0], ARGV[1])
+s = MachineElf.new(ARGV[0], ARGV[1])
 s.scrape
 print(s.print_report())
 s.write_csv(ARGV[2])
