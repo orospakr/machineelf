@@ -7,6 +7,12 @@ Spec::Runner.configure do |config|
     config.mock_with :flexmock
   end
 
+def get_fixture(name)
+  f = open("#{Dir.getwd}/spec/fixtures/#{name}.html")
+  html = f.read
+  f.close
+  Hpricot(html)
+end
 
 describe MachineElf do
   before(:each) do
@@ -24,13 +30,20 @@ describe MachineElf do
     @elf.login
   end
 
+#   it "should retrieve gold" do
+#     main_page = flexmock(:main_page)
+#     main_page.should_receive('text').and_return(42)
+#     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php")
+#     main_page.should_receive('/').once.with('#value_gold').and_return(main_page)
+#     @elf.get_gold
+#     @elf.gold.should eql(42)
+#   end
+
   it "should retrieve gold" do
-    main_page = flexmock(:main_page)
-    main_page.should_receive('text').and_return(42)
-    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php")
-    main_page.should_receive('/').once.with('#value_gold').and_return(main_page)
+    h = get_fixture('main_page')
+    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php").
+      and_return(h)
     @elf.get_gold
-    @elf.gold.should eql(42)
+    @elf.gold.should eql(14681)
   end
 end
-
