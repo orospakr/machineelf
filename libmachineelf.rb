@@ -13,9 +13,6 @@ S3_URI = "http://s3.ikariam.org/index.php"
 
 cookie = nil
 
-ISLANDS_WE_CARE_ABOUT = ["Issayos", "Unteos", "Cuhyios"]
-COLONIES_WE_CARE_ABOUT = ["Oropolis", "Genesis", "Tiamatya"]
-
 PARSER_JS = <<-eos
  for (var x in m) {
     for (var y in m[x]) {
@@ -34,8 +31,6 @@ end
 def parse_city(city_string)
 #  coordinates = city_string.match(/\[.*:.*\]/)
   numbers = city_string.scan(/([0-9]+)/)
-  print "numbers: "
-  pp numbers
   x = Integer(numbers[0][0])
   y = Integer(numbers[1][0])
 
@@ -45,7 +40,15 @@ def parse_city(city_string)
 end
 
 class MachineElf
-  attr_accessor :agent, :main_page, :logged_in, :gold, :username, :password, :towns, :islands, :alliance_members
+  attr_accessor :home_secretary_page, :testing, :agent, :main_page, :logged_in, :gold, :username, :password, :towns, :islands, :alliance_members
+
+  def meat_tube
+    if !@testing
+      delay = rand*15
+      print "I'm a human, I promise!  Sleeping for #{delay}...\n"
+      sleep(rand*15)
+    end
+  end
 
   def login
     # I don't actually navigate through the main page in true mechanize form, because the main page relies on javascript
@@ -56,9 +59,11 @@ class MachineElf
       # @login_page = Hpricot(@login_page_contents)
       # @logged_in = true
       # fetch the login page anyway, even though I don't use it.
+      meat_tube
       login_page_ignored = @agent.get(MAIN_URI)
 
       # actually POST my login to Gamma
+      meat_tube
       login_output = @agent.get(S3_URI, {:name => @username, :password => @password, :action => 'loginAvatar', :function => 'login'})
       @logged_in = true
     end
@@ -66,6 +71,7 @@ class MachineElf
 
   def needs_main_page
     if @main_page.nil?
+      meat_tube
       @main_page = @agent.get(S3_URI)
     end
   end
@@ -92,7 +98,9 @@ class MachineElf
   def get_one_of_my_towns(id)
     # change some state on the server, so the top bar also includes
     # the info about the city we want to inspect.
+    meat_tube
     temp_switch = @agent.get(S3_URI, {:action => 'header', :cityId => id, :function => 'changeCurrentCity', :id => id, :oldView => 'city' })
+    meat_tube
     town = @agent.get(S3_URI + "?view=city&id=#{id}")
     wood = parse_number(town.at('#value_wood').inner_html)
     wine = parse_number(town.at('#value_wine').inner_html)
@@ -103,7 +111,28 @@ class MachineElf
     return {:name => name, :wood => wood, :wine => wine, :marble => marble, :crystal => crystal, :sulphur => sulphur}
   end
 
+  def needs_home_secretary_page
+    if @home_secretary_page.nil?
+      meat_tube
+      @home_secretary_page = @agent.get(S3_URI + "?view=embassyHomeSecretaryMembers&id=82966&position=10")
+      content_block = @home_secretary_page.at('#mainview').at("//div[@class='content']")
+      # pp content_block
+      body = content_block.at('table') # .at('tbody')
+      print body.inner_html
+      rows = tbody/"tr"
+      rows.each do |row|
+        print row + "\n"
+      end
+    end
+  end
+
+  def get_alliance_member_stats(name)
+    needs_home_secretary_page
+
+  end
+
   def get_alliance_members
+    meat_tube
     alliance_page = @agent.get(S3_URI + "?view=embassy&id=82966&position=10")
     members_table = alliance_page.at("#memberList").at("tbody")
     rows = members_table/"tr"
@@ -112,12 +141,16 @@ class MachineElf
       score = parse_number(row.at("//td[@class='score']").inner_html)
       cities = []
       cities_td = row.at("//td[@class='cities']")
-      pp cities_td
+      # pp cities_td
+      if cities_td.nil?
+        print "Are you sure you have home secretary, Andrew?\nGiving up on retrieving alliance member list...\n"
+        return
+      end
       city_as = cities_td/"a"
       city_as.each do |a|
-        print "Parsing a city: #{a.inner_html}...\n"
         cities << parse_city(a.inner_html)
       end
+      other_stats = get_alliance_member_stats(name)
       @alliance_members << { :name => name, :score => score, :cities => cities}
     end
   end
@@ -144,14 +177,15 @@ class MachineElf
 
   def scrape
     login
-    get_gold
-    get_my_towns
+#    get_gold
+#    get_my_towns
     get_alliance_members
   end
 
-  def initialize(username, password, agent=nil)
+  def initialize(username, password, agent=nil, testing=false)
     @username = username
     @password = password
+    @testing = testing
     @alliance_members = []
     if agent.nil?
       @agent = WWW::Mechanize.new
