@@ -20,4 +20,4 @@ end
 s = MachineElf.new(ARGV[0], ARGV[1])
 s.scrape
 print(s.print_report())
-s.write_csv(ARGV[2])
+#s.write_csv(ARGV[2])
