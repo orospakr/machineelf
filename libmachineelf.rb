@@ -150,7 +150,7 @@ class MachineElf
       city_as.each do |a|
         cities << parse_city(a.inner_html)
       end
-      other_stats = get_alliance_member_stats(name)
+      # other_stats = get_alliance_member_stats(name)
       @alliance_members << { :name => name, :score => score, :cities => cities}
     end
   end
