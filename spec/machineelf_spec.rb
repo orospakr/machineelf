@@ -20,14 +20,20 @@ describe MachineElf do
     @elf = MachineElf.new("somedude", "sailboat", @agent, true)
   end
 
+  def login(elf)
+    @agent.should_receive(:get).once.with("http://www.ikariam.org/")
+    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php", {:password=>"sailboat", :name=>"somedude", :action=>"loginAvatar", :function=>"login"})
+    elf.login
+  end
+
   it "should grab main page and POST login to Gamma" do
     # main page load
 #     @agent.should_receive(:get).twice do |arg|
 #       actual << arg
 #     end
-    @agent.should_receive(:get).once.with("http://www.ikariam.org/")
-    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php", {:password=>"sailboat", :name=>"somedude", :action=>"loginAvatar", :function=>"login"})
-    @elf.login
+    # @agent.should_receive(:get).once.with("http://www.ikariam.org/")
+    # @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php", {:password=>"sailboat", :name=>"somedude", :action=>"loginAvatar", :function=>"login"})
+    login(@elf)
   end
 
 #   it "should retrieve gold" do
@@ -61,13 +67,26 @@ describe MachineElf do
   end
 
   it "should not die if home secretary is not available" do
-    h = get_fixture('embassyWithoutHomeSecretaryTurnedOn')
+    embassy_page = get_fixture('embassyWithoutHomeSecretaryTurnedOn')
     members_page = get_fixture('embassyHomeSecretaryMembers')
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassy&id=82966&position=10").
-      and_return(h)
+      and_return(embassy_page)
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
       and_return(members_page)
     @elf.get_alliance_members
     @elf.alliance_members.length.should == 0
+  end
+
+  it "should not throw an exception while rendering a report" do
+    embassy_page = get_fixture('embassy')
+    members_page = get_fixture('embassyHomeSecretaryMembers')
+
+    login(@elf)
+    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassy&id=82966&position=10").
+      and_return(embassy_page)
+    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
+      and_return(members_page)
+    @elf.scrape
+    @elf.print_report
   end
 end

@@ -165,6 +165,7 @@ class MachineElf
       city_as.each do |a|
         cities << parse_city(a.inner_html)
       end
+
       @alliance_members << { :name => name, :score => score, :cities => cities}.merge(other_stats[name])
     end
   end
