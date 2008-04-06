@@ -2,6 +2,7 @@ require 'libmachineelf'
 
 require 'spec'
 require 'mechanize'
+require "redcloth"
 
 Spec::Runner.configure do |config|
     config.mock_with :flexmock
@@ -75,6 +76,7 @@ describe MachineElf do
       and_return(members_page)
     @elf.get_alliance_members
     @elf.alliance_members.length.should == 0
+    @elf.print_report.should == "Dan is a nub and didn't enable homeland security."
   end
 
   it "should not throw an exception while rendering a report" do
@@ -87,6 +89,9 @@ describe MachineElf do
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
       and_return(members_page)
     @elf.scrape
-    @elf.print_report
+    open('/tmp/machine_elf_report_test.html', "w") do |rep_dump|
+      markup = RedCloth.new(@elf.print_report)
+      rep_dump.write(markup.to_html)
+    end
   end
 end

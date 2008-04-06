@@ -40,7 +40,7 @@ def parse_city(city_string)
 end
 
 class MachineElf
-  attr_accessor :home_secretary_page, :testing, :agent, :main_page, :logged_in, :gold, :username, :password, :towns, :islands, :alliance_members
+  attr_accessor :home_secretary_missing, :home_secretary_page, :testing, :agent, :main_page, :logged_in, :gold, :username, :password, :towns, :islands, :alliance_members
 
   def meat_tube
     if !@testing
@@ -130,7 +130,6 @@ class MachineElf
     real_rows = rows[1..-2]
     real_rows.each do |row|
       elements = row/"td"
-      print "Player is #{elements[0].inner_html}\n"
       name = elements[0].inner_html
       gold = parse_number(elements[1].inner_html)
       wood = parse_number(elements[2].inner_html)
@@ -159,6 +158,7 @@ class MachineElf
       # pp cities_td
       if cities_td.nil?
         print "Are you sure you have home secretary, Andrew?\nGiving up on retrieving alliance member list...\n"
+        @home_secretary_missing = true
         return
       end
       city_as = cities_td/"a"
@@ -171,12 +171,16 @@ class MachineElf
   end
 
   def print_report
+    if @home_secretary_missing
+      return "Dan is a nub and didn't enable homeland security."
+    end
     output = ""
-    output << ("\nAlliance members:\n")
+    output << ("\nAlliance members:<br/>\n")
+    output << "| _Player_ | _Score_ | _Gold_ | _Wood_ | _Wine_ | _Marble_ | _Crystal Glass_ | _Sulphur_ |\n"
     @alliance_members.each do |guy|
-      output << "... *#{guy[:name]}*: (score: #{guy[:score]})\n"
+      output << ("| *#{guy[:name]}* | %{color:red}#{guy[:score]}% | %{color:gold}#{guy[:gold]}% | %{color:brown}#{guy[:wood]}% | %{color:purple}#{guy[:wine]}% | %{color:grey}#{guy[:marble]}% | %{color:blue}#{guy[:crystal]}% | %{color:yellow}#{guy[:sulphur]}% |\n")
       guy[:cities].each do |city|
-        output << "... ... _#{city[:name]}_: (x: #{city[:x]}, y: #{city[:y]})\n"
+        output << "| . | . | . | . | . | . | . | . |#{city[:name]} | #{city[:x]} | #{city[:y]} |\n"
       end
     end
     return output
@@ -201,6 +205,7 @@ class MachineElf
     @username = username
     @password = password
     @testing = testing
+    @home_secretary_missing = false
     @alliance_members = []
     if agent.nil?
       @agent = WWW::Mechanize.new
