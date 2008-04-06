@@ -62,8 +62,11 @@ describe MachineElf do
 
   it "should not die if home secretary is not available" do
     h = get_fixture('embassyWithoutHomeSecretaryTurnedOn')
+    members_page = get_fixture('embassyHomeSecretaryMembers')
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassy&id=82966&position=10").
       and_return(h)
+    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
+      and_return(members_page)
     @elf.get_alliance_members
     @elf.alliance_members.length.should == 0
   end

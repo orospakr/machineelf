@@ -115,20 +115,34 @@ class MachineElf
     if @home_secretary_page.nil?
       meat_tube
       @home_secretary_page = @agent.get(S3_URI + "?view=embassyHomeSecretaryMembers&id=82966&position=10")
-      content_block = @home_secretary_page.at('#mainview').at("//div[@class='content']")
-      # pp content_block
-      body = content_block.at('table') # .at('tbody')
-      print body.inner_html
-      rows = tbody/"tr"
-      rows.each do |row|
-        print row + "\n"
-      end
+
     end
   end
 
-  def get_alliance_member_stats(name)
+  def get_alliance_member_stats
     needs_home_secretary_page
-
+    content_block = @home_secretary_page.at('#mainview').at("//div[@class='content']")
+    players = { }
+    # pp content_block
+    body = content_block.at('table') # .at('tbody')
+    rows = body/"tr"
+    # strip off the header and total rows
+    real_rows = rows[1..-2]
+    real_rows.each do |row|
+      elements = row/"td"
+      print "Player is #{elements[0].inner_html}\n"
+      name = elements[0].inner_html
+      gold = parse_number(elements[1].inner_html)
+      wood = parse_number(elements[2].inner_html)
+      wine = parse_number(elements[3].inner_html)
+      marble = parse_number(elements[4].inner_html)
+      crystal = parse_number(elements[5].inner_html)
+      sulphur = parse_number(elements[6].inner_html)
+      players[name] = {:gold => gold,
+        :wood => wood, :wine => wine, :marble => marble,
+        :crystal => crystal, :sulphur => sulphur }
+    end
+    return players
   end
 
   def get_alliance_members
@@ -136,6 +150,7 @@ class MachineElf
     alliance_page = @agent.get(S3_URI + "?view=embassy&id=82966&position=10")
     members_table = alliance_page.at("#memberList").at("tbody")
     rows = members_table/"tr"
+    other_stats = get_alliance_member_stats()
     rows.each do |row|
       name = (row/"td")[2].inner_html
       score = parse_number(row.at("//td[@class='score']").inner_html)
@@ -150,8 +165,7 @@ class MachineElf
       city_as.each do |a|
         cities << parse_city(a.inner_html)
       end
-      # other_stats = get_alliance_member_stats(name)
-      @alliance_members << { :name => name, :score => score, :cities => cities}
+      @alliance_members << { :name => name, :score => score, :cities => cities}.merge(other_stats[name])
     end
   end
 
