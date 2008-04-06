@@ -69,7 +69,8 @@ describe MachineElf do
 
   it "should not die if home secretary is not available" do
     embassy_page = get_fixture('embassyWithoutHomeSecretaryTurnedOn')
-    members_page = get_fixture('embassyHomeSecretaryMembers')
+
+    members_page = get_fixture('embassyWithoutHomeSecretaryTurnedOnMembers')
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassy&id=82966&position=10").
       and_return(embassy_page)
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
@@ -82,7 +83,6 @@ describe MachineElf do
   it "should not throw an exception while rendering a report" do
     embassy_page = get_fixture('embassy')
     members_page = get_fixture('embassyHomeSecretaryMembers')
-
     login(@elf)
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassy&id=82966&position=10").
       and_return(embassy_page)

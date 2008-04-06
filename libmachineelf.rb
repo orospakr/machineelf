@@ -125,6 +125,11 @@ class MachineElf
     players = { }
     # pp content_block
     body = content_block.at('table') # .at('tbody')
+    if body.nil?
+      print "Andrew, are you *really* sure you have home secretary...?"
+      @missing_home_secretary = true
+      return
+    end
     rows = body/"tr"
     # strip off the header and total rows
     real_rows = rows[1..-2]
@@ -149,7 +154,7 @@ class MachineElf
     alliance_page = @agent.get(S3_URI + "?view=embassy&id=82966&position=10")
     members_table = alliance_page.at("#memberList").at("tbody")
     rows = members_table/"tr"
-    other_stats = get_alliance_member_stats()
+    other_stats = get_alliance_member_stats
     rows.each do |row|
       name = (row/"td")[2].inner_html
       score = parse_number(row.at("//td[@class='score']").inner_html)
