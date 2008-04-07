@@ -77,7 +77,7 @@ describe MachineElf do
       and_return(members_page)
     @elf.get_alliance_members
     @elf.alliance_members.length.should == 0
-    @elf.print_report.should == "Dan is a nub and didn't enable homeland security."
+    @elf.print_report.should == "Dan is a nub and didn't enable homeland security.\n\n_Were no strangers to love_\n_You know the rules and so do I_\n_A full commitment's what I'm thinking of_\n_You wouldn't get this from any other guy..._\n"
   end
 
   it "should not throw an exception while rendering a report" do
