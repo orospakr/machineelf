@@ -46,14 +46,6 @@ describe MachineElf do
 #     @elf.gold.should eql(42)
 #   end
 
-  it "should retrieve gold" do
-    h = get_fixture('main_page')
-    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php").
-      and_return(h)
-    @elf.get_gold
-    @elf.gold.should eql(14681)
-  end
-
   it "should retrieve alliance members" do
     embassy_page = get_fixture('embassy')
     members_page = get_fixture('embassyHomeSecretaryMembers')
@@ -63,7 +55,7 @@ describe MachineElf do
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
       and_return(members_page)
     @elf.get_alliance_members
-    @elf.alliance_members[0].should == {:name=>"orospakr", :gold => 14745, :wood => 291, :wine => 1710, :marble => 284, :crystal => 49, :sulphur => 8, :score=>510, :cities=>[{:name=>"Oropolis", :x=>95, :y=>65}, {:name=>"Ivarion", :x=>94, :y=>65}]}
+    @elf.alliance_members[0].should == {:name=>"orospakr", :gold => 14745, :wood => 291, :wine => 1710, :marble => 284, :crystal => 49, :sulphur => 8, :score=>510, :cities=>[{:name=>"Oropolis", :hyperlink => 'http://s3.ikariam.org/index.php?view=island&id=3909&selectCity=82966', :x=>95, :y=>65}, {:name=>"Ivarion", :hyperlink => 'http://s3.ikariam.org/index.php?view=island&id=3910&selectCity=91576', :x=>94, :y=>65}]}
     # @elf.alliance_members[12].should == {:score=>453, :name=>"Mal", :cities=>[{:name=>"Pentaglia", :x=>68, :y=>17}, {:name=>"Polis", :x=>13, :y=>51}]}
   end
 

@@ -28,15 +28,16 @@ def parse_number(num)
   return stripped.to_i
 end
 
-def parse_city(city_string)
+def parse_city(city)
 #  coordinates = city_string.match(/\[.*:.*\]/)
+  city_string = city.inner_html
   numbers = city_string.scan(/([0-9]+)/)
   x = Integer(numbers[0][0])
   y = Integer(numbers[1][0])
 
   name_string = city_string.match(/(.*\[)/)[0]
   name = name_string[0, name_string.length-2]
-  return {:name => name, :x => x, :y => y}
+  return {:name => name, :x => x, :y => y, :hyperlink => S3_URI + city['href']}
 end
 
 class MachineElf
@@ -74,41 +75,6 @@ class MachineElf
       meat_tube
       @main_page = @agent.get(S3_URI)
     end
-  end
-
-  def get_gold
-    needs_main_page
-    @gold = parse_number((@main_page/'#value_gold').text)
-    return @gold
-  end
-
-  def get_my_towns
-    needs_main_page
-    @towns = []
-    towns_select = (@main_page/'#citySelect')
-    towns = towns_select/('option')
-    towns.each do |town|
-      value = town.attributes['value']
-      name = town.inner_html
-      print("Town detected: #{name}.  ID number is #{value}.\n")
-      @towns << get_one_of_my_towns(value)
-    end
-  end
-
-  def get_one_of_my_towns(id)
-    # change some state on the server, so the top bar also includes
-    # the info about the city we want to inspect.
-    meat_tube
-    temp_switch = @agent.get(S3_URI, {:action => 'header', :cityId => id, :function => 'changeCurrentCity', :id => id, :oldView => 'city' })
-    meat_tube
-    town = @agent.get(S3_URI + "?view=city&id=#{id}")
-    wood = parse_number(town.at('#value_wood').inner_html)
-    wine = parse_number(town.at('#value_wine').inner_html)
-    marble = parse_number(town.at('#value_marble').inner_html)
-    crystal = parse_number(town.at('#value_crystal').inner_html)
-    sulphur = parse_number(town.at('#value_sulfur').inner_html)
-    name = town.at("//span[@class='city']").inner_html
-    return {:name => name, :wood => wood, :wine => wine, :marble => marble, :crystal => crystal, :sulphur => sulphur}
   end
 
   def needs_home_secretary_page
@@ -168,7 +134,7 @@ class MachineElf
       end
       city_as = cities_td/"a"
       city_as.each do |a|
-        cities << parse_city(a.inner_html)
+        cities << parse_city(a)
       end
 
       @alliance_members << { :name => name, :score => score, :cities => cities}.merge(other_stats[name])
@@ -185,18 +151,10 @@ class MachineElf
     @alliance_members.each do |guy|
       output << ("| *#{guy[:name]}* | %{color:red}#{guy[:score]}% | %{color:gold}#{guy[:gold]}% | %{color:brown}#{guy[:wood]}% | %{color:purple}#{guy[:wine]}% | %{color:grey}#{guy[:marble]}% | %{color:blue}#{guy[:crystal]}% | %{color:yellow}#{guy[:sulphur]}% |\n")
       guy[:cities].each do |city|
-        output << "| . | . | . | . | . | . | . | . |#{city[:name]} | #{city[:x]} | #{city[:y]} |\n"
+        output << "| . | . | . | . | . | . | . | . | \"#{city[:name]}\":#{city[:hyperlink]} | #{city[:x]} | #{city[:y]} |\n"
       end
     end
     return output
-  end
-
-  def write_csv(filename)
-    f = File.new(filename, "w")
-    @towns.each do |t|
-      f.puts("#{t[:name]}, #{t[:wine]}, #{t[:marble]},  #{t[:crystal]}, #{t[:sulphur]}\n")
-    end
-    f.close
   end
 
   def scrape
