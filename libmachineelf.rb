@@ -204,7 +204,7 @@ class MachineElf
         output << "| . | . | . | . | . | . | . | . | \"#{city.name}\":#{city.hyperlink} | #{city.x} | #{city.y} |\n"
       end
     end
-    output << "\n\n_*Totals:*_\n\n|_Members_|_Score_|_Gold_|_Wood_|_Wine_|_Marble_|_Crystal_|_Sulphur_|\n"
+    output << "\n\n_*Totals:*_\n\n|_Members_|_Score_|_Gold_|_Wood_|_Wine_|_Marble_|_Crystal Glass_|_Sulphur_|\n"
     output << "|#{@alliance_members.length}|%{color:red}#{@total_score}%|%{color:gold}#{@total_gold}%|%{color:brown}#{@total_wood}%|%{color:purple}#{@total_wine}%|%{color:grey}#{@total_marble}%|%{color:blue}#{@total_crystal}%|%{color:yellow}#{@total_sulphur}%|\n"
     return output
   end
