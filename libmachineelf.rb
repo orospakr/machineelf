@@ -30,10 +30,18 @@ end
 
 class City
   attr_accessor :name, :hyperlink, :x, :y
+
+  def <=>(city)
+    @name <=> city.name
+  end
 end
 
 class Player
   attr_accessor :name, :score, :gold, :wood, :wine, :marble, :crystal, :sulphur, :cities
+
+  def <=>(player)
+    @name <=> player.name
+  end
 end
 
 def parse_city(city_element)
@@ -171,9 +179,9 @@ class MachineElf
     output = ""
     output << ("\nAlliance members:<br/>\n")
     output << "| _Player_ | _Score_ | _Gold_ | _Wood_ | _Wine_ | _Marble_ | _Crystal Glass_ | _Sulphur_ | . | x | y |\n"
-    @alliance_members.each do |guy|
+    @alliance_members.sort.each do |guy|
       output << ("| *#{guy.name}* | %{color:red}#{guy.score}% | %{color:gold}#{guy.gold}% | %{color:brown}#{guy.wood}% | %{color:purple}#{guy.wine}% | %{color:grey}#{guy.marble}% | %{color:blue}#{guy.crystal}% | %{color:yellow}#{guy.sulphur}% |\n")
-      guy.cities.each do |city|
+      guy.cities.sort.each do |city|
         output << "| . | . | . | . | . | . | . | . | \"#{city.name}\":#{city.hyperlink} | #{city.x} | #{city.y} |\n"
       end
     end
