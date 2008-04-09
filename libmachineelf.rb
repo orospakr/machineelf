@@ -143,7 +143,7 @@ class MachineElf
 
   def print_report
     if @home_secretary_missing
-      return "Dan is a nub and didn't enable homeland security.\n\n_Were no strangers to love_\n_You know the rules and so do I_\n_A full commitment's what I'm thinking of_\n_You wouldn't get this from any other guy..._\n"
+      return "Dan is a nub and didn't enable homeland security.\n\n\n\n_Were no strangers to love_\n\n_You know the rules and so do I_\n\n_A full commitment's what I'm thinking of_\n\n_You wouldn't get this from any other guy..._\n"
     end
     output = ""
     output << ("\nAlliance members:<br/>\n")
