@@ -69,7 +69,7 @@ describe MachineElf do
       and_return(members_page)
     @elf.get_alliance_members
     @elf.alliance_members.length.should == 0
-    @elf.print_report.should == "Dan is a nub and didn't enable homeland security.\n\n\n\n_Were no strangers to love_\n\n_You know the rules and so do I_\n\n_A full commitment's what I'm thinking of_\n\n_You wouldn't get this from any other guy..._\n"
+    @elf.print_report.should == "Dan is a nub and didn't legislate homeland security.\n\n\n\n_We're no strangers to love_\n\n_You know the rules and so do I_\n\n_A full commitment's what I'm thinking of_\n\n_You wouldn't get this from any other guy..._\n"
 
     open('/tmp/machine_elf_report_blowup.html', "w") do |rep_dump|
       markup = RedCloth.new(@elf.print_report)
