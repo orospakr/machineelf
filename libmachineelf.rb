@@ -32,6 +32,10 @@ class City
   attr_accessor :name, :hyperlink, :x, :y
 end
 
+class Player
+  attr_accessor :name, :score, :gold, :wood, :wine, :marble, :crystal, :sulphur
+end
+
 def parse_city(city_element)
 #  coordinates = city_string.match(/\[.*:.*\]/)
   city_string = city_element.inner_html
@@ -146,8 +150,17 @@ class MachineElf
       city_as.each do |a|
         cities << parse_city(a)
       end
-
-      @alliance_members << { :name => name, :score => score, :cities => cities}.merge(other_stats[name])
+      member = Member.new
+      member.name = name
+      member.score = score
+      member.gold = other_stats[name][:gold]
+      member.wood = other_stats[name][:wood]
+      member.wine = other_stats[name][:wine]
+      member.marble = other_stats[name][:marble]
+      member.crystal = other_stats[name][:crystal]
+      member.sulphur = other_stats[name][:sulphur]
+      member.cities = cities
+      @alliance_members << member
     end
   end
 
