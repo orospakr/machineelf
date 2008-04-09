@@ -28,16 +28,26 @@ def parse_number(num)
   return stripped.to_i
 end
 
-def parse_city(city)
+class City
+  attr_accessor :name, :hyperlink, :x, :y
+end
+
+def parse_city(city_element)
 #  coordinates = city_string.match(/\[.*:.*\]/)
-  city_string = city.inner_html
+  city_string = city_element.inner_html
   numbers = city_string.scan(/([0-9]+)/)
   x = Integer(numbers[0][0])
   y = Integer(numbers[1][0])
 
   name_string = city_string.match(/(.*\[)/)[0]
   name = name_string[0, name_string.length-2]
-  return {:name => name, :x => x, :y => y, :hyperlink => S3_URI + city['href']}
+
+  city = City.new
+  city.name = name
+  city.x = x
+  city.y = y
+  city.hyperlink = S3_URI + city_element['href']
+  return city
 end
 
 class MachineElf
@@ -151,7 +161,7 @@ class MachineElf
     @alliance_members.each do |guy|
       output << ("| *#{guy[:name]}* | %{color:red}#{guy[:score]}% | %{color:gold}#{guy[:gold]}% | %{color:brown}#{guy[:wood]}% | %{color:purple}#{guy[:wine]}% | %{color:grey}#{guy[:marble]}% | %{color:blue}#{guy[:crystal]}% | %{color:yellow}#{guy[:sulphur]}% |\n")
       guy[:cities].each do |city|
-        output << "| . | . | . | . | . | . | . | . | \"#{city[:name]}\":#{city[:hyperlink]} | #{city[:x]} | #{city[:y]} |\n"
+        output << "| . | . | . | . | . | . | . | . | \"#{city.name}\":#{city.hyperlink} | #{city.x} | #{city.y} |\n"
       end
     end
     return output
