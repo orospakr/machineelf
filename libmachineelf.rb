@@ -63,7 +63,7 @@ def parse_city(city_element)
 end
 
 class MachineElf
-  attr_accessor :home_secretary_missing, :home_secretary_page, :testing, :agent, :main_page, :logged_in, :gold, :username, :password, :towns, :islands, :alliance_members
+  attr_accessor :total_gold, :total_score, :total_wood, :total_wine, :total_marble, :total_crystal, :total_sulphur, :home_secretary_missing, :home_secretary_page, :testing, :agent, :main_page, :logged_in, :gold, :username, :password, :towns, :islands, :alliance_members
 
   def meat_tube
     if !@testing
@@ -172,12 +172,31 @@ class MachineElf
     end
   end
 
+  def compute_totals
+    @total_gold = 0
+    @total_score = 0
+    @total_wood = 0
+    @total_wine = 0
+    @total_marble = 0
+    @total_crystal = 0
+    @total_sulphur = 0
+    @alliance_members.each do |member|
+      @total_gold += member.gold
+      @total_score += member.score
+      @total_wood += member.wood
+      @total_wine += member.wine
+      @total_marble += member.marble
+      @total_crystal += member.crystal
+      @total_sulphur += member.sulphur
+    end
+  end
+
   def print_report
     if @home_secretary_missing
       return "Dan is a nub and didn't legislate homeland security.\n\n\n\n_We're no strangers to love_\n\n_You know the rules and so do I_\n\n_A full commitment's what I'm thinking of_\n\n_You wouldn't get this from any other guy..._\n"
     end
     output = ""
-    output << ("\nAlliance members:<br/>\n")
+#    output << ("\nAlliance members:<br/>\n")
     output << "| _Player_ | _Score_ | _Gold_ | _Wood_ | _Wine_ | _Marble_ | _Crystal Glass_ | _Sulphur_ | . | x | y |\n"
     @alliance_members.sort.each do |guy|
       output << ("| *#{guy.name}* | %{color:red}#{guy.score}% | %{color:gold}#{guy.gold}% | %{color:brown}#{guy.wood}% | %{color:purple}#{guy.wine}% | %{color:grey}#{guy.marble}% | %{color:blue}#{guy.crystal}% | %{color:yellow}#{guy.sulphur}% |\n")
@@ -185,6 +204,8 @@ class MachineElf
         output << "| . | . | . | . | . | . | . | . | \"#{city.name}\":#{city.hyperlink} | #{city.x} | #{city.y} |\n"
       end
     end
+    output << "\n\n_*Totals:*_\n\n|_Members_|_Score_|_Gold_|_Wood_|_Wine_|_Marble_|_Crystal_|_Sulphur_|\n"
+    output << "|#{@alliance_members.length}|%{color:red}#{@total_score}%|%{color:gold}#{@total_gold}%|%{color:brown}#{@total_wood}%|%{color:purple}#{@total_wine}%|%{color:grey}#{@total_marble}%|%{color:blue}#{@total_crystal}%|%{color:yellow}#{@total_sulphur}%|\n"
     return output
   end
 
@@ -193,6 +214,7 @@ class MachineElf
 #    get_gold
 #    get_my_towns
     get_alliance_members
+    compute_totals
   end
 
   def initialize(username, password, agent=nil, testing=false)

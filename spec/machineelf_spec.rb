@@ -32,6 +32,7 @@ describe MachineElf do
   end
 
   it "should retrieve alliance members" do
+    login(@elf)
     embassy_page = get_fixture('embassy')
     members_page = get_fixture('embassyHomeSecretaryMembers')
 
@@ -39,7 +40,7 @@ describe MachineElf do
       and_return(embassy_page)
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
       and_return(members_page)
-    @elf.get_alliance_members
+    @elf.scrape
 
     orospakr = @elf.alliance_members[0]
     mal = @elf.alliance_members[12]
@@ -76,6 +77,7 @@ describe MachineElf do
   end
 
   it "should not die if home secretary is not available" do
+    login(@elf)
     embassy_page = get_fixture('embassyWithoutHomeSecretaryTurnedOn')
 
     members_page = get_fixture('embassyWithoutHomeSecretaryTurnedOnMembers')
@@ -83,7 +85,7 @@ describe MachineElf do
       and_return(embassy_page)
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
       and_return(members_page)
-    @elf.get_alliance_members
+    @elf.scrape
     @elf.alliance_members.length.should == 0
     @elf.print_report.should == "Dan is a nub and didn't legislate homeland security.\n\n\n\n_We're no strangers to love_\n\n_You know the rules and so do I_\n\n_A full commitment's what I'm thinking of_\n\n_You wouldn't get this from any other guy..._\n"
 
@@ -93,10 +95,30 @@ describe MachineElf do
     end
   end
 
-  it "should not throw an exception while rendering a report" do
+  it "should compute totals" do
+    login(@elf)
     embassy_page = get_fixture('embassy')
     members_page = get_fixture('embassyHomeSecretaryMembers')
+
+    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassy&id=82966&position=10").
+      and_return(embassy_page)
+    @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
+      and_return(members_page)
+    @elf.scrape
+
+    @elf.total_gold.should == 826993
+    @elf.total_score.should == 24115
+    @elf.total_wood.should == 63568
+    @elf.total_wine.should == 27600
+    @elf.total_marble.should == 13733
+    @elf.total_crystal.should == 11126
+    @elf.total_sulphur.should == 4716
+  end
+
+  it "should not throw an exception while rendering a report" do
     login(@elf)
+    embassy_page = get_fixture('embassy')
+    members_page = get_fixture('embassyHomeSecretaryMembers')
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassy&id=82966&position=10").
       and_return(embassy_page)
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
