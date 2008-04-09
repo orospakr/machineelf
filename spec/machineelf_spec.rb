@@ -28,23 +28,8 @@ describe MachineElf do
   end
 
   it "should grab main page and POST login to Gamma" do
-    # main page load
-#     @agent.should_receive(:get).twice do |arg|
-#       actual << arg
-#     end
-    # @agent.should_receive(:get).once.with("http://www.ikariam.org/")
-    # @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php", {:password=>"sailboat", :name=>"somedude", :action=>"loginAvatar", :function=>"login"})
     login(@elf)
   end
-
-#   it "should retrieve gold" do
-#     main_page = flexmock(:main_page)
-#     main_page.should_receive('text').and_return(42)
-#     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php")
-#     main_page.should_receive('/').once.with('#value_gold').and_return(main_page)
-#     @elf.get_gold
-#     @elf.gold.should eql(42)
-#   end
 
   it "should retrieve alliance members" do
     embassy_page = get_fixture('embassy')
@@ -55,13 +40,13 @@ describe MachineElf do
     @agent.should_receive(:get).once.with("http://s3.ikariam.org/index.php?view=embassyHomeSecretaryMembers&id=82966&position=10").
       and_return(members_page)
     @elf.get_alliance_members
-    oropolis = @elf.alliance_members[0][:cities][0]
+    oropolis = @elf.alliance_members[0].cities[0]
     oropolis.x.should == 95
     oropolis.y.should == 65
     oropolis.hyperlink.should == 'http://s3.ikariam.org/index.php?view=island&id=3909&selectCity=82966'
     oropolis.name.should == 'Oropolis'
 
-    ivarion = @elf.alliance_members[0][:cities][1]
+    ivarion = @elf.alliance_members[0].cities[1]
     ivarion.x.should == 94
     ivarion.y.should == 65
     ivarion.hyperlink.should == 'http://s3.ikariam.org/index.php?view=island&id=3910&selectCity=91576'

@@ -33,7 +33,7 @@ class City
 end
 
 class Player
-  attr_accessor :name, :score, :gold, :wood, :wine, :marble, :crystal, :sulphur
+  attr_accessor :name, :score, :gold, :wood, :wine, :marble, :crystal, :sulphur, :cities
 end
 
 def parse_city(city_element)
@@ -150,17 +150,17 @@ class MachineElf
       city_as.each do |a|
         cities << parse_city(a)
       end
-      member = Member.new
-      member.name = name
-      member.score = score
-      member.gold = other_stats[name][:gold]
-      member.wood = other_stats[name][:wood]
-      member.wine = other_stats[name][:wine]
-      member.marble = other_stats[name][:marble]
-      member.crystal = other_stats[name][:crystal]
-      member.sulphur = other_stats[name][:sulphur]
-      member.cities = cities
-      @alliance_members << member
+      player = Player.new
+      player.name = name
+      player.score = score
+      player.gold = other_stats[name][:gold]
+      player.wood = other_stats[name][:wood]
+      player.wine = other_stats[name][:wine]
+      player.marble = other_stats[name][:marble]
+      player.crystal = other_stats[name][:crystal]
+      player.sulphur = other_stats[name][:sulphur]
+      player.cities = cities
+      @alliance_members << player
     end
   end
 
@@ -172,8 +172,8 @@ class MachineElf
     output << ("\nAlliance members:<br/>\n")
     output << "| _Player_ | _Score_ | _Gold_ | _Wood_ | _Wine_ | _Marble_ | _Crystal Glass_ | _Sulphur_ | . | x | y |\n"
     @alliance_members.each do |guy|
-      output << ("| *#{guy[:name]}* | %{color:red}#{guy[:score]}% | %{color:gold}#{guy[:gold]}% | %{color:brown}#{guy[:wood]}% | %{color:purple}#{guy[:wine]}% | %{color:grey}#{guy[:marble]}% | %{color:blue}#{guy[:crystal]}% | %{color:yellow}#{guy[:sulphur]}% |\n")
-      guy[:cities].each do |city|
+      output << ("| *#{guy.name}* | %{color:red}#{guy.score}% | %{color:gold}#{guy.gold}% | %{color:brown}#{guy.wood}% | %{color:purple}#{guy.wine}% | %{color:grey}#{guy.marble}% | %{color:blue}#{guy.crystal}% | %{color:yellow}#{guy.sulphur}% |\n")
+      guy.cities.each do |city|
         output << "| . | . | . | . | . | . | . | . | \"#{city.name}\":#{city.hyperlink} | #{city.x} | #{city.y} |\n"
       end
     end
