@@ -197,14 +197,14 @@ class MachineElf
     end
     output = ""
 #    output << ("\nAlliance members:<br/>\n")
-    output << "| _Player_ | _Score_ | _Gold_ | _Wood_ | _Wine_ | _Marble_ | _Crystal Glass_ | _Sulphur_ | . | x | y |\n"
+    output << "| _Player_ | _Score_ | _Gold_ | _Wood_ | _Wine_ | _Marble_ | _Crystal_ | _Sulphur_ | . | x | y |\n"
     @alliance_members.sort.each do |guy|
       output << ("| *#{guy.name}* | %{color:red}#{guy.score}% | %{color:gold}#{guy.gold}% | %{color:brown}#{guy.wood}% | %{color:purple}#{guy.wine}% | %{color:grey}#{guy.marble}% | %{color:blue}#{guy.crystal}% | %{color:yellow}#{guy.sulphur}% |\n")
       guy.cities.sort.each do |city|
         output << "| . | . | . | . | . | . | . | . | \"#{city.name}\":#{city.hyperlink} | #{city.x} | #{city.y} |\n"
       end
     end
-    output << "\n\n_*Totals:*_\n\n|_Members_|_Score_|_Gold_|_Wood_|_Wine_|_Marble_|_Crystal Glass_|_Sulphur_|\n"
+    output << "\n\n_*Totals:*_\n\n|_Members_|_Score_|_Gold_|_Wood_|_Wine_|_Marble_|_Crystal_|_Sulphur_|\n"
     output << "|#{@alliance_members.length}|%{color:red}#{@total_score}%|%{color:gold}#{@total_gold}%|%{color:brown}#{@total_wood}%|%{color:purple}#{@total_wine}%|%{color:grey}#{@total_marble}%|%{color:blue}#{@total_crystal}%|%{color:yellow}#{@total_sulphur}%|\n"
     return output
   end
