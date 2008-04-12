@@ -10,7 +10,7 @@ SPEC = Gem::Specification.new do |s|
   candidates      = Dir.glob("lib/*.rb")
   s.files         = candidates.delete_if {|i| i =~ /.svn/ }
   s.require_path  = "lib"
-  s.autorequire   = "machineelf"
+#  s.autorequire   = "machineelf"
 #  s.test_files    = Dir.glob("test/{,mock_}{client,worker}.rb")
   s.has_rdoc      = true
 end

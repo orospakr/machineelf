@@ -13,6 +13,7 @@
 # end
 require 'rubygems'
 gem 'MachineElf'
+require 'machineelf'
 
 if ARGV.length != 3
   print("usage: username password csv_file\n")
