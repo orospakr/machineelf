@@ -1,4 +1,4 @@
-require 'libmachineelf'
+require 'machineelf'
 
 require 'spec'
 require 'mechanize'
