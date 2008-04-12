@@ -32,7 +32,7 @@ class City
   attr_accessor :name, :hyperlink, :x, :y
 
   def <=>(city)
-    @name <=> city.name
+    @name.downcase <=> city.name.downcase
   end
 end
 
@@ -40,7 +40,7 @@ class Player
   attr_accessor :name, :score, :gold, :wood, :wine, :marble, :crystal, :sulphur, :cities
 
   def <=>(player)
-    @name <=> player.name
+    @name.downcase <=> player.name.downcase
   end
 end
 
