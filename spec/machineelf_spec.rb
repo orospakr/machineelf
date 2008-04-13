@@ -15,10 +15,10 @@ def get_fixture(name)
   Hpricot(html)
 end
 
-describe MachineElf do
+describe KnightsbridgePact::MachineElf do
   before(:each) do
     @agent = flexmock(:mechanize_agent)
-    @elf = MachineElf.new("somedude", "sailboat", @agent, true)
+    @elf = KnightsbridgePact::MachineElf.new("somedude", "sailboat", @agent, true)
   end
 
   def login(elf)

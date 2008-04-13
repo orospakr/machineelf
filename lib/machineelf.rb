@@ -7,7 +7,9 @@ require 'mechanize'
 require 'json'
 require 'cgi'
 
-module MachineElf
+
+module KnightsbridgePact
+
 
   IKARIAM_MAIN_URI = "http://www.ikariam.org/"
   MAIN_URI = "http://www.ikariam.org/"
@@ -23,12 +25,7 @@ module MachineElf
 }
 eos
 
-  def parse_number(num)
-    stripped = num.gsub(/\,/, '')
-    stripped = num.gsub(/ /, '')
-    stripped = num.split(",").join("")
-    return stripped.to_i
-  end
+
 
   class City
     attr_accessor :name, :hyperlink, :x, :y
@@ -46,26 +43,35 @@ eos
     end
   end
 
-  def parse_city(city_element)
-    #  coordinates = city_string.match(/\[.*:.*\]/)
-    city_string = city_element.inner_html
-    numbers = city_string.scan(/([0-9]+)/)
-    x = Integer(numbers[0][0])
-    y = Integer(numbers[1][0])
 
-    name_string = city_string.match(/(.*\[)/)[0]
-    name = name_string[0, name_string.length-2]
-
-    city = City.new
-    city.name = name
-    city.x = x
-    city.y = y
-    city.hyperlink = S3_URI + city_element['href']
-    return city
-  end
 
   class MachineElf
     attr_accessor :total_gold, :total_score, :total_wood, :total_wine, :total_marble, :total_crystal, :total_sulphur, :home_secretary_missing, :home_secretary_page, :testing, :agent, :main_page, :logged_in, :gold, :username, :password, :towns, :islands, :alliance_members
+
+    def MachineElf.parse_number(num)
+      stripped = num.gsub(/\,/, '')
+      stripped = num.gsub(/ /, '')
+      stripped = num.split(",").join("")
+      return stripped.to_i
+    end
+
+    def MachineElf.parse_city(city_element)
+      #  coordinates = city_string.match(/\[.*:.*\]/)
+      city_string = city_element.inner_html
+      numbers = city_string.scan(/([0-9]+)/)
+      x = Integer(numbers[0][0])
+      y = Integer(numbers[1][0])
+
+      name_string = city_string.match(/(.*\[)/)[0]
+      name = name_string[0, name_string.length-2]
+
+      city = City.new
+      city.name = name
+      city.x = x
+      city.y = y
+      city.hyperlink = S3_URI + city_element['href']
+      return city
+    end
 
     def meat_tube
       if !@testing
@@ -126,12 +132,12 @@ eos
       real_rows.each do |row|
         elements = row/"td"
         name = elements[0].inner_html
-        gold = parse_number(elements[1].inner_html)
-        wood = parse_number(elements[2].inner_html)
-        wine = parse_number(elements[3].inner_html)
-        marble = parse_number(elements[4].inner_html)
-        crystal = parse_number(elements[5].inner_html)
-        sulphur = parse_number(elements[6].inner_html)
+        gold = MachineElf.parse_number(elements[1].inner_html)
+        wood = MachineElf.parse_number(elements[2].inner_html)
+        wine = MachineElf.parse_number(elements[3].inner_html)
+        marble = MachineElf.parse_number(elements[4].inner_html)
+        crystal = MachineElf.parse_number(elements[5].inner_html)
+        sulphur = MachineElf.parse_number(elements[6].inner_html)
         players[name] = {:gold => gold,
           :wood => wood, :wine => wine, :marble => marble,
           :crystal => crystal, :sulphur => sulphur }
@@ -147,7 +153,7 @@ eos
       other_stats = get_alliance_member_stats
       rows.each do |row|
         name = (row/"td")[2].inner_html
-        score = parse_number(row.at("//td[@class='score']").inner_html)
+        score = MachineElf.parse_number(row.at("//td[@class='score']").inner_html)
         cities = []
         cities_td = row.at("//td[@class='cities']")
         # pp cities_td
@@ -158,7 +164,7 @@ eos
         end
         city_as = cities_td/"a"
         city_as.each do |a|
-          cities << parse_city(a)
+          cities << MachineElf.parse_city(a)
         end
         player = Player.new
         player.name = name
