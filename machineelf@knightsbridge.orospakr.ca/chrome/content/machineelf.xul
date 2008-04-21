@@ -1,7 +1,39 @@
 <?xml version="1.0"?>
-<overlay id="machineelfbar"
+<overlay id="machineelf"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
- <statusbar id="status-bar">
-  <statusbarpanel id="my-panel" label="Hello, World"/>
- </statusbar>
+
+
+  <toolbox id="navigator-toolbox">
+    <toolbar id="machineelf" class="chromeclass-toolbar" iconsize="small" persist="collapsed,hidden" inherits="hidden" toolbarname="Knightsbridge Pact Machine Elf Ikariam Toolbar (Ctrl+F11)" savedtoolbarname="Knightsbridge Pact Machine Elf Ikariam Toolbar (Ctrl-F11)" accesskey="S" context="toolbar-context-menu" customizable="true" fullscreentoolbar="true" hidden="false">
+      <toolbaritem id="me_toolbaritem" width="927px">
+        <stack flex="0">
+
+          <hbox flex="0">
+            <toolbarbutton id="me_penish_button" image="chrome://stumbleupon/skin/thumbup.png" label="Penish"/>
+            <toolbarseparator />
+            <toolbarbutton image="chrome://stumbleupon/skin/thumbup.png" label="Penish ]["/>
+            <toolbarseparator />
+            <vbox>
+              <spacer flex="1"/>
+              <label id="me_blah_label" value="Blaahalallh:"/>
+              <spacer flex="1"/>
+            </vbox>
+            <notification label="This is a warning"/>
+          </hbox>
+        </stack>
+      </toolbaritem>
+    </toolbar>
+  </toolbox>
+  <statusbar id="status-bar">
+    <statusbarpanel id="machineelfbar" label="Machine Elf, reporting!">
+      <deck id="machineelfdeck">
+        <box id="machineelfbox">
+          <button label="I'm a button!"/>
+        </box>
+      </deck>
+    </statusbarpanel>
+  </statusbar>
+  <script src="chrome://machineelf/content/machineelf.js" type="application/x-javascript" />
 </overlay>
+
+
