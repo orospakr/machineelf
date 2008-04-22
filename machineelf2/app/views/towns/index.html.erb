@@ -1,0 +1,40 @@
+<h1>Listing towns</h1>
+
+<table>
+  <tr>
+    <th>Island</th>
+    <th>Found at</th>
+    <th>Updated at</th>
+    <th>Name</th>
+    <th>Owner</th>
+    <th>Wood</th>
+    <th>Wine</th>
+    <th>Marble</th>
+    <th>Crystal</th>
+    <th>Sulphur</th>
+    <th>Version</th>
+  </tr>
+
+<% for town in @towns %>
+  <tr>
+    <td><%=h town.island_id %></td>
+    <td><%=h town.found_at %></td>
+    <td><%=h town.updated_at %></td>
+    <td><%=h town.name %></td>
+    <td><%=h town.owner_id %></td>
+    <td><%=h town.wood %></td>
+    <td><%=h town.wine %></td>
+    <td><%=h town.marble %></td>
+    <td><%=h town.crystal %></td>
+    <td><%=h town.sulphur %></td>
+    <td><%=h town.version %></td>
+    <td><%= link_to 'Show', town %></td>
+    <td><%= link_to 'Edit', edit_town_path(town) %></td>
+    <td><%= link_to 'Destroy', town, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New town', new_town_path %>

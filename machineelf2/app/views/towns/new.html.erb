@@ -1,0 +1,66 @@
+<h1>New town</h1>
+
+<%= error_messages_for :town %>
+
+<% form_for(@town) do |f| %>
+  <p>
+    <b>Island</b><br />
+    <%= f.text_field :island_id %>
+  </p>
+
+  <p>
+    <b>Found at</b><br />
+    <%= f.datetime_select :found_at %>
+  </p>
+
+  <p>
+    <b>Updated at</b><br />
+    <%= f.datetime_select :updated_at %>
+  </p>
+
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Owner</b><br />
+    <%= f.text_field :owner_id %>
+  </p>
+
+  <p>
+    <b>Wood</b><br />
+    <%= f.text_field :wood %>
+  </p>
+
+  <p>
+    <b>Wine</b><br />
+    <%= f.text_field :wine %>
+  </p>
+
+  <p>
+    <b>Marble</b><br />
+    <%= f.text_field :marble %>
+  </p>
+
+  <p>
+    <b>Crystal</b><br />
+    <%= f.text_field :crystal %>
+  </p>
+
+  <p>
+    <b>Sulphur</b><br />
+    <%= f.text_field :sulphur %>
+  </p>
+
+  <p>
+    <b>Version</b><br />
+    <%= f.text_field :version %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', towns_path %>

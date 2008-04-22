@@ -1,0 +1,12 @@
+  [4;36;1mSQL (0.000351)[0m   [0;1mselect sqlite_version(*)[0m
+  [4;35;1mSQL (0.002960)[0m   [0mCREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.006522)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.000230)[0m   [0mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.000204)[0m   [0;1m SELECT name
+ FROM sqlite_master
+ WHERE type = 'table' AND NOT name = 'sqlite_sequence'
+[0m
+  [4;35;1mSQL (0.000209)[0m   [0mselect sqlite_version(*)[0m
+  [4;36;1mSQL (0.004574)[0m   [0;1mCREATE TABLE schema_info (version integer)[0m
+  [4;35;1mSQL (0.004169)[0m   [0mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;36;1mSQL (0.006983)[0m   [0;1mUPDATE schema_info SET version = 0[0m
