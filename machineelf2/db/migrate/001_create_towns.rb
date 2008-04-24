@@ -1,5 +1,7 @@
 class CreateTowns < ActiveRecord::Migration
+  require_dependency 'town'
   def self.up
+    
     create_table :towns do |t|
       t.integer :island_id
       t.datetime :found_at
@@ -12,12 +14,13 @@ class CreateTowns < ActiveRecord::Migration
       t.integer :crystal
       t.integer :sulphur
       t.integer :version
-
       t.timestamps
     end
+    Town.create_versioned_table
   end
 
   def self.down
+    Town.drop_versioned_table
     drop_table :towns
   end
 end
