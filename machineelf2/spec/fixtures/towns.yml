@@ -1,10 +1,10 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
+knothole:
   island_id: 1
   found_at: 2008-04-22 00:08:19
   updated_at: 2008-04-22 00:08:19
-  name: MyString
+  name: Knothole
   owner_id: 1
   wood: 1
   wine: 1
@@ -12,12 +12,13 @@ one:
   crystal: 1
   sulphur: 1
   version: 1
+  ikariam_id: 42
 
-two:
+mobotropolis:
   island_id: 1
   found_at: 2008-04-22 00:08:19
   updated_at: 2008-04-22 00:08:19
-  name: MyString
+  name: Mobotropolis
   owner_id: 1
   wood: 1
   wine: 1
@@ -25,3 +26,4 @@ two:
   crystal: 1
   sulphur: 1
   version: 1
+  ikariam_id: 56

@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer  "town_id"
     t.integer  "version"
     t.integer  "island_id"
+    t.integer  "ikariam_id"
     t.datetime "found_at"
-    t.datetime "updated_at"
     t.string   "name"
     t.integer  "owner_id"
     t.integer  "wood"
@@ -25,12 +25,13 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer  "crystal"
     t.integer  "sulphur"
     t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "towns", :force => true do |t|
     t.integer  "island_id"
+    t.integer  "ikariam_id"
     t.datetime "found_at"
-    t.datetime "updated_at"
     t.string   "name"
     t.integer  "owner_id"
     t.integer  "wood"
@@ -40,6 +41,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer  "sulphur"
     t.integer  "version"
     t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
