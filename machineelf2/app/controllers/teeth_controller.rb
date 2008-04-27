@@ -1,0 +1,2 @@
+class TeethController < ApplicationController
+end
