@@ -32,8 +32,9 @@ var MachineElfPageLoadListener = {
             blah.value = doc.documentElement.innerHTML;
 
             var req = new XMLHttpRequest();
-            req.open('POST', 'http://www.orospakr.ca/', true);
-            req.send("url=" + escape(doc.location.href) + "&pagecontents=" + escape(doc.documentElement.innerHTML));
+            req.open('POST', 'http://localhost:3000/teeth/scree', true);
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.send("ikariam_url=" + escape(doc.location.href) + "&ikariam_page=" + escape(doc.documentElement.innerHTML));
             //if(req.status == 0)
             //dump(req.responseText);
 
