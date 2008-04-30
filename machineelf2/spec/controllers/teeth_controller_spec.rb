@@ -18,11 +18,12 @@ describe TeethController do
     end
 
     def ikariam_url(page_name)
+      "http://s3.ikariam.org/index.php?view=city&id=82966"
     end
 
     def expects(model, expectations)
       expectations.each_pair do |field, val|
-        model.should_receive("#{field}=".intern).with(val)
+        model.should_receive("#{field.to_s}=".intern).with(val)
       end
     end
 
@@ -35,10 +36,19 @@ describe TeethController do
       Town.stub!(:by_ikariam_id).and_return(@town)
     end
 
-    it "should munch orospakr's town page" do
-      expects(@town, { 'name', 'Knothole'})
-      do_scrape_page_fixture :embassy
-      # @town.name = "Knothole"
+    it "should munch a view_city page" do
+      expects(@town, { :name => 'Mobotropolis'})
+      @town.should_receive(:save!)
+      do_scrape_page_fixture :view_city
+      # OK, andrew start here!  You need to write a separate set of methods
+      # that parse the ever-present ikariam top-bar.  The new city page
+      # is really only good for getting island coordinates, which we might as well
+      # do here (are those figures even available anywhere else, except for
+      # home secretary?)
+    end
+    
+    it "should not crash when receiving a blank ikariam_url" do
+      post :scree, {:ikariam_page => "", :ikariam_url => ""}
     end
 
   end

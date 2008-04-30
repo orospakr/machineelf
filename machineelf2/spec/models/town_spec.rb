@@ -25,13 +25,15 @@ describe Town do
   end
 
   it "should return a new town if asked for one with a new Ikariam town id" do
-    t = Town.by_ikariam_id(12345)
-    t.name.should be_nil
+    nowhere = Town.by_ikariam_id(12345)
+    nowhere.new_record?.should be_true
+    nowhere.ikariam_id.should == 12345
+    nowhere.name.should be_nil
   end
 
   it "should return a new town if asked for one with an Ikariam town id that already exists in the system" do
-    t1 = Town.by_ikariam_id(towns(:knothole).ikariam_id)
-    t1.name.should == "Knothole"
+    knothole = Town.by_ikariam_id(towns(:knothole).ikariam_id)
+    knothole.name.should == "Knothole"
   end
 end
 
