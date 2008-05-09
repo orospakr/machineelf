@@ -18,7 +18,8 @@ describe TeethController do
     end
 
     def ikariam_url(page_name)
-      "http://s3.ikariam.org/index.php?view=city&id=82966"
+      names = { :view_city => 'http://s3.ikariam.org/index.php?view=city&id=82966' }
+      return names[page_name]
     end
 
     def expects(model, expectations)
@@ -37,7 +38,7 @@ describe TeethController do
     end
 
     it "should munch a view_city page" do
-      expects(@town, { :name => 'Mobotropolis'})
+      expects(@town, { :name => 'Mobotropolis' })
       @town.should_receive(:save!)
       do_scrape_page_fixture :view_city
       # OK, andrew start here!  You need to write a separate set of methods
@@ -46,10 +47,15 @@ describe TeethController do
       # do here (are those figures even available anywhere else, except for
       # home secretary?)
     end
-    
+
+#     it "should munch the ikariam town bar on all pages" do
+#       expects(@town, { :name => 'Mobotropolis'})
+#       @town.should_receive(:save!)
+#       do_scrape_page_fixture :view_city
+#     end
+
     it "should not crash when receiving a blank ikariam_url" do
       post :scree, {:ikariam_page => "", :ikariam_url => ""}
     end
-
   end
 end

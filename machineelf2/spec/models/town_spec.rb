@@ -11,7 +11,7 @@ describe Town do
     @town.should be_valid
   end
 
-  it "should have the ActsAsVersioned working" do
+  it "should have the ActsAsVersioned stuff working" do
     @town.name = "Hi!"
     @town.save!
     @town.version.should == 1
