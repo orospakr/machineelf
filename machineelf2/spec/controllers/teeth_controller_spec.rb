@@ -33,19 +33,30 @@ describe TeethController do
     end
 
     before(:each) do
-      @town = mock_model(Town)
-      Town.stub!(:by_ikariam_id).and_return(@town)
+
     end
 
     it "should munch a view_city page" do
-      expects(@town, { :name => 'Mobotropolis' })
+      @town = mock_model(Town)
+      @island = mock_model(Island)
+      Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
+      Island.should_receive(:by_ikariam_id).with(3909).and_return(@island)
+      @town.should_receive(:island=).with(@island)
       @town.should_receive(:save!)
+      @island.should_receive(:save!)
+
+      expects(@town, { :name => 'Mobotropolis' })
+      expects(@island, { :name => 'Issayos'})
+
       do_scrape_page_fixture :view_city
       # OK, andrew start here!  You need to write a separate set of methods
       # that parse the ever-present ikariam top-bar.  The new city page
       # is really only good for getting island coordinates, which we might as well
       # do here (are those figures even available anywhere else, except for
       # home secretary?)
+    end
+
+    it "should ignore a city on the town bar if the island does not exist yet (a view_city needs to be seen)" do
     end
 
 #     it "should munch the ikariam town bar on all pages" do
@@ -59,3 +70,4 @@ describe TeethController do
     end
   end
 end
+
