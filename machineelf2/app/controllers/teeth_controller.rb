@@ -35,7 +35,6 @@ class TeethController < ApplicationController
     #island_url = lol.at("//a[@class='island'")['href']
     breadcrumbs = lol.at('div#breadcrumbs')
 
-
     the_as = breadcrumbs/('a')
     a_with_island_id = the_as[1]
 
@@ -62,13 +61,39 @@ class TeethController < ApplicationController
   end
 
   def scree
+    scree_contents
+    scree_menu
+  end
+
+  def scree_contents
     begin
       view_type = find_arg_by_name(:view)
       parse_view(view_type.intern)
      rescue ArgumentError => detail
        logger.error "missing arguments: #{detail.to_s}"
      end
-
     @scary = params[:ikariam_url]
+  end
+
+  def scree_menu
+    # parse the menu!!11
+    my_town = nil
+    lol = nil
+    page = Hpricot(params[:ikariam_page])
+    city_select = page.at('#citySelect')
+    if city_select.nil?
+      return
+    end
+    city_options = city_select/"option.avatarCities"
+    for city in city_options
+      if (city['selected'] == 'selected')
+        pp "FOUND MA TOWN"
+        my_town = Town.by_ikariam_id(city['value'].to_i)
+        my_town.name = city.innerHTML
+#        lol.name = "sadf"
+      end
+    end
+    print "HI DANNY: " + lol.name.to_s
+    print my_town.name
   end
 end
