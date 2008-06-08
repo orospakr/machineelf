@@ -15,11 +15,11 @@ class CreateTowns < ActiveRecord::Migration
       t.integer :version
       t.timestamps
     end
-    Town.create_versioned_table
+    #Town.create_versioned_table
   end
 
   def self.down
-    Town.drop_versioned_table
+    #Town.drop_versioned_table
     drop_table :towns
   end
 end

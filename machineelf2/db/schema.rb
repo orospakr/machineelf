@@ -16,23 +16,6 @@ ActiveRecord::Schema.define(:version => 2) do
     t.datetime "updated_at"
   end
 
-  create_table "town_versions", :force => true do |t|
-    t.integer  "town_id"
-    t.integer  "version"
-    t.integer  "island_id"
-    t.integer  "ikariam_id"
-    t.datetime "found_at"
-    t.string   "name"
-    t.integer  "owner_id"
-    t.integer  "wood"
-    t.integer  "wine"
-    t.integer  "marble"
-    t.integer  "crystal"
-    t.integer  "sulphur"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "towns", :force => true do |t|
     t.integer  "island_id"
     t.integer  "ikariam_id"

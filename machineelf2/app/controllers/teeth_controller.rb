@@ -93,7 +93,7 @@ class TeethController < ApplicationController
 #        lol.name = "sadf"
       end
     end
-    print "HI DANNY: " + lol.name.to_s
-    print my_town.name
+#    print "HI DANNY: " + lol.name.to_s
+#    print my_town.name
   end
 end
