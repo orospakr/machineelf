@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  town_id: 1
+  wood: 1
+  wine: 1
+  marble: 1
+  crystal: 1
+  sulphur: 1
+
+two:
+  town_id: 1
+  wood: 1
+  wine: 1
+  marble: 1
+  crystal: 1
+  sulphur: 1
