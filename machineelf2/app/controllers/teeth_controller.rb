@@ -107,7 +107,6 @@ class TeethController < ApplicationController
       val = parse_number(page.at("span#value_#{field_name.to_s}").inner_html)
       tevent.send(rez.to_s + '=', val)
     end
-
     tevent.save!
   end
 end

@@ -7,8 +7,10 @@ class CreateTownEvents < ActiveRecord::Migration
       t.integer :marble
       t.integer :crystal
       t.integer :sulphur
+      t.integer :population_capacity
+      t.integer :population
+      t.integer :available_mans
 
-#      t.timestamps
       t.datetime :created_at
     end
   end

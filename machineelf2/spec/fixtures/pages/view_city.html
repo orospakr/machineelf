@@ -16,8 +16,8 @@
 <meta name="Revisit" content="After 14 days" />
 <title>Ikariam - World Gamma </title>
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-		<link href="/skin/complete-0.2.1.css" rel="stylesheet" type="text/css" media="screen" />
-		<script type="text/javascript" src="/js/complete-0.2.1.js"></script>
+		<link href="/skin/complete-0.2.4.css" rel="stylesheet" type="text/css" media="screen" />
+		<script type="text/javascript" src="/js/complete-0.2.4.js"></script>
 
 
 				<script type="text/javascript">
@@ -148,7 +148,7 @@
 		<div class="content">
 			<ul class="cityinfo">
 				<li class="name"><span class="textLabel">Name: </span>Mobotropolis</li>
-				<li class="citylevel"><span class="textLabel">Town size: </span>13</li>
+				<li class="citylevel"><span class="textLabel">Town size: </span>17</li>
 				<li class="owner">
                     <span class="textLabel">Player: </span>orospakr                </li>
 				<li class="ally">
@@ -174,31 +174,16 @@
      ////////////////////////////////////////////////////////////////////////////////////
      ///////////////// the main view. take care that it stretches. //////////////////////
      //////////////////////////////////////////////////////////////////////////////////// -->
-	<div id="mainview" class="phase13">
+	<div id="mainview" class="phase17">
 		<ul id="locations">
 
               <li id="position0" class="townHall">
-    				<div class="constructionSite"></div>
-    				<a href="?view=townHall&amp;id=82966&amp;position=0" title="Town hall Level 13"><span class="textLabel">Town hall Level 13 (Under construction)</span></a>
-    				<div class="timetofinish"><span class="before"></span><span class="textLabel">Time till completion: </span><span id="cityCountdown">4h 19m</span><span class="after"></span></div>
-<script type="text/javascript">
-var tmpCnt =	getCountdown({
-		enddate: 1209529721,
-		currentdate: 1209514178,
-		el: "cityCountdown"
-		});
-    tmpCnt.subscribe("finished", function() {
-		setTimeout(function() {
-    	location.href="?view=city&id=82966";
-			},2000);
-		});
-</script>
-
-
+    				<div class="buildingimg"></div>
+    				<a href="?view=townHall&amp;id=82966&amp;position=0" title="Town hall Level 17"><span class="textLabel">Town hall Level 17</span></a>
                </li>
                   <li id="position1" class="port">
     				<div class="buildingimg"></div>
-    				<a href="?view=port&amp;id=82966&amp;position=1" title="Trading port Level 4"><span class="textLabel">Trading port Level 4</span></a>
+    				<a href="?view=port&amp;id=82966&amp;position=1" title="Trading port Level 5"><span class="textLabel">Trading port Level 5</span></a>
                </li>
                   <li id="position2" class="shipyard">
     				<div class="buildingimg"></div>
@@ -206,7 +191,7 @@ var tmpCnt =	getCountdown({
                </li>
                   <li id="position3" class="tavern">
     				<div class="buildingimg"></div>
-    				<a href="?view=tavern&amp;id=82966&amp;position=3" title="Tavern Level 8"><span class="textLabel">Tavern Level 8</span></a>
+    				<a href="?view=tavern&amp;id=82966&amp;position=3" title="Tavern Level 11"><span class="textLabel">Tavern Level 11</span></a>
                </li>
                   <li id="position4" class="barracks">
     				<div class="buildingimg"></div>
@@ -214,15 +199,15 @@ var tmpCnt =	getCountdown({
                </li>
                   <li id="position5" class="academy">
     				<div class="buildingimg"></div>
-    				<a href="?view=academy&amp;id=82966&amp;position=5" title="Academy Level 11"><span class="textLabel">Academy Level 11</span></a>
+    				<a href="?view=academy&amp;id=82966&amp;position=5" title="Academy Level 12"><span class="textLabel">Academy Level 12</span></a>
                </li>
                   <li id="position6" class="warehouse">
     				<div class="buildingimg"></div>
-    				<a href="?view=warehouse&amp;id=82966&amp;position=6" title="Warehouse Level 8"><span class="textLabel">Warehouse Level 8</span></a>
+    				<a href="?view=warehouse&amp;id=82966&amp;position=6" title="Warehouse Level 10"><span class="textLabel">Warehouse Level 10</span></a>
                </li>
                   <li id="position7" class="safehouse">
     				<div class="buildingimg"></div>
-    				<a href="?view=safehouse&amp;id=82966&amp;position=7" title="Hideout Level 4"><span class="textLabel">Hideout Level 4</span></a>
+    				<a href="?view=safehouse&amp;id=82966&amp;position=7" title="Hideout Level 5"><span class="textLabel">Hideout Level 5</span></a>
                </li>
                   <li id="position8" class="museum">
     				<div class="buildingimg"></div>
@@ -250,7 +235,7 @@ var tmpCnt =	getCountdown({
                </li>
                   <li id="position14" class="wall">
     				<div class="buildingimg"></div>
-    				<a href="?view=wall&amp;id=82966&amp;position=14" title="Town wall Level 6"><span class="textLabel">Town wall Level 6</span></a>
+    				<a href="?view=wall&amp;id=82966&amp;position=14" title="Town wall Level 8"><span class="textLabel">Town wall Level 8</span></a>
                </li>
     
 
@@ -288,8 +273,8 @@ var tmpCnt =	getCountdown({
 	<div id="globalResources">
 		<h3>Resources of your Empire</h3>
 		<ul>
-			<li class="transporters" title="Trade ships Available/Total"><a href="?view=merchantNavy"><span class="textLabel">Trade ships: </span><span id="value_transAvail" class="transAvail">15</span><span id="value_transSum" class="transSum">(29)</span></a></li>
-			<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">1,821k</span></a></li>
+			<li class="transporters" title="Trade ships Available/Total"><a href="?view=merchantNavy"><span class="textLabel">Trade ships: </span><span id="value_transAvail" class="transAvail">42</span><span id="value_transSum" class="transSum">(42)</span></a></li>
+			<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">4,615k</span></a></li>
 			<li class="goldBalance negative"><span class="textLabel">Income: </span>234</li>
 		</ul>
 	</div>
@@ -301,36 +286,36 @@ var tmpCnt =	getCountdown({
         <ul class="resources">
             <li class="population" title="Population">
 				<span class="textLabel">Population: </span>
-				<span id="value_inhabitants" style="display:block;width:80px;">766 (1,077)</span>
+				<span id="value_inhabitants" style="display:block;width:80px;">1,045 (1,541)</span>
 			</li>
             <li class="actions" title="Action Points">
 				<span class="textLabel">Action Points: </span>
-				<span id="value_maxActionPoints">4</span>
+				<span id="value_maxActionPoints">5</span>
 			</li>
             <li class="wood" title="Building material">
 							<span class="textLabel">Building material: </span>
-							<span id="value_wood" class="">2,982</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>17,152</div>
+							<span id="value_wood" class="storage_full">25,200</span>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>25,200</div>
 						</li>
             <li class="wine" title="Wine">
 							<span class="textLabel">Wine: </span>
-							<span id="value_wine" class="">2,637</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>5,632</div>
+							<span id="value_wine" class="">4,000</span>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>9,647</div>
 						</li>
             <li class="marble" title="Marble">
 							<span class="textLabel">Marble: </span>
-							<span id="value_marble" class="">769</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>5,632</div>
+							<span id="value_marble" class="">4,946</span>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>9,647</div>
 						</li>
             <li class="glass" title="Crystal Glass">
 							<span class="textLabel">Crystal Glass: </span>
-							<span id="value_crystal" class="">2,579</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>5,632</div>
+							<span id="value_crystal" class="storage_danger">9,385</span>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>9,647</div>
 						</li>
             <li class="sulfur" title="Sulphur">
 							<span class="textLabel">Sulphur: </span>
 							<span id="value_sulfur" class="">36</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>5,632</div>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>9,647</div>
 						</li>
         </ul>
 
@@ -340,15 +325,15 @@ var startServerTime = localTime.getTime() - (7200000) - localTime.getTimezoneOff
 var startTime = localTime.getTime();
 
 
-var startResources = 2982.59444446;
-var startResourcesDelta = 0.0427777777778;
-var resourcesStorage = 17152;
+var startResources = 25200;
+var startResourcesDelta = 0.0486111111111;
+var resourcesStorage = 25200;
 
-var startTradegood = 2637.51555558;
-var startTradegoodDelta = 0.0122222222222;
-var tradegoodStorage = 5632;
-var tradegoodSub = 8;
-var tradegoodSubTime = 578;
+var startTradegood = 4000.60277778;
+var startTradegoodDelta = 0.0336111111111;
+var tradegoodStorage = 9647;
+var tradegoodSub = 11;
+var tradegoodSubTime = 970;
 
 function updateResources() {
 	//global:  startTime, Dom, resourcesStorage
@@ -400,7 +385,7 @@ Event.onDOMReady(function() {
 });
 function updateServerTime() {
     var currTime = new Date();
-    currTime.setTime((1209514178000-startServerTime)+ currTime.getTime()) ;
+    currTime.setTime((1213136170000-startServerTime)+ currTime.getTime()) ;
     str = getFormatedDate(currTime.getTime(), 'd.m.Y G:i:s');
     obj_ServerTime.innerHTML = str;
 }
@@ -409,7 +394,7 @@ function updateServerTime() {
 	<div id="advisors">
 		<h3>Overviews</h3>
 		<ul>
-			<li id="advCities" ><a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normal"><span class="textLabel">Towns</span></a></li>
+			<li id="advCities" ><a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normalactive"><span class="textLabel">Towns</span></a></li>
 			<li id="advMilitary">
                 <a href="?view=militaryAdvisorCombatReports&amp;oldView=city&amp;id=82966" title="Military overview" class="normal">
                     <span class="textLabel">Military</span>
@@ -444,8 +429,8 @@ function updateServerTime() {
 		<li class="options"><a href="/index.php?view=options" title="Settings"><span class="textLabel">Options</span></a></li>
         <li class="forum"><a href="http://board.ikariam.org" title="Message Board" target="_blank"><span class="textLabel">Board</span></a></li>
 		<li class="logout"><a href="/index.php?action=loginAvatar&function=logout" title="End game session"><span class="textLabel">Logout</span></a></li>
-        <li class="version"><a href="?view=version" title="Version"><span class="textLabel">v.0.2.1</span></a></li>
-		<li class="serverTime"><a><span class="textLabel" id="servertime">30.04.2008 2:09:38</span></a></li>
+        <li class="version"><a href="?view=version" title="Version"><span class="textLabel">v.0.2.4</span></a></li>
+		<li class="serverTime"><a><span class="textLabel" id="servertime">11.06.2008 0:16:10</span></a></li>
 
 	</ul>
 </div>
