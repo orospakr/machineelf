@@ -97,8 +97,7 @@ class TeethController < ApplicationController
     tevent = TownEvent.new
     tevent.town = my_town
 
-#    tevent.wood = parse_number(parsed_contents.at('span#value_wood').inner_html)
-#    tevent.wine = parse_number(parsed)
+    # the standard resources...
     [:wood, :wine, :marble, :crystal, :sulphur].each do |rez|
       field_name = rez
       if field_name == :sulphur
@@ -107,6 +106,13 @@ class TeethController < ApplicationController
       val = parse_number(page.at("span#value_#{field_name.to_s}").inner_html)
       tevent.send(rez.to_s + '=', val)
     end
+
+    # the population field...
+    pop_field = page.at("span#value_inhabitants").inner_html
+    pop_fields = pop_field.split('(')
+    tevent.available_mans = parse_number(pop_fields[0])
+    tevent.population = parse_number(pop_fields[1].split(')')[0])
+
     tevent.save!
   end
 end

@@ -75,7 +75,9 @@ describe TeethController do
       expects(@town_event,
               { :town => @town, :wood => 25200,
                 :wine => 4000, :marble => 4946,
-                :crystal => 9385, :sulphur => 36})
+                :crystal => 9385, :sulphur => 36,
+                :population => 1541,
+                :available_mans => 1045})
       @town_event.should_receive(:save!)
 
       do_scrape_menu_only :view_city
