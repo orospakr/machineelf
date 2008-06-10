@@ -27,37 +27,35 @@ class TeethController < ApplicationController
   end
 
   def parse_city
-    logger.error("Am I here at least?")
-    #print(params[:ikariam_page])
-    lol = Hpricot(params[:ikariam_page])
-    t = Town.by_ikariam_id(find_arg_by_name(:id).to_i)
+    parsed_contents = Hpricot(params[:ikariam_page])
 
-    #island_url = lol.at("//a[@class='island'")['href']
-    breadcrumbs = lol.at('div#breadcrumbs')
-
+    breadcrumbs = parsed_contents.at('div#breadcrumbs')
     the_as = breadcrumbs/('a')
     a_with_island_id = the_as[1]
-
     island_name_and_coordinates = a_with_island_id.inner_html
     island_name = island_name_and_coordinates.split('[')[0]
     island_url = a_with_island_id['href']
-
     pos = island_url.index('id=')
     island_id = island_url[pos+3..-1].to_i
-    # load island props
+
     i = Island.by_ikariam_id(island_id)
     i.name = island_name
-
-    #i.name = "Issayos"
     i.save!
 
-    # load town props
-    t.island = i
-
-    b = lol.at('body#city')
+    b = parsed_contents.at('body#city')
     city = b.at("//span[@class='city'")
+
+    t = Town.by_ikariam_id(find_arg_by_name(:id).to_i)
+    t.island = i
     t.name = city.inner_html
     t.save!
+
+    # OK, now that we've ensured that the Town and Island
+    # records are up to date, we can now create a TownEvent
+    # and an IslandEvent to represent the temporarl data we
+    # have here.
+
+
   end
 
   def scree
@@ -76,9 +74,7 @@ class TeethController < ApplicationController
   end
 
   def scree_menu
-    # parse the menu!!11
     my_town = nil
-    lol = nil
     page = Hpricot(params[:ikariam_page])
     city_select = page.at('#citySelect')
     if city_select.nil?
@@ -90,10 +86,7 @@ class TeethController < ApplicationController
         pp "FOUND MA TOWN"
         my_town = Town.by_ikariam_id(city['value'].to_i)
         my_town.name = city.innerHTML
-#        lol.name = "sadf"
       end
     end
-#    print "HI DANNY: " + lol.name.to_s
-#    print my_town.name
   end
 end

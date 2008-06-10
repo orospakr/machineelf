@@ -22,4 +22,11 @@ describe Town do
     @town.name = "Should not matter what the name is"
     @town.should_not be_valid
   end
+
+  it "should return a new town if asked for one with a new Ikariam town id" do
+    nowhere = Town.by_ikariam_id(12345)
+    nowhere.new_record?.should be_true
+    nowhere.ikariam_id.should == 12345
+    nowhere.name.should be_nil
+  end
 end

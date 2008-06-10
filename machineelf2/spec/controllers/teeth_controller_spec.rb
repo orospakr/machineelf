@@ -44,37 +44,26 @@ describe TeethController do
 
     end
 
-    it "should munch a view_city page" do
+    it "should munch a view_city with a new Town and Island that are not already in the database" do
       @town = mock_model(Town)
       @island = mock_model(Island)
+
       Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
       Island.should_receive(:by_ikariam_id).with(3909).and_return(@island)
-      @town.should_receive(:island=).with(@island)
+
       @town.should_receive(:save!)
       @island.should_receive(:save!)
 
-      expects(@town, { :name => 'Mobotropolis' })
+      expects(@town, { :name => 'Mobotropolis', :island => @island })
       expects(@island, { :name => 'Issayos'})
 
       do_scrape_contents_only :view_city
-      # OK, andrew start here!  You need to write a separate set of methods
-      # that parse the ever-present ikariam top-bar.  The new city page
-      # is really only good for getting island coordinates, which we might as well
-      # do here (are those figures even available anywhere else, except for
-      # home secretary?)
+
+      # now to test data point creation...
+
+#      @town_event = mock_model(TownEvent)
+
     end
-
-#     it "should ignore a city on the Town bar if the island does not exist yet (a view_city needs to be seen)" do
-#       # just 'cause there's not enough information yet to be validate a single record.
-#     end
-
-#     describe "ikariam town bar munching for all pages" do
-#       it "should munch the ikariam town bar on view_city page" do
-#         expects(@town, { :name => 'Mobotropolis'})
-#         @town.should_receive(:save!)
-#         do_scrape_page_fixture :view_city
-#       end
-#     end
 
     it "should much a view_city's page toolbar" do
       @towm = mock_model(Town)
