@@ -8,7 +8,8 @@ class CreateTownEvents < ActiveRecord::Migration
       t.integer :crystal
       t.integer :sulphur
 
-      t.timestamps
+#      t.timestamps
+      t.datetime :created_at
     end
   end
 

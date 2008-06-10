@@ -3,6 +3,13 @@ require 'hpricot'
 class TeethController < ApplicationController
   protect_from_forgery :except => [:scree]
 
+  def parse_number(num)
+      stripped = num.gsub(/\,/, '')
+      stripped = num.gsub(/ /, '')
+      stripped = num.split(",").join("")
+      return stripped.to_i
+  end
+
   def find_arg_by_name(arg_name)
     raise ArgumentError.new if params[:ikariam_url].index('?').nil?
     url_argstring = params[:ikariam_url].split('?')[1]
@@ -55,7 +62,6 @@ class TeethController < ApplicationController
     # and an IslandEvent to represent the temporarl data we
     # have here.
 
-
   end
 
   def scree
@@ -83,10 +89,25 @@ class TeethController < ApplicationController
     city_options = city_select/"option.avatarCities"
     for city in city_options
       if (city['selected'] == 'selected')
-        pp "FOUND MA TOWN"
         my_town = Town.by_ikariam_id(city['value'].to_i)
         my_town.name = city.innerHTML
       end
     end
+
+    tevent = TownEvent.new
+    tevent.town = my_town
+
+#    tevent.wood = parse_number(parsed_contents.at('span#value_wood').inner_html)
+#    tevent.wine = parse_number(parsed)
+    [:wood, :wine, :marble, :crystal, :sulphur].each do |rez|
+      field_name = rez
+      if field_name == :sulphur
+        field_name = :sulfur # durr, the Ikariam devs can't spell!
+      end
+      val = parse_number(page.at("span#value_#{field_name.to_s}").inner_html)
+      tevent.send(rez.to_s + '=', val)
+    end
+
+    tevent.save!
   end
 end

@@ -57,11 +57,12 @@ describe TeethController do
       expects(@town, { :name => 'Mobotropolis', :island => @island })
       expects(@island, { :name => 'Issayos'})
 
-      do_scrape_contents_only :view_city
-
       # now to test data point creation...
 
-#      @town_event = mock_model(TownEvent)
+      @town_event = mock_model(TownEvent)
+
+
+      do_scrape_contents_only :view_city
 
     end
 
@@ -69,6 +70,14 @@ describe TeethController do
       @towm = mock_model(Town)
       Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
       expects(@town, { :name => 'Mobotropolis'})
+
+      TownEvent.should_receive(:new).and_return(@town_event)
+      expects(@town_event,
+              { :town => @town, :wood => 2982,
+                :wine => 2637, :marble => 769,
+                :crystal => 2579, :sulphur => 36})
+      @town_event.should_receive(:save!)
+
       do_scrape_menu_only :view_city
     end
 
