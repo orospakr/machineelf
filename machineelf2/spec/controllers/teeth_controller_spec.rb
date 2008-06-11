@@ -22,6 +22,11 @@ describe TeethController do
       return names[page_name]
     end
 
+    def ikariam_cookie(page_name)
+      cookies = { :view_city => '57667_%241%24IB9rEhZ6%24qlO9SH0R3SGe4BzL.t3rN1'}
+      return cookies[page_name]
+    end
+
     def expects(model, expectations)
       expectations.each_pair do |field, val|
         model.should_receive("#{field.to_s}=".intern).with(val)
@@ -29,15 +34,15 @@ describe TeethController do
     end
 
     def do_scrape_page_fixture(page_name)
-      post :scree, {:ikariam_page => ikariam_page(page_name), :ikariam_url => ikariam_url(page_name)}
+      post :scree, {:ikariam_page => ikariam_page(page_name), :ikariam_url => ikariam_url(page_name), :ikariam_cookie => ikariam_cookie(page_name)}
     end
 
     def do_scrape_contents_only(page_name)
-      post :scree_contents, {:ikariam_page => ikariam_page(page_name), :ikariam_url => ikariam_url(page_name)}
+      post :scree_contents, {:ikariam_page => ikariam_page(page_name), :ikariam_url => ikariam_url(page_name), :ikariam_cookie => ikariam_cookie(page_name)}
     end
 
     def do_scrape_menu_only(page_name)
-      post :scree_menu, {:ikariam_page => ikariam_page(page_name), :ikariam_url => ikariam_url(page_name)}
+      post :scree_menu, {:ikariam_page => ikariam_page(page_name), :ikariam_url => ikariam_url(page_name), :ikariam_cookie => ikariam_cookie(page_name)}
     end
 
     before(:each) do
@@ -67,16 +72,23 @@ describe TeethController do
     end
 
     it "should much a view_city's page toolbar" do
-      @towm = mock_model(Town)
+      @town = mock_model(Town)
       @player = mock_model(Player)
+      @town_event = mock_model(TownEvent)
+      @player_event = mock_model(PlayerEvent)
 
       Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
       Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
-      # andrew, start here and change params sent to include contents of
-      # ikariam cookie.
-
       expects(@town, { :name => 'Mobotropolis'})
+      @town.should_receive(:save!)
+      @player.should_receive(:save!)
+
+      PlayerEvent.should_receive(:new).and_return(@player_event)
+      expects(@player_event,
+              { :player => @player, :available_ships => 42,
+                :ships => 42, :gold => 4615})
+      @player_event.should_receive(:save!)
 
       TownEvent.should_receive(:new).and_return(@town_event)
       expects(@town_event,

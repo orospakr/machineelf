@@ -50,7 +50,7 @@ class TeethController < ApplicationController
     i.save!
 
     b = parsed_contents.at('body#city')
-    city = b.at("//span[@class='city'")
+    city = b.at("//span[@class='city']")
 
     t = Town.by_ikariam_id(find_arg_by_name(:id).to_i)
     t.island = i
@@ -90,9 +90,21 @@ class TeethController < ApplicationController
     for city in city_options
       if (city['selected'] == 'selected')
         my_town = Town.by_ikariam_id(city['value'].to_i)
-        my_town.name = city.innerHTML
+        my_town.name = city.inner_html
+        my_town.save!
       end
     end
+
+    owner_id = params[:ikariam_cookie].split('_')[0].to_i
+    owner = Player.by_ikariam_id(owner_id)
+    owner.save!
+
+    owner_event = PlayerEvent.new
+    owner_event.player = owner
+    owner_event.available_ships = parse_number(page.at('span#value_transAvail').inner_html)
+    owner_event.ships = parse_number(page.at('span#value_transSum').inner_html.split('(')[1].split(')')[0])
+    owner_event.gold = parse_number(page.at('span#value_gold').inner_html)
+    owner_event.save!
 
     tevent = TownEvent.new
     tevent.town = my_town
@@ -116,5 +128,3 @@ class TeethController < ApplicationController
     tevent.save!
   end
 end
-
-57667
