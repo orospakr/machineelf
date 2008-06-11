@@ -9,11 +9,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 3) do
+ActiveRecord::Schema.define(:version => 5) do
 
   create_table "islands", :force => true do |t|
     t.integer  "ikariam_id"
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "player_events", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "ships_in_transit"
+    t.integer  "ships"
+    t.integer  "gold"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "players", :force => true do |t|
+    t.integer  "ikariam_id"
+    t.string   "ikariam_login"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -25,6 +41,9 @@ ActiveRecord::Schema.define(:version => 3) do
     t.integer  "marble"
     t.integer  "crystal"
     t.integer  "sulphur"
+    t.integer  "population_capacity"
+    t.integer  "population"
+    t.integer  "available_mans"
     t.datetime "created_at"
   end
 

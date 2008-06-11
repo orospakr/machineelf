@@ -68,7 +68,14 @@ describe TeethController do
 
     it "should much a view_city's page toolbar" do
       @towm = mock_model(Town)
+      @player = mock_model(Player)
+
       Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
+      Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
+
+      # andrew, start here and change params sent to include contents of
+      # ikariam cookie.
+
       expects(@town, { :name => 'Mobotropolis'})
 
       TownEvent.should_receive(:new).and_return(@town_event)
