@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  player_id: 1
+  ships_in_transit: 1
+  ships: 1
+  gold: 1
+
+two:
+  player_id: 1
+  ships_in_transit: 1
+  ships: 1
+  gold: 1

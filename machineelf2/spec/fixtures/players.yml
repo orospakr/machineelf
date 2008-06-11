@@ -1,0 +1,9 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  ikariam_id: 1
+  ikariam_login: MyString
+
+two:
+  ikariam_id: 1
+  ikariam_login: MyString

@@ -44,7 +44,7 @@ describe TeethController do
 
     end
 
-    it "should munch a view_city with a new Town and Island that are not already in the database" do
+    it "should munch a view_city page" do
       @town = mock_model(Town)
       @island = mock_model(Island)
 
@@ -60,7 +60,7 @@ describe TeethController do
       # now to test data point creation...
 
       @town_event = mock_model(TownEvent)
-
+      # here is a good place to get building levels...
 
       do_scrape_contents_only :view_city
 
