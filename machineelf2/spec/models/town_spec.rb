@@ -29,4 +29,10 @@ describe Town do
     nowhere.ikariam_id.should == 12345
     nowhere.name.should be_nil
   end
+
+  it "should return an existing town if asked for one with an existing Ikariam town id" do
+    mobo = Town.by_ikariam_id(towns(:mobotropolis).ikariam_id)
+    mobo.id.should == towns(:mobotropolis).id
+    mobo.new_record?.should_not be_true
+  end
 end

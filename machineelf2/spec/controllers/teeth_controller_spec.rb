@@ -67,6 +67,7 @@ describe TeethController do
       @town_event = mock_model(TownEvent)
       # here is a good place to get building levels...
 
+
       do_scrape_contents_only :view_city
 
     end

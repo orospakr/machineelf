@@ -18,5 +18,4 @@ class Town < ActiveRecord::Base
       return already_exists
     end
   end
-
 end
