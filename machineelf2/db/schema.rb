@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(:version => 5) do
 
   create_table "player_events", :force => true do |t|
     t.integer  "player_id"
-    t.integer  "ships_in_transit"
+    t.integer  "available_ships"
     t.integer  "income"
     t.integer  "ships"
     t.integer  "gold"

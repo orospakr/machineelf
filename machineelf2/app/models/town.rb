@@ -5,6 +5,10 @@ class Town < ActiveRecord::Base
   # An associated TownDataPoint table represents the transient,
   # mutable values.
 
+  belongs_to :island
+
+  has_many :town_events
+
   validates_presence_of :ikariam_id, :name
   validates_uniqueness_of :ikariam_id
 
