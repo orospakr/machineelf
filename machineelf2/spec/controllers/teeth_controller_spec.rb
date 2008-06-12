@@ -65,11 +65,21 @@ describe TeethController do
       # now to test data point creation...
 
       @town_event = mock_model(TownEvent)
-      # here is a good place to get building levels...
-
+      TownEvent.should_receive(:new).and_return(@town_event)
+      # This doesn't cover all of the build types.
+      # Must get a look at a town belonging to a high-level
+      # person...
+      expects(@town_event, { :town => @town,
+                :town_hall => 17, :trading_port => 5,
+                :shipyard => 2, :tavern => 11,
+                :barracks => 4, :academy => 12,
+                :warehouse => 10, :hideout => 5,
+                :museum => 4, :trading_post => 6,
+                :embassy => 1, :palace => 2,
+                :town_wall => 8})
+      @town_event.should_receive(:save!)
 
       do_scrape_contents_only :view_city
-
     end
 
     it "should much a view_city's page toolbar" do

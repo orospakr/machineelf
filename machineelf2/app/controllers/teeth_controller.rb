@@ -59,9 +59,39 @@ class TeethController < ApplicationController
 
     # OK, now that we've ensured that the Town and Island
     # records are up to date, we can now create a TownEvent
-    # and an IslandEvent to represent the temporarl data we
+    # and an IslandEvent to represent the temporal data we
     # have here.
 
+    building_names = { 'Town hall' => :town_hall,
+      'Trading port' => :trading_port,
+    'Shipyard' => :shipyard, 'Tavern' => :tavern,
+    'Barracks' => :barracks, 'Academy' => :academy,
+    'Warehouse' => :warehouse, 'Hideout' => :hideout,
+    'Museum' => :museum, 'Trading post' => :trading_post,
+    'Embassy' => :embassy, 'Palace' => :palace,
+    'Town wall' => :town_wall}
+
+    t_event = TownEvent.new
+    t_event.town = t
+
+    locations_list = parsed_contents.at('ul#locations')
+    building_elems = locations_list/'a'
+    building_elems.each do |b|
+      title_string = b['title']
+      bits = title_string.split(' ')
+      level_number = (bits[-1]).to_i
+
+      building_name = ''
+      bits[0..-3].each do |word|
+        building_name += word + ' '
+      end
+      building = building_names[building_name[0..-2]] # slice is to get rid of extra space
+      if building.nil?
+        next
+      end
+      t_event.send("#{building.to_s}=", level_number)
+    end
+    t_event.save!
   end
 
   def scree

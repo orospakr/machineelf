@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 5) do
   create_table "player_events", :force => true do |t|
     t.integer  "player_id"
     t.integer  "ships_in_transit"
+    t.integer  "income"
     t.integer  "ships"
     t.integer  "gold"
     t.datetime "created_at"
@@ -44,6 +45,19 @@ ActiveRecord::Schema.define(:version => 5) do
     t.integer  "population_capacity"
     t.integer  "population"
     t.integer  "available_mans"
+    t.integer  "town_hall"
+    t.integer  "trading_port"
+    t.integer  "shipyard"
+    t.integer  "tavern"
+    t.integer  "barracks"
+    t.integer  "academy"
+    t.integer  "warehouse"
+    t.integer  "hideout"
+    t.integer  "museum"
+    t.integer  "trading_post"
+    t.integer  "embassy"
+    t.integer  "palace"
+    t.integer  "town_wall"
     t.datetime "created_at"
   end
 
