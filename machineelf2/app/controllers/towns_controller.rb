@@ -7,6 +7,7 @@ class TownsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @towns }
+      format.json { render :json => @towns.to_json }
     end
   end
 

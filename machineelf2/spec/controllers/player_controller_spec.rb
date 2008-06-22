@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe PlayerController do
+  fixtures(:players)
 
   #Delete this example and add some real ones
   it "should use PlayerController" do

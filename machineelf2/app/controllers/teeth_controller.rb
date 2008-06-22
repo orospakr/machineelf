@@ -154,7 +154,6 @@ class TeethController < ApplicationController
     pop_fields = pop_field.split('(')
     tevent.available_mans = parse_number(pop_fields[0])
     tevent.population = parse_number(pop_fields[1].split(')')[0])
-
     tevent.save!
   end
 end

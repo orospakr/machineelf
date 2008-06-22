@@ -24,7 +24,7 @@
       </toolbaritem>
     </toolbar>
   </toolbox>
-  <statusbar id="status-bar">
+<!--  <statusbar id="status-bar">
     <statusbarpanel id="machineelfbar" label="Machine Elf, reporting!">
       <deck id="machineelfdeck">
         <box id="machineelfbox">
@@ -32,7 +32,7 @@
         </box>
       </deck>
     </statusbarpanel>
-  </statusbar>
+  </statusbar> -->
   <script src="chrome://machineelf/content/machineelf.js" type="application/x-javascript" />
 </overlay>
 

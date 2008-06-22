@@ -22,6 +22,20 @@ function getIkariamCookie() {
 
 window.addEventListener("load", function() { MachineElfPageLoadListener.init(); }, false);
 
+function updateToolbar(req) {
+    var blah = document.getElementById("me_blah_label");
+    blah.value = 'UNMODIFIED FROG';
+
+    if (req.readyState == 4) {
+        // blah.value = req.responseText;
+        var doc = eval('(' + req.responseText + ')');
+        blah.value = doc[0]["name"];
+    }
+    else {
+        blah.value = "FAILURE";
+    }
+}
+
 var MachineElfPageLoadListener = {
     init: function() {
         var appcontent = document.getElementById("appcontent");   // browser
@@ -44,11 +58,11 @@ var MachineElfPageLoadListener = {
         if(doc.location.href.search("http://s3.ikariam.org") > -1) {
             // alert("a forum page is loaded: " + doc.location.href );
             // lol();
-            alert("here!");
+            //            alert("here!");
             var blah = document.getElementById("me_blah_label");
 
             var cookie_value = getIkariamCookie();
-            alert(cookie_value);
+            //            alert(cookie_value);
             // alert(blah);
             blah.value = doc.documentElement.innerHTML;
 
@@ -58,6 +72,17 @@ var MachineElfPageLoadListener = {
             req.send("ikariam_url=" + escape(doc.location.href) + "&ikariam_cookie=" + escape(cookie_value) + "&ikariam_page=" + escape(doc.documentElement.innerHTML));
             //if(req.status == 0)
             //dump(req.responseText);
+
+            // read Town stats from server and display town name in me_blah_label!
+            //            updateToolbar(doc);
+
+            var tb_updater = new XMLHttpRequest();
+            tb_updater.open("GET", "http://localhost:3000/towns.json", true);
+            //            req.onreadystatechange = updateToolbar;   // the handler
+            tb_updater.onreadystatechange=function() {
+                updateToolbar(tb_updater);
+            }
+            tb_updater.send(null);
         }
     }
 }
