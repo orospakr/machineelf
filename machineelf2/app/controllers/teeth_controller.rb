@@ -59,11 +59,14 @@ class TeethController < ApplicationController
 
     # we can safely assume here that the owner displayed on this page is also
     # the one logged in, since no other player can look at someone else's
-    # view_city page.
+    # view_city page.  WRONG -- if you spy out a town, this isn't true
 
-    owner = Player.by_ikariam_id(get_player_id_from_cookie)
-    owner.ikariam_login = parsed_contents.at("//li[@class='owner']").inner_html.split()[-1].split('>')[-1]
-    owner.save!
+    owner = t.player
+    # broken window!  there is no unit test for the nil case.
+    if not owner.nil?
+      owner.ikariam_login = parsed_contents.at("//li[@class='owner']").inner_html.split()[-1].split('>')[-1]
+      owner.save!
+    end
 
     # OK, now that we've ensured that the Town and Island
     # records are up to date, we can now create a TownEvent
@@ -133,13 +136,15 @@ class TeethController < ApplicationController
       if (city['selected'] == 'selected')
         my_town = Town.by_ikariam_id(city['value'].to_i)
         my_town.name = city.inner_html
-        my_town.save!
       end
     end
 
     owner_id = get_player_id_from_cookie
     owner = Player.by_ikariam_id(owner_id)
     owner.save!
+
+    my_town.player = owner
+    my_town.save!
 
     owner_event = PlayerEvent.new
     owner_event.player = owner

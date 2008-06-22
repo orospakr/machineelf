@@ -56,9 +56,10 @@ describe TeethController do
 
       Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
       Island.should_receive(:by_ikariam_id).with(3909).and_return(@island)
-      Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
+      #Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
       @town.should_receive(:save!)
+      @town.should_receive(:player).and_return(@player)
       expects(@town, { :name => 'Mobotropolis', :island => @island })
 
       expects(@island, { :name => 'Issayos'})
@@ -88,7 +89,7 @@ describe TeethController do
       do_scrape_contents_only :view_city
     end
 
-    it "should much a view_city's page toolbar" do
+    it "should munch a view_city's page toolbar" do
       @town = mock_model(Town)
       @player = mock_model(Player)
       @town_event = mock_model(TownEvent)
@@ -97,7 +98,7 @@ describe TeethController do
       Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
       Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
-      expects(@town, { :name => 'Mobotropolis'})
+      expects(@town, { :name => 'Mobotropolis', :player => @player})
       @town.should_receive(:save!)
       @player.should_receive(:save!)
 

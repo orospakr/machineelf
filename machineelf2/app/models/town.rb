@@ -7,6 +7,8 @@ class Town < ActiveRecord::Base
 
   belongs_to :island
 
+  belongs_to :player, :foreign_key => 'owner_id'
+
   has_many :town_events
 
   validates_presence_of :ikariam_id, :name

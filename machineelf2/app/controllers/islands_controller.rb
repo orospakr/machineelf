@@ -7,6 +7,7 @@ class IslandsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @islands }
+      format.json { render :json => @islands.to_json }
     end
   end
 
