@@ -52,15 +52,20 @@ describe TeethController do
     it "should munch a view_city page" do
       @town = mock_model(Town)
       @island = mock_model(Island)
+      @player = mock_model(Player)
 
       Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
       Island.should_receive(:by_ikariam_id).with(3909).and_return(@island)
+      Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
       @town.should_receive(:save!)
+      expects(@town, { :name => 'Mobotropolis', :island => @island })
+
+      expects(@island, { :name => 'Issayos'})
       @island.should_receive(:save!)
 
-      expects(@town, { :name => 'Mobotropolis', :island => @island })
-      expects(@island, { :name => 'Issayos'})
+      expects(@player, { :ikariam_login => 'orospakr'})
+      @player.should_receive(:save!)
 
       # now to test data point creation...
 
@@ -78,6 +83,7 @@ describe TeethController do
                 :embassy => 1, :palace => 2,
                 :town_wall => 8})
       @town_event.should_receive(:save!)
+
 
       do_scrape_contents_only :view_city
     end

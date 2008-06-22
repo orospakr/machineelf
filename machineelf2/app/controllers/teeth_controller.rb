@@ -57,6 +57,14 @@ class TeethController < ApplicationController
     t.name = city.inner_html
     t.save!
 
+    # we can safely assume here that the owner displayed on this page is also
+    # the one logged in, since no other player can look at someone else's
+    # view_city page.
+
+    owner = Player.by_ikariam_id(get_player_id_from_cookie)
+    owner.ikariam_login = parsed_contents.at("//li[@class='owner']").inner_html.split()[-1].split('>')[-1]
+    owner.save!
+
     # OK, now that we've ensured that the Town and Island
     # records are up to date, we can now create a TownEvent
     # and an IslandEvent to represent the temporal data we
@@ -109,6 +117,10 @@ class TeethController < ApplicationController
     @scary = params[:ikariam_url]
   end
 
+  def get_player_id_from_cookie
+    params[:ikariam_cookie].split('_')[0].to_i
+  end
+
   def scree_menu
     my_town = nil
     page = Hpricot(params[:ikariam_page])
@@ -125,7 +137,7 @@ class TeethController < ApplicationController
       end
     end
 
-    owner_id = params[:ikariam_cookie].split('_')[0].to_i
+    owner_id = get_player_id_from_cookie
     owner = Player.by_ikariam_id(owner_id)
     owner.save!
 
