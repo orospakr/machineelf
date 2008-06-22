@@ -1,0 +1,159 @@
+No cookie!<br><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="language" content="de" />
+<meta name="author" content="Gameforge AG" />
+<meta name="publisher" content="Gameforge AG" />
+<meta name="copyright" content="Gameforge AG" />
+<meta name="page-type" content="Browsergame, Browser game" />
+<meta name="page-topic" content="Browser game, strategy game, online game" />
+<meta name="audience" content="all" />
+<meta name="Expires" content="never" />
+<meta name="Keywords" content="Ikariam, antique world, strategy game, play for free, online game, role play game, browser game, game"/>
+<meta name="Description" content="Ikariam is a free browser game. The task is to lead a nation through the ancient world, building up towns, trade and conquer islands." />
+<meta name="robots" content="index,follow" />
+<meta name="Revisit" content="After 14 days" />
+<title>Ikariam - Live the ancient world!</title>
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+		<link href="/skin/complete-0.1.8.css" rel="stylesheet" type="text/css" media="screen" />
+		<script type="text/javascript" src="/js/complete-0.1.8.js"></script>
+
+
+				<script type="text/javascript">
+		/* <![CDATA[ */
+
+		var Event = YAHOO.util.Event,
+		Dom   = YAHOO.util.Dom,
+		lang  = YAHOO.lang;
+
+		var LocalizationStrings = new Array();
+		LocalizationStrings['timeunits'] = new Array();
+		LocalizationStrings['timeunits']['short'] = new Array();
+		LocalizationStrings['timeunits']['short']['day'] = 'D';
+		LocalizationStrings['timeunits']['short']['hour'] = 'h';
+		LocalizationStrings['timeunits']['short']['minute'] = 'm';
+		LocalizationStrings['timeunits']['short']['second'] = 's';
+
+        LocalizationStrings['language']                     = 'en';
+        LocalizationStrings['decimalPoint']               = '.';
+        LocalizationStrings['thousandSeperator']     = ',';
+
+		/**
+		* switches one item on and the other off.. but only if they share the same groupname.
+		*/
+		selectGroup = {
+			groups:new Array(), //[groupname]=item
+			getGroup:function(group) {
+				if(typeof(this.groups[group]) == "undefined") {
+					this.groups[group] = new Object();
+					this.groups[group].activeItem = "undefined";
+					this.groups[group].onActivate = function(obj) {};
+					this.groups[group].onDeactivate = function(obj) {};
+					}
+				return this.groups[group];
+			},
+			activate:function(obj, group) {
+				g = this.getGroup(group);
+				if(typeof(g.activeItem) != "undefined") {
+					g.onDeactivate(g.activeItem);
+					}
+				g.activeItem=obj;
+				g.onActivate(obj);
+			}
+		};
+		selectGroup.getGroup('cities').onActivate = function(obj) {
+			YAHOO.util.Dom.addClass(obj.parentNode, "selected");
+		}
+		selectGroup.getGroup('cities').onDeactivate = function(obj) {
+			YAHOO.util.Dom.removeClass(obj.parentNode, "selected");
+		}
+
+		/**
+		 * - will COPY all child nodes of the source-node that are marked with a CSS class to be child nodes of the target.
+		 * - will purge all children of the TARGET element that are marked the same special CSS class at each call, so previously copied will be deleted before copying new
+		 * - expects either an Id or an object.
+		 */
+		function showInContainer(source, target, exchangeClass) {
+			//objects or Id-strings, i don't care
+			if(typeof source == "string") { source = Dom.get(source); }
+			if(typeof target == "string") {target = Dom.get(target); }
+			if(typeof exchangeClass != "string") { alert("Error: IKARIAM.showInContainer -> Forgot to add an exchangeClass?"); }
+			//removal
+			for(i=0; i<target.childNodes.length; i++) {
+				if(typeof(target.childNodes[i].className) != "undefined" && target.childNodes[i].className==exchangeClass) {
+					target.removeChild(target.childNodes[i]);
+				}
+			}
+			//clone new
+			for(i=0; i<source.childNodes.length; i++) {
+				if(typeof(source.childNodes[i].className) != "undefined" && source.childNodes[i].className==exchangeClass) {
+					clone = source.childNodes[i].cloneNode(true);
+					target.insertBefore(clone, target.firstChild.nextSibling);
+				}
+			}
+		}
+
+		selectedCity = -1;
+		function selectCity(cityNum, cityId, viewAble) {
+		    if(selectedCity == cityNum) {
+		        if(viewAble) document.location.href="?view=city&id="+cityId;
+		        else document.location.href="#";
+		    } else {
+		        selectedCity = cityNum;
+		    }
+			showInContainer("cityLocation"+cityNum,"information", "cityinfo");
+			showInContainer("cityLocation"+cityNum,"actions", "cityactions");
+			var container = document.getElementById("cities");
+			var citySelectedClass = "selected";
+		}
+
+		//IE6 CSS Background-Flicker fix
+		(function(){
+			/*Use Object Detection to detect IE6*/
+			var  m = document.uniqueID /*IE*/
+			&& document.compatMode  /*>=IE6*/
+			&& !window.XMLHttpRequest /*<=IE6*/
+			&& document.execCommand ;
+			try{
+				if(!!m){
+					m("BackgroundImageCache", false, true) /* = IE6 only */
+				}
+			}catch(oh){};
+		})();
+		/* ]]> */
+
+		function myConfirm(message, target) {
+		    bestaetigt = window.confirm (message);
+		    if (bestaetigt == true)
+              window.location.href = target;
+		}
+
+		</script>
+	</head>
+	<body id="error">
+		<script type="text/javascript" src="/js/wz_tooltip.js"></script>
+		<div id="container">
+			<div id="container2">
+				<div id="header">
+					<h1>Ikariam</h1>
+					<h2>Live the ancient world!</h2>
+				</div>
+<div id="breadcrumbs">
+    <h3>You are here:</h3>
+	<span class="textLabel">Error!</span>
+</div>
+<div id="information" class="dynamic"></div>
+<div id="mainview">
+    <div class="buildingDescription">
+        <h1>Error!</h1>
+    </div>
+    <div class="contentBox01h">
+        <h3 class="header"><span class="textLabel">Error message(s)</span></h3>
+        <div class="content">
+            <ul class="hübsch">
+<li><a href="http://ikariam.org">Your session has expired, please log in through the start page!</a></li>            </ul>
+        </div><!-- end #content -->
+        <div class="footer"></div>
+    </div><!-- end #contentbox -->
+</div><!-- end #mainview -->
