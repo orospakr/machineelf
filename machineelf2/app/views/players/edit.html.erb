@@ -1,0 +1,22 @@
+<h1>Editing player</h1>
+
+<%= error_messages_for :player %>
+
+<% form_for(@player) do |f| %>
+  <p>
+    <b>Ikariam</b><br />
+    <%= f.text_field :ikariam_id %>
+  </p>
+
+  <p>
+    <b>Ikariam login</b><br />
+    <%= f.text_field :ikariam_login %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @player %> |
+<%= link_to 'Back', players_path %>

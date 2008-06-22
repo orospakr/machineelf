@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
                                      :unsuspend => :put,
                                      :purge     => :delete }
 
+  map.resources :players
+
   map.resource :session
 
   map.resources :towns
