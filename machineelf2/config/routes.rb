@@ -1,5 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
 #  map.resources :users
+  map.connect 'towns/:id/stats', :controller => 'towns', :action => 'stats'
+  map.connect 'towns/:id/stats.:format', :controller => 'towns', :action => 'stats'
+
+
   map.resources :users, :member => { :suspend   => :put,
                                      :unsuspend => :put,
                                      :purge     => :delete }
@@ -11,6 +15,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
 
   map.resources :towns
+
 
   # The priority is based upon order of creation: first created -> highest priority.
 

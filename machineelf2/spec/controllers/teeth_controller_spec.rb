@@ -85,7 +85,6 @@ describe TeethController do
                 :town_wall => 8})
       @town_event.should_receive(:save!)
 
-
       do_scrape_contents_only :view_city
     end
 

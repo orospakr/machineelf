@@ -6,7 +6,7 @@ class TownsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @towns }
+      format.xml  { render :xml => @towns.to_xml }
       format.json { render :json => @towns.to_json }
     end
   end
@@ -19,6 +19,18 @@ class TownsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @town }
+    end
+  end
+
+  def stats
+    @town = Town.find(params[:id])
+
+    stats = @town.get_stats
+
+    respond_to do |format|
+      format.html
+      format.xml { render :xml => stats.to_xml }
+      format.json { render :json => stats.to_json }
     end
   end
 
