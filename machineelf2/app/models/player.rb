@@ -4,5 +4,7 @@ class Player < ActiveRecord::Base
 
   has_many :player_events
 
+  belongs_to :user
+
   acts_as_ikariam
 end
