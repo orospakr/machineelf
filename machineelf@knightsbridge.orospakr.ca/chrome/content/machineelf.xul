@@ -20,7 +20,8 @@
             </vbox>
             <toolbarbutton id="machineelf_warp_menu_button" type="menu" container="true" label="Warp" tooltiptext="Engage.">
               <menupopup id="machineelf_warp_menu">
-                <menuitem label="Holy crap" />
+                <menuitem label="Towns" disabled="true"/>
+                <menuseparator />
               </menupopup>
             </toolbarbutton>
             <notification label="This is a warning"/>

@@ -23,16 +23,15 @@ var MachineElfToolbar = {
     updateWarpMenu: function(towns_json) {
         var warp_menu = document.getElementById("machineelf_warp_menu");
         for (item in MachineElfToolbar.warp_zone_items) {
-            warp_menu.removeChild(item);
+            warp_menu.removeChild(MachineElfToolbar.warp_zone_items[item]);
         }
         MachineElfToolbar.warp_zone_items = [];
 
         for (town in towns_json) {
-            //            town = towns_json[0];
-            var test_item = document.createElement("menuitem");
-            test_item.setAttribute("label", towns_json[town].name);
-            warp_menu.appendChild(test_item);
-            MachineElfToolbar.warp_zone_items.push(test_item);
+            var new_item = document.createElement("menuitem");
+            new_item.setAttribute("label", towns_json[town].name);
+            warp_menu.appendChild(new_item);
+            MachineElfToolbar.warp_zone_items.push(new_item);
         }
     },
 
@@ -43,19 +42,18 @@ var MachineElfToolbar = {
         var towns_json;
 
         if (towns_json_req.readyState == 4) {
-            // blah.value = req.responseText;
             towns_json = eval('(' + towns_json_req.responseText + ')');
-
+            blah.value = towns_json[0].name;
+            MachineElfToolbar.updateWarpMenu(towns_json);
         }
         else {
             blah.value = "FAILURE";
             return;
         }
-        blah.value = towns_json[0].name;
-        MachineElfToolbar.updateWarpMenu(towns_json);
     },
 
     onPageLoad: function(aEvent) {
+
         var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
         // do something with the loaded page.
         // doc.location is a Location object (see below for a link).
@@ -64,7 +62,7 @@ var MachineElfToolbar = {
             // alert("a forum page is loaded: " + doc.location.href );
             // lol();
             //            alert("here!");
-            var blah = document.getElementById("me_blah_label");
+            //            var blah = document.getElementById("me_blah_label");
             var cookie_value = MachineElfToolbar.getIkariamCookie();
             //            alert(cookie_value);
             // alert(blah);
