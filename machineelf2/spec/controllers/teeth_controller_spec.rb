@@ -2,6 +2,25 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe TeethController do
 
+  describe "should convert a number" do
+
+    before :each do
+      @teeth = TeethController.new
+    end
+
+    it "with no thousands seperator" do
+      @teeth.parse_number("420").should == 420
+    end
+
+    it "with a thousands seperator" do
+      @teeth.parse_number("1,879").should == 1879
+    end
+
+    it "with no thousands sepator, in 'k' notation" do
+      @teeth.parse_number("420k").should == 420000
+    end
+  end
+
   #Delete this example and add some real ones
   it "should use TeethController" do
     controller.should be_an_instance_of(TeethController)
@@ -104,7 +123,7 @@ describe TeethController do
       PlayerEvent.should_receive(:new).and_return(@player_event)
       expects(@player_event,
               { :player => @player, :available_ships => 56,
-                :ships => 56, :gold => 1069})
+                :ships => 56, :gold => 1069000})
       @player_event.should_receive(:save!)
 
       TownEvent.should_receive(:new).and_return(@town_event)

@@ -4,10 +4,14 @@ class TeethController < ApplicationController
   protect_from_forgery :except => [:scree]
 
   def parse_number(num)
-      stripped = num.gsub(/\,/, '')
-      stripped = num.gsub(/ /, '')
-      stripped = num.split(",").join("")
-      return stripped.to_i
+    magnitude = 1
+    if num[-1].chr == 'k'
+      magnitude = 1000
+    end
+    stripped = num.gsub(/\,/, '')
+    stripped = num.gsub(/ /, '')
+    stripped = num.split(",").join("")
+    return stripped.to_i * magnitude
   end
 
   def find_arg_by_name(arg_name)

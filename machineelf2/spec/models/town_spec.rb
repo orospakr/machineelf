@@ -50,7 +50,7 @@ describe Town do
     :available_mans => 200, :town_hall => 12, :trading_port => 3, :shipyard => 4,
     :tavern => 15, :barracks => 7, :academy => 14, :warehouse => 10,
     :hideout => 2, :museum => 9, :trading_post => 4, :embassy => 1,
-    :palace => 3, :town_wall => 5}
+    :palace => 3, :town_wall => 5, :workshop => 1}
 
     mobo.get_stats.should == expected
   end
