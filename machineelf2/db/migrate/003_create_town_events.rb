@@ -30,6 +30,7 @@ class CreateTownEvents < ActiveRecord::Migration
       t.integer :embassy
       t.integer :palace
       t.integer :town_wall
+      t.integer :workshop
 
       t.datetime :created_at
     end

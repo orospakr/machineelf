@@ -80,7 +80,7 @@ class TeethController < ApplicationController
     'Warehouse' => :warehouse, 'Hideout' => :hideout,
     'Museum' => :museum, 'Trading post' => :trading_post,
     'Embassy' => :embassy, 'Palace' => :palace,
-    'Town wall' => :town_wall}
+    'Town wall' => :town_wall, "Workshop" => :workshop}
 
     t_event = TownEvent.new
     t_event.town = t

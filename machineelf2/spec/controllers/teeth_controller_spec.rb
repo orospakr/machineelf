@@ -82,7 +82,7 @@ describe TeethController do
                 :warehouse => 13, :hideout => 5,
                 :museum => 4, :trading_post => 6,
                 :embassy => 1, :palace => 2,
-                :town_wall => 8})
+                :town_wall => 8, :workshop => 1})
       @town_event.should_receive(:save!)
 
       do_scrape_contents_only :view_city
