@@ -79,7 +79,7 @@ describe TeethController do
                 :town_hall => 17, :trading_port => 5,
                 :shipyard => 2, :tavern => 11,
                 :barracks => 4, :academy => 12,
-                :warehouse => 10, :hideout => 5,
+                :warehouse => 13, :hideout => 5,
                 :museum => 4, :trading_post => 6,
                 :embassy => 1, :palace => 2,
                 :town_wall => 8})
@@ -103,17 +103,17 @@ describe TeethController do
 
       PlayerEvent.should_receive(:new).and_return(@player_event)
       expects(@player_event,
-              { :player => @player, :available_ships => 42,
-                :ships => 42, :gold => 4615})
+              { :player => @player, :available_ships => 56,
+                :ships => 56, :gold => 1069})
       @player_event.should_receive(:save!)
 
       TownEvent.should_receive(:new).and_return(@town_event)
       expects(@town_event,
-              { :town => @town, :wood => 25200,
-                :wine => 4000, :marble => 4946,
+              { :town => @town, :wood => 30981,
+                :wine => 13163, :marble => 10317,
                 :crystal => 9385, :sulphur => 36,
                 :population => 1541,
-                :available_mans => 1045})
+                :available_mans => 693})
       @town_event.should_receive(:save!)
 
       do_scrape_menu_only :view_city

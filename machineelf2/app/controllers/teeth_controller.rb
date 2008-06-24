@@ -135,7 +135,7 @@ class TeethController < ApplicationController
     for city in city_options
       if (city['selected'] == 'selected')
         my_town = Town.by_ikariam_id(city['value'].to_i)
-        my_town.name = city.inner_html
+        my_town.name = city.inner_html[1..-1]
       end
     end
 
