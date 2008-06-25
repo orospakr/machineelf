@@ -1,6 +1,11 @@
 class TownsController < ApplicationController
   # GET /towns
   # GET /towns.xml
+
+  layout 'standard'
+
+  before_filter :is_korps?
+
   def index
     @towns = Town.find(:all)
 

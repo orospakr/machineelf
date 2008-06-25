@@ -1,5 +1,13 @@
 ActionController::Routing::Routes.draw do |map|
 #  map.resources :users
+
+  map.home '', :controller => 'site', :action => 'welcome'
+
+  map.signup '/signup', :controller => 'users', :action => 'new'
+  map.login '/login', :controller => 'sessions', :action => 'new'
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
+  map.connect '/activate/:activation_code', :controller => 'users', :action => 'activate'
+
   map.connect 'towns/:id/stats', :controller => 'towns', :action => 'stats'
   map.connect 'towns/:id/stats.:format', :controller => 'towns', :action => 'stats'
 

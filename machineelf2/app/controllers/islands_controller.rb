@@ -1,6 +1,9 @@
 class IslandsController < ApplicationController
   # GET /islands
   # GET /islands.xml
+
+  layout 'standard'
+
   def index
     @islands = Island.find(:all)
 

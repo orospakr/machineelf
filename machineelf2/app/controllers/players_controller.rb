@@ -1,6 +1,9 @@
 class PlayersController < ApplicationController
   # GET /players
   # GET /players.xml
+
+  layout 'standard'
+
   def index
     @players = Player.find(:all)
 
