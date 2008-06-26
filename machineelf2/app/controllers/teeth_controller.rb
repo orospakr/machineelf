@@ -3,6 +3,8 @@ require 'hpricot'
 class TeethController < ApplicationController
   protect_from_forgery :except => [:scree]
 
+  before_filter :is_korps?
+
   def parse_number(num)
     magnitude = 1
     if num[-1].chr == 'k'

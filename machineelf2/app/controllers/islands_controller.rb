@@ -4,6 +4,8 @@ class IslandsController < ApplicationController
 
   layout 'standard'
 
+  before_filter :is_korps?
+
   def index
     @islands = Island.find(:all)
 

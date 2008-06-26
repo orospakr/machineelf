@@ -14,14 +14,14 @@ describe UsersController do
     end.should change(User, :count).by(1)
   end
 
-  
+
   it 'signs up user in pending state' do
     create_user
     assigns(:user).reload
     assigns(:user).should be_pending
   end
 
-  
+
   it 'signs up user with activation code' do
     create_user
     assigns(:user).reload
@@ -35,7 +35,7 @@ describe UsersController do
       response.should be_success
     end.should_not change(User, :count)
   end
-  
+
   it 'requires password on signup' do
     lambda do
       create_user(:password => nil)
@@ -43,7 +43,7 @@ describe UsersController do
       response.should be_success
     end.should_not change(User, :count)
   end
-  
+
   it 'requires password confirmation on signup' do
     lambda do
       create_user(:password_confirmation => nil)
@@ -59,8 +59,8 @@ describe UsersController do
       response.should be_success
     end.should_not change(User, :count)
   end
-  
-  
+
+
   it 'activates user' do
     User.authenticate('aaron', 'test').should be_nil
     get :activate, :activation_code => users(:aaron).activation_code
@@ -68,17 +68,17 @@ describe UsersController do
     flash[:notice].should_not be_nil
     User.authenticate('aaron', 'test').should == users(:aaron)
   end
-  
+
   it 'does not activate user without key' do
     get :activate
     flash[:notice].should be_nil
   end
-  
+
   it 'does not activate user with blank key' do
     get :activate, :activation_code => ''
     flash[:notice].should be_nil
   end
-  
+
   def create_user(options = {})
     post :create, :user => { :login => 'quire', :email => 'quire@example.com',
       :password => 'quire', :password_confirmation => 'quire' }.merge(options)

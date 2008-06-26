@@ -4,6 +4,8 @@ class PlayersController < ApplicationController
 
   layout 'standard'
 
+  before_filter :is_korps?
+
   def index
     @players = Player.find(:all)
 

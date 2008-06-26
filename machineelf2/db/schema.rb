@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 6) do
     t.datetime "activated_at"
     t.string   "state",                                   :default => "passive"
     t.datetime "deleted_at"
+    t.boolean  "is_korps"
   end
 
 end

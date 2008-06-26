@@ -11,7 +11,18 @@ class ApplicationController < ActionController::Base
   include AuthenticatedSystem
 
   def is_korps?
-    flash[:error] = "Snooping as usual, I see!"
-    access_denied
+    luser = current_user
+    if luser.nil?
+      flash[:error] = "Snooping as usual, I see!  (you need to be logged in to see this page)"
+      access_denied
+      return
+    end
+    if not luser.state == "active"
+      flash[:error] = "Your account has not been activated yet.  Check your email."
+    end
+    if not luser.is_korps
+      flash[:error] = "Your account hasn't been approved yet."
+      access_denied
+    end
   end
 end

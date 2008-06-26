@@ -1,6 +1,12 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe TownsController do
+
+  before :each do
+    korps_person_logged_in
+  end
+
+
   describe "handling GET /towns" do
 
     before(:each) do
