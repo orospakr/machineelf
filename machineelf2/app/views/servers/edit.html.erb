@@ -1,0 +1,17 @@
+<h1>Editing server</h1>
+
+<%= error_messages_for :server %>
+
+<% form_for(@server) do |f| %>
+  <p>
+    <b>Hostname</b><br />
+    <%= f.text_field :hostname %>
+  </p>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @server %> |
+<%= link_to 'Back', servers_path %>

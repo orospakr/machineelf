@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :servers
+
 #  map.resources :users
 
   map.home '', :controller => 'site', :action => 'welcome'
