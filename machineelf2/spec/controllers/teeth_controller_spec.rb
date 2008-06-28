@@ -131,13 +131,13 @@ describe TeethController do
         PlayerEvent.should_receive(:new).and_return(@player_event)
         expects(@player_event,
                 { :player => @player, :available_ships => 56,
-                  :ships => 56, :gold => 1069000})
+                  :ships => 56, :gold => 1242000})
         @player_event.should_receive(:save!)
 
         TownEvent.should_receive(:new).and_return(@town_event)
         expects(@town_event,
-                { :town => @town, :wood => 30981,
-                  :wine => 13163, :marble => 10317,
+                { :town => @town, :wood => 44520,
+                  :wine => 20328, :marble => 10317,
                   :crystal => 9385, :sulphur => 36,
                   :population => 1541,
                   :available_mans => 693})

@@ -250,10 +250,10 @@
 		<ul>
 			<li>
 				<label for="citySelect">Current town:</label>
-				<select id="citySelect" class="citySelect " name="cityId" tabindex="1" onchange="this.form.submit()">
-    <option class="avatarCities" value="82966" selected="selected"> Mobotropolis</option>
-    <option class="avatarCities" value="91576"> Ivarion</option>
-    <option class="avatarCities" value="101627"> Knothole</option>
+				<select id="citySelect" class="citySelect smallFont" name="cityId" tabindex="1" onchange="this.form.submit()">
+    <option class="avatarCities" value="82966" selected="selected"> [95:65] Mobotropolis</option>
+    <option class="avatarCities" value="91576"> [94:65] Ivarion</option>
+    <option class="avatarCities" value="101627"> [75:54] Knothole</option>
                 </select>
 			</li>
 			<li class="previousCity"><a href="#changeCityPrevious" tabindex="2" title="Switch to the last town"><span class="textLabel">Previous Town</span></a></li>
@@ -269,7 +269,7 @@
 		<h3>Resources of your Empire</h3>
 		<ul>
 			<li class="transporters" title="Trade ships Available/Total"><a href="?view=merchantNavy"><span class="textLabel">Trade ships: </span><span id="value_transAvail" class="transAvail">56</span><span id="value_transSum" class="transSum">(56)</span></a></li>
-			<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">1,069k</span></a></li>
+			<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">1,242k</span></a></li>
 			<li class="goldBalance negative"><span class="textLabel">Income: </span>234</li>
 		</ul>
 	</div>
@@ -289,12 +289,12 @@
 			</li>
             <li class="wood" title="Building material">
 							<span class="textLabel">Building material: </span>
-							<span id="value_wood" class="">30,981</span>
+							<span id="value_wood" class="storage_full">44,520</span>
 							<div class="tooltip"><span class="textLabel">Storage capacity: </span>44,520</div>
 						</li>
             <li class="wine" title="Wine">
 							<span class="textLabel">Wine: </span>
-							<span id="value_wine" class="">13,163</span>
+							<span id="value_wine" class="storage_full">20,328</span>
 							<div class="tooltip"><span class="textLabel">Storage capacity: </span>20,328</div>
 						</li>
             <li class="marble" title="Marble">
@@ -320,15 +320,15 @@ var startServerTime = localTime.getTime() - (7200000) - localTime.getTimezoneOff
 var startTime = localTime.getTime();
 
 
-var startResources = 30981.2595138;
+var startResources = 44520;
 var startResourcesDelta = 0.075625;
 var resourcesStorage = 44520;
 
-var startTradegood = 13163.8502081;
+var startTradegood = 20328;
 var startTradegoodDelta = 0.0455555555556;
 var tradegoodStorage = 20328;
 var tradegoodSub = 11;
-var tradegoodSubTime = 308;
+var tradegoodSubTime = 525;
 
 function updateResources() {
 	//global:  startTime, Dom, resourcesStorage
@@ -380,7 +380,7 @@ Event.onDOMReady(function() {
 });
 function updateServerTime() {
     var currTime = new Date();
-    currTime.setTime((1214337908000-startServerTime)+ currTime.getTime()) ;
+    currTime.setTime((1214638125000-startServerTime)+ currTime.getTime()) ;
     str = getFormatedDate(currTime.getTime(), 'd.m.Y G:i:s');
     obj_ServerTime.innerHTML = str;
 }
@@ -390,19 +390,19 @@ function updateServerTime() {
 		<h3>Overviews</h3>
 		<ul>
 			<li id="advCities">
-				<a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normalactive"><span class="textLabel">Towns</span></a>
-							</li>
+				<a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normal"><span class="textLabel">Towns</span></a>
+				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
 			<li id="advMilitary">
 				<a href="?view=militaryAdvisorCombatReports&amp;oldView=city&amp;id=82966" title="Military overview" class="normal">
 						<span class="textLabel">Military</span>
 				</a>
-							</li>
+				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
 			<li id="advResearch">
 				<a href="?view=researchAdvisor&amp;oldView=city&amp;id=82966" title="Research overview" class="normal"><span class="textLabel">Research</span></a>
-							</li>
+				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
 			<li id="advDiplomacy">
 				<a href="?view=diplomacyAdvisor&amp;oldView=city&amp;id=82966" title="Overview of messages and diplomacy" class="normal"><span class="textLabel">Diplomacy</span></a>
-							</li>
+				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
 		</ul>
 	</div>
 	<div id="footer">
@@ -431,7 +431,7 @@ function updateServerTime() {
         <li class="forum"><a href="http://board.ikariam.org" title="Message Board" target="_blank"><span class="textLabel">Board</span></a></li>
 		<li class="logout"><a href="/index.php?action=loginAvatar&function=logout" title="End game session"><span class="textLabel">Logout</span></a></li>
         <li class="version"><a href="?view=version" title="Version"><span class="textLabel">v.0.2.5</span></a></li>
-		<li class="serverTime"><a><span class="textLabel" id="servertime">24.06.2008 22:05:08</span></a></li>
+		<li class="serverTime"><a><span class="textLabel" id="servertime">28.06.2008 9:28:45</span></a></li>
 
 	</ul>
 </div>
