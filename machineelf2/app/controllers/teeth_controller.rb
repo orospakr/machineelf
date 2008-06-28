@@ -41,6 +41,10 @@ class TeethController < ApplicationController
     end
   end
 
+  def get_server
+    return Server.by_hostname(URI.parse(params[:ikariam_url]).host)
+  end
+
   def parse_city
     parsed_contents = Hpricot(params[:ikariam_page])
 
@@ -54,7 +58,7 @@ class TeethController < ApplicationController
     island_id = island_url[pos+3..-1].to_i
 
     print island_url
-    s = Server.by_hostname(URI.parse(params[:ikariam_url]).host)
+    s = get_server
 
     i = Island.by_ikariam_id(island_id)
     i.name = island_name
@@ -120,6 +124,9 @@ class TeethController < ApplicationController
   end
 
   def scree
+    if params[:ikariam_url].nil? or params[:ikariam_page].nil?
+      return
+    end
     scree_contents
     scree_menu
   end
@@ -140,6 +147,7 @@ class TeethController < ApplicationController
 
   def scree_menu
     my_town = nil
+    server = get_server
     page = Hpricot(params[:ikariam_page])
     city_select = page.at('#citySelect')
     if city_select.nil?
@@ -155,8 +163,10 @@ class TeethController < ApplicationController
 
     owner_id = get_player_id_from_cookie
     owner = Player.by_ikariam_id(owner_id)
+    owner.server = server
     owner.save!
 
+    my_town.server = server
     my_town.player = owner
     my_town.save!
 

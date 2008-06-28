@@ -114,13 +114,17 @@ describe TeethController do
       it "should munch a view_city's page toolbar" do
         @town = mock_model(Town)
         @player = mock_model(Player)
+        @server = mock_model(Server)
         @town_event = mock_model(TownEvent)
         @player_event = mock_model(PlayerEvent)
 
+        Server.should_receive(:by_hostname).with('s3.ikariam.org').and_return(@server)
         Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
         Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
-        expects(@town, { :name => 'Mobotropolis', :player => @player})
+        expects(@town, { :name => 'Mobotropolis', :player => @player,
+                :server => @server})
+        expects(@player, { :server => @server})
         @town.should_receive(:save!)
         @player.should_receive(:save!)
 
@@ -142,8 +146,13 @@ describe TeethController do
         do_scrape_menu_only :view_city
       end
 
-      it "should not crash when receiving a blank ikariam_url" do
+      it "should not crash when receiving a blank ikariam_url and ikariam_page" do
+        Server.should_receive(:by_hostname).with(nil).and_return(nil)
         post :scree, {:ikariam_page => "", :ikariam_url => ""}
+      end
+
+      it "should not crash when receiving a request with NO ikariam_url and ikariam_page" do
+        post :scree
       end
     end
   end
