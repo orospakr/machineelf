@@ -1,12 +1,18 @@
 class ServersController < ApplicationController
   # GET /servers
   # GET /servers.xml
+
+  layout 'standard'
+
+  before_filter :is_korps?
+
   def index
     @servers = Server.find(:all)
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @servers }
+      format.json { render :json => @servers.to_json }
     end
   end
 
@@ -18,6 +24,7 @@ class ServersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @server }
+      format.json { render :json => @server.to_json }
     end
   end
 

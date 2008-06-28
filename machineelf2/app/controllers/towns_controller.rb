@@ -24,6 +24,7 @@ class TownsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @town }
+      format.json { render :json => @town.to_json }
     end
   end
 
