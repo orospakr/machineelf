@@ -1,22 +1,22 @@
 // Machine Elf 2 Toolbar.
 
-window.addEventListener("load", function() { MachineElfToolbar.init(this); }, false);
+window.addEventListener("load", function() { MachineElf.init(this); }, false);
 
 // class defined in so-called 'literal' notation
 
-var MachineElfToolbar = {
+var MachineElf = {
     REFRESH_INTERVAL: 30000,
     MACHINEELF_HOST: "http://localhost:3000",
 
     init: function(chromeWindow) {
         var appcontent = document.getElementById("appcontent");   // browser
         if(appcontent)
-            appcontent.addEventListener("DOMContentLoaded", MachineElfToolbar.onPageLoad, true);
+            appcontent.addEventListener("DOMContentLoaded", MachineElf.onPageLoad, true);
         var messagepane = document.getElementById("messagepane"); // mail
         if(messagepane)
             messagepane.addEventListener("load", function () { MachineElfPageLoadListener.onPageLoad(); }, true);
 
-                chromeWindow.window.setInterval("MachineElfToolbar.doUpdate();",
+                chromeWindow.window.setInterval("MachineElf.doUpdate();",
         this.REFRESH_INTERVAL);
         this.doUpdate();
     },
@@ -29,16 +29,16 @@ var MachineElfToolbar = {
 
     updateWarpMenu: function(towns_json) {
         var warp_menu = document.getElementById("machineelf_warp_menu");
-        for (item in MachineElfToolbar.warp_zone_items) {
-            warp_menu.removeChild(MachineElfToolbar.warp_zone_items[item]);
+        for (item in MachineElf.warp_zone_items) {
+            warp_menu.removeChild(MachineElf.warp_zone_items[item]);
         }
-        MachineElfToolbar.warp_zone_items = [];
+        MachineElf.warp_zone_items = [];
 
         for (town in towns_json) {
             var new_item = document.createElement("menuitem");
             new_item.setAttribute("label", towns_json[town].name);
             warp_menu.appendChild(new_item);
-            MachineElfToolbar.warp_zone_items.push(new_item);
+            MachineElf.warp_zone_items.push(new_item);
         }
     },
 
@@ -51,7 +51,7 @@ var MachineElfToolbar = {
         if (towns_json_req.readyState == 4) {
             towns_json = eval('(' + towns_json_req.responseText + ')');
             blah.value = towns_json[0].name;
-            MachineElfToolbar.updateWarpMenu(towns_json);
+            MachineElf.updateWarpMenu(towns_json);
         }
         else {
             blah.value = "FAILURE";
@@ -72,13 +72,13 @@ var MachineElfToolbar = {
             // lol();
             //            alert("here!");
             //            var blah = document.getElementById("me_blah_label");
-            var cookie_value = MachineElfToolbar.getIkariamCookie();
+            var cookie_value = MachineElf.getIkariamCookie();
             //            alert(cookie_value);
             // alert(blah);
             //            blah.value = doc.documentElement.innerHTML;
 
             var req = new XMLHttpRequest();
-            req.open('POST', MachineElfToolbar.MACHINEELF_HOST + '/teeth/scree', true);
+            req.open('POST', MachineElf.MACHINEELF_HOST + '/teeth/scree', true);
             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             req.send("ikariam_url=" + escape(doc.location.href) + "&ikariam_cookie=" + escape(cookie_value) + "&ikariam_page=" + escape(doc.documentElement.innerHTML));
             //if(req.status == 0)
@@ -87,15 +87,15 @@ var MachineElfToolbar = {
             // read Town stats from server and display town name in me_blah_label!
             //            updateToolbar(doc);
 
-            MachineElfToolbar.doUpdate();
+            MachineElf.doUpdate();
         }
     },
 
     doUpdate: function() {
         var login_checker = new XMLHttpRequest();
-        login_checker.open('GET', MachineElfToolbar.MACHINEELF_HOST + '/am_i_logged_in', true);
+        login_checker.open('GET', MachineElf.MACHINEELF_HOST + '/am_i_logged_in', true);
         login_checker.onreadystatechange=function() {
-            MachineElfToolbar.validateLoginAndDispatchUpdates(login_checker);
+            MachineElf.validateLoginAndDispatchUpdates(login_checker);
         }
         login_checker.send(null);
     },
@@ -103,7 +103,7 @@ var MachineElfToolbar = {
     validateLoginAndDispatchUpdates: function(login_checker) {
         if (login_checker.readyState == 4) {
             if (login_checker.responseText == "YES") {
-                MachineElfToolbar.dispatchUpdaters();
+                MachineElf.dispatchUpdaters();
             }
             else if (login_checker.responseText == "NO") {
                 alert("You aren't logged into Machine Elf.");
@@ -121,15 +121,15 @@ var MachineElfToolbar = {
     },
 
     dispatchUpdaters: function() {
-        MachineElfToolbar.doToolbarUpdate();
+        MachineElf.doToolbarUpdate();
     },
 
     doToolbarUpdate: function() {
         var tb_updater = new XMLHttpRequest();
-            tb_updater.open("GET", MachineElfToolbar.MACHINEELF_HOST + "/towns.json", true);
+            tb_updater.open("GET", MachineElf.MACHINEELF_HOST + "/towns.json", true);
             //            req.onreadystatechange = updateToolbar;   // the handler
             tb_updater.onreadystatechange=function() {
-                MachineElfToolbar.updateToolbar(tb_updater);
+                MachineElf.updateToolbar(tb_updater);
             }
             tb_updater.send(null);
     },
