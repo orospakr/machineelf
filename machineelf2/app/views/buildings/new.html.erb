@@ -1,0 +1,26 @@
+<h1>New building</h1>
+
+<%= error_messages_for :building %>
+
+<% form_for(@building) do |f| %>
+  <p>
+    <b>Flavour</b><br />
+    <%= f.text_field :flavour %>
+  </p>
+
+  <p>
+    <b>Ready at</b><br />
+    <%= f.datetime_select :ready_at %>
+  </p>
+
+  <p>
+    <b>Town</b><br />
+    <%= f.text_field :town_id %>
+  </p>
+
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', buildings_path %>

@@ -1,0 +1,18 @@
+<p>
+  <b>Flavour:</b>
+  <%=h @building.flavour %>
+</p>
+
+<p>
+  <b>Ready at:</b>
+  <%=h @building.ready_at %>
+</p>
+
+<p>
+  <b>Town:</b>
+  <%=h @building.town_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_building_path(@building) %> |
+<%= link_to 'Back', buildings_path %>
