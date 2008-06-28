@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
 
   include AuthenticatedSystem
 
+  # this is kind of crappy, it should be using states rather than lame-o booleans I added to the model
   def is_korps?
     luser = current_user
     if luser.nil?
@@ -25,4 +26,6 @@ class ApplicationController < ActionController::Base
       access_denied
     end
   end
+
+  # TODO is_admin? as well, that checks both is_admin and is_korps
 end

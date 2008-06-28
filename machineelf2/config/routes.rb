@@ -5,6 +5,8 @@ ActionController::Routing::Routes.draw do |map|
 
   map.home '', :controller => 'site', :action => 'welcome'
 
+  map.connect '/am_i_logged_in', :controller => 'site', :action => 'am_i_logged_in'
+
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'

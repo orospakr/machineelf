@@ -1,17 +1,23 @@
 // Machine Elf 2 Toolbar.
 
-window.addEventListener("load", function() { MachineElfToolbar.init(); }, false);
+window.addEventListener("load", function() { MachineElfToolbar.init(this); }, false);
 
 // class defined in so-called 'literal' notation
 
 var MachineElfToolbar = {
-    init: function() {
+    REFRESH_INTERVAL: 10000,
+
+    init: function(chromeWindow) {
         var appcontent = document.getElementById("appcontent");   // browser
         if(appcontent)
             appcontent.addEventListener("DOMContentLoaded", MachineElfToolbar.onPageLoad, true);
         var messagepane = document.getElementById("messagepane"); // mail
         if(messagepane)
             messagepane.addEventListener("load", function () { MachineElfPageLoadListener.onPageLoad(); }, true);
+
+        //        chromeWindow.window.setInterval("MachineElfToolbar.doUpdate();",
+        //this.REFRESH_INTERVAL);
+        this.doUpdate();
     },
 
     warp_zone_items: [],
@@ -80,14 +86,19 @@ var MachineElfToolbar = {
             // read Town stats from server and display town name in me_blah_label!
             //            updateToolbar(doc);
 
-            var tb_updater = new XMLHttpRequest();
+            MachineElfToolbar.doUpdate();
+        }
+    },
+
+    doUpdate: function() {
+        alert("doUpdate()");
+        var tb_updater = new XMLHttpRequest();
             tb_updater.open("GET", "http://localhost:3000/towns.json", true);
             //            req.onreadystatechange = updateToolbar;   // the handler
             tb_updater.onreadystatechange=function() {
                 MachineElfToolbar.updateToolbar(tb_updater);
             }
             tb_updater.send(null);
-        }
     },
 
     getIkariamCookie: function() {
