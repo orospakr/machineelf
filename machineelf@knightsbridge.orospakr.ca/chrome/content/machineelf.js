@@ -5,7 +5,7 @@ window.addEventListener("load", function() { MachineElfToolbar.init(this); }, fa
 // class defined in so-called 'literal' notation
 
 var MachineElfToolbar = {
-    REFRESH_INTERVAL: 10000,
+    REFRESH_INTERVAL: 30000,
 
     init: function(chromeWindow) {
         var appcontent = document.getElementById("appcontent");   // browser
@@ -15,8 +15,8 @@ var MachineElfToolbar = {
         if(messagepane)
             messagepane.addEventListener("load", function () { MachineElfPageLoadListener.onPageLoad(); }, true);
 
-        //        chromeWindow.window.setInterval("MachineElfToolbar.doUpdate();",
-        //this.REFRESH_INTERVAL);
+                chromeWindow.window.setInterval("MachineElfToolbar.doUpdate();",
+        this.REFRESH_INTERVAL);
         this.doUpdate();
     },
 
@@ -91,6 +91,39 @@ var MachineElfToolbar = {
     },
 
     doUpdate: function() {
+        var login_checker = new XMLHttpRequest();
+        login_checker.open('GET', 'http://localhost:3000/am_i_logged_in', true);
+        login_checker.onreadystatechange=function() {
+            MachineElfToolbar.validateLoginAndDispatchUpdates(login_checker);
+        }
+        login_checker.send(null);
+    },
+
+    validateLoginAndDispatchUpdates: function(login_checker) {
+        if (login_checker.readyState == 4) {
+            if (login_checker.responseText == "YES") {
+                MachineElfToolbar.dispatchUpdaters();
+            }
+            else if (login_checker.responseText == "NO") {
+                alert("You aren't logged into Machine Elf.");
+            }
+            else if (login_checker.responseText == "NOT APPROVED") {
+                alert("You haven't been approved yet as a Machine Elf user.  Prod Andrew.");
+            }
+            else if (login_checker.responseText == "ACTIVATION PENDING") {
+                alert("Check your email.  You need to click the activation link there before anything will work.");
+            }
+            else {
+                alert("Unreconized response to Machine Elf 2.0's are_you_logged_in method.  It may be down or your Internet connection may be weird.  Text: \n\n" + login_checker.responseText);
+            }
+        }
+    },
+
+    dispatchUpdaters: function() {
+        MachineElfToolbar.doToolbarUpdate();
+    },
+
+    doToolbarUpdate: function() {
         alert("doUpdate()");
         var tb_updater = new XMLHttpRequest();
             tb_updater.open("GET", "http://localhost:3000/towns.json", true);
