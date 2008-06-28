@@ -79,9 +79,10 @@ class TeethController < ApplicationController
     # view_city page.  WRONG -- if you spy out a town, this isn't true
 
     owner = t.player
-    owner.server = s
+
     # broken window!  there is no unit test for the nil case.
     if not owner.nil?
+      owner.server = s
       owner.ikariam_login = parsed_contents.at("//li[@class='owner']").inner_html.split()[-1].split('>')[-1]
       owner.save!
     end

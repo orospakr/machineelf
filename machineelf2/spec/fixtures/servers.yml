@@ -1,7 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  hostname: MyString
+gamma:
+  hostname: s3.ikariam.org
+  name: Gamma
 
-two:
-  hostname: MyString
+alpha:
+  hostname: s1.ikariam.org
+  name: Alpha
