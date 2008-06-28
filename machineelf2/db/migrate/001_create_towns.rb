@@ -6,6 +6,7 @@ class CreateTowns < ActiveRecord::Migration
       t.integer :ikariam_id
       t.string :name
       t.integer :owner_id
+      t.integer :server_id
       t.timestamps
     end
    end

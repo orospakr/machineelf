@@ -4,6 +4,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.integer :ikariam_id
       t.string :ikariam_login
       t.integer :user_id
+      t.integer :server_id
       t.timestamps
     end
   end

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 6) do
+ActiveRecord::Schema.define(:version => 7) do
 
   create_table "islands", :force => true do |t|
     t.integer  "ikariam_id"
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(:version => 6) do
     t.integer  "ikariam_id"
     t.string   "ikariam_login"
     t.integer  "user_id"
+    t.integer  "server_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "servers", :force => true do |t|
+    t.string   "hostname"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -68,6 +76,7 @@ ActiveRecord::Schema.define(:version => 6) do
     t.integer  "ikariam_id"
     t.string   "name"
     t.integer  "owner_id"
+    t.integer  "server_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

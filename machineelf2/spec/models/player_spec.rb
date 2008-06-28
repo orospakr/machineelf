@@ -5,6 +5,7 @@ describe Player do
 
   before(:each) do
     @player = Player.new
+    @server = mock_model(Server)
   end
 
   it "should not be valid if blank" do
@@ -12,12 +13,14 @@ describe Player do
   end
 
   it "should not be valid if it specifies a person that already exists" do
+    @player.server = @server
     @player.ikariam_id = players(:orospakr).ikariam_id
     @player.should_not be_valid
   end
 
   it "should return a new town if asked for one with a new Ikariam player id" do
     dude = Player.by_ikariam_id(players(:orospakr).ikariam_id)
+    dude.server = @server
     dude.id.should == players(:orospakr).id
   end
 end

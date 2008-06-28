@@ -12,8 +12,10 @@ describe Town do
     @town.should_not be_valid
   end
 
-  it "should be valid if it has an ikariam id, and name, that does not already exist in the database" do
+  it "should be valid if it has an ikariam id, server, and name, that does not already exist in the database" do
+    gamma = mock_model(Server)
     @town.ikariam_id = 9999
+    @town.server = gamma
     @town.name = 'Not Mobotropolis'
     @town.should be_valid
   end
@@ -22,6 +24,12 @@ describe Town do
     @town.ikariam_id = towns(:mobotropolis).ikariam_id
     @town.name = "Should not matter what the name is"
     @town.should_not be_valid
+  end
+
+  it "should not be valid if it doesn't specify a server" do
+    @town.ikariam_id = 9999
+    @town.name = 'Not Mobotropolis'
+    @town.should_not be_valid # lulz... I have had a should where I should have had a should not.  Durr.
   end
 
   it "should return a new town if asked for one with a new Ikariam town id" do

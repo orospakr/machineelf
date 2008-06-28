@@ -5,13 +5,15 @@ describe Island do
 
   before(:each) do
     @island = Island.new
+    @server = mock_model(Server)
   end
 
   it "should not be valid if blank" do
     @island.should_not be_valid
   end
 
-  it "should be valid if it has an ikariam id, and a name, that does not already exist in the database " do
+  it "should be valid if it has an ikariam id, a server, and a name, that does not already exist in the database " do
+    @island.server = @server
     @island.ikariam_id = 4754325643
     @island.name = "should not matter"
     @island.should be_valid
