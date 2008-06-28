@@ -33,7 +33,7 @@ class Town < ActiveRecord::Base
   def get_stats
     should_not_get = [:id, :created_at, :town_id]
     results = { }
-#    pp TownEvent.columns
+    #    pp TownEvent.columns
     TownEvent.columns.each do |col|
       if should_not_get.include?(col.name.intern)
         next
@@ -42,4 +42,22 @@ class Town < ActiveRecord::Base
     end
     return results
   end
+
+  def Town.remaining_finished_at(remaining)
+    segments = remaining.split(' ')
+    time_now = Time.now
+    for seg in segments
+      units = seg[0..-2]
+      metric = seg[-1].chr
+      if metric == "m"
+        time_now += units.to_i.minutes
+      elsif metric == "s"
+        time_now += units.to_i.seconds
+      elsif metric == "h"
+        time_now += units.to_i.hours
+      end
+    end
+    return time_now
+  end
+
 end

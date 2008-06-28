@@ -105,8 +105,11 @@ class TeethController < ApplicationController
     t_event.town = t
 
     locations_list = parsed_contents.at('ul#locations')
-    building_elems = locations_list/'a'
-    building_elems.each do |b|
+#    building_elems = locations_list/'a'
+    building_elems = locations_list/'li'
+#    pp building_elems
+    building_elems.each do |aref|
+      b = aref.at 'a'
       title_string = b['title']
       bits = title_string.split(' ')
       level_number = (bits[-1]).to_i
@@ -115,11 +118,21 @@ class TeethController < ApplicationController
       bits[0..-3].each do |word|
         building_name += word + ' '
       end
+
+
+
       building = building_names[building_name[0..-2]] # slice is to get rid of extra space
       if building.nil?
         next
       end
       t_event.send("#{building.to_s}=", level_number)
+
+      time_elem = aref.at("//div[@class='timetofinish']")
+      if !time_elem.nil?
+        upgrade_finish_time = Town.remaining_finished_at(time_elem.at('#cityCountdown').inner_html)
+        t_event.send("#{building.to_s}_remaining=", upgrade_finish_time)
+      end
+
     end
     t_event.save!
   end

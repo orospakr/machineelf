@@ -11,6 +11,8 @@ window.addEventListener("load", function() { MachineElf.init(this); }, false);
 
 // Cordon off the admin features (CRUD/scaffold operations that mutate things)
 
+// Implement remaining-build time feature for buildings
+
 
 // class defined in so-called 'literal' notation
 var MachineElf = {

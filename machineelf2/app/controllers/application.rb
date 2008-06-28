@@ -28,4 +28,5 @@ class ApplicationController < ActionController::Base
   end
 
   # TODO is_admin? as well, that checks both is_admin and is_korps
+
 end

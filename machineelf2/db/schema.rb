@@ -13,6 +13,7 @@ ActiveRecord::Schema.define(:version => 7) do
 
   create_table "islands", :force => true do |t|
     t.integer  "ikariam_id"
+    t.integer  "server_id"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -68,6 +69,20 @@ ActiveRecord::Schema.define(:version => 7) do
     t.integer  "palace"
     t.integer  "town_wall"
     t.integer  "workshop"
+    t.integer  "town_hall_remaining"
+    t.integer  "trading_port_remaining"
+    t.integer  "shipyard_remaining"
+    t.integer  "tavern_remaining"
+    t.integer  "barracks_remaining"
+    t.integer  "academy_remaining"
+    t.integer  "warehouse_remaining"
+    t.integer  "hideout_remaining"
+    t.integer  "museum_remaining"
+    t.integer  "trading_post_remaining"
+    t.integer  "embassy_remaining"
+    t.integer  "palace_remaining"
+    t.integer  "town_wall_remaining"
+    t.integer  "workshop_remaining"
     t.datetime "created_at"
   end
 

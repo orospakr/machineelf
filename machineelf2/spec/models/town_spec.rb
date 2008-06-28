@@ -63,4 +63,21 @@ describe Town do
     mobo.get_stats.should == expected
   end
 
+    describe "should calculate the time of completion from the remaining time value" do
+    before :each do
+      @now_time = Time.parse("Sat Jun 28 16:29:14 -0400 2008")
+      Time.stub!(:now).and_return(@now_time)
+    end
+
+    it "for 10m 30s" do
+      expected_time = @now_time + 10.minutes + 30.seconds
+      Town.remaining_finished_at("10m 30s").should == expected_time
+    end
+
+    it "for 5h 10m" do
+      expected_time = @now_time + 5.hours + 10.minutes
+      Town.remaining_finished_at("5h 10m").should == expected_time
+    end
+  end
+
 end

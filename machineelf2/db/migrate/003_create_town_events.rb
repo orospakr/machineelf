@@ -32,6 +32,22 @@ class CreateTownEvents < ActiveRecord::Migration
       t.integer :town_wall
       t.integer :workshop
 
+      # remaining build times, if build in progress
+      t.integer :town_hall_remaining
+      t.integer :trading_port_remaining
+      t.integer :shipyard_remaining
+      t.integer :tavern_remaining
+      t.integer :barracks_remaining
+      t.integer :academy_remaining
+      t.integer :warehouse_remaining
+      t.integer :hideout_remaining
+      t.integer :museum_remaining
+      t.integer :trading_post_remaining
+      t.integer :embassy_remaining
+      t.integer :palace_remaining
+      t.integer :town_wall_remaining
+      t.integer :workshop_remaining
+
       t.datetime :created_at
     end
   end

@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-
+require 'time'
 
 describe TeethController do
 
@@ -95,9 +95,7 @@ describe TeethController do
 
         @town_event = mock_model(TownEvent)
         TownEvent.should_receive(:new).and_return(@town_event)
-        # This doesn't cover all of the build types.
-        # Must get a look at a town belonging to a high-level
-        # person...
+        Time.stub!(:now).and_return(Time.parse("Sun Jun 28 17:35:21 -0400 2008"))
         expects(@town_event, { :town => @town,
                   :town_hall => 17, :trading_port => 5,
                   :shipyard => 2, :tavern => 11,
@@ -105,7 +103,9 @@ describe TeethController do
                   :warehouse => 13, :hideout => 5,
                   :museum => 4, :trading_post => 6,
                   :embassy => 1, :palace => 2,
-                  :town_wall => 8, :workshop => 1})
+                  :town_wall => 8, :workshop => 1,
+                  :tavern_remaining => Time.parse("Sun Jun 29 05:03:21 -0400 2008")
+                })
         @town_event.should_receive(:save!)
 
         do_scrape_contents_only :view_city
@@ -130,14 +130,14 @@ describe TeethController do
 
         PlayerEvent.should_receive(:new).and_return(@player_event)
         expects(@player_event,
-                { :player => @player, :available_ships => 56,
-                  :ships => 56, :gold => 1242000})
+                { :player => @player, :available_ships => 0,
+                  :ships => 56, :gold => 1274000})
         @player_event.should_receive(:save!)
 
         TownEvent.should_receive(:new).and_return(@town_event)
         expects(@town_event,
-                { :town => @town, :wood => 44520,
-                  :wine => 20328, :marble => 10317,
+                { :town => @town, :wood => 40041,
+                  :wine => 10976, :marble => 8208,
                   :crystal => 9385, :sulphur => 36,
                   :population => 1541,
                   :available_mans => 693})

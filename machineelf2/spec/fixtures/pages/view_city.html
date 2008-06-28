@@ -185,8 +185,23 @@
     				<a href="?view=shipyard&amp;id=82966&amp;position=2" title="Shipyard Level 2"><span class="textLabel">Shipyard Level 2</span></a>
                </li>
                   <li id="position3" class="tavern">
-    				<div class="buildingimg"></div>
-    				<a href="?view=tavern&amp;id=82966&amp;position=3" title="Tavern Level 11"><span class="textLabel">Tavern Level 11</span></a>
+    				<div class="constructionSite"></div>
+    				<a href="?view=tavern&amp;id=82966&amp;position=3" title="Tavern Level 11"><span class="textLabel">Tavern Level 11 (Under construction)</span></a>
+    				<div class="timetofinish"><span class="before"></span><span class="textLabel">Time till completion: </span><span id="cityCountdown">11h 28m</span><span class="after"></span></div>
+<script type="text/javascript">
+var tmpCnt =	getCountdown({
+		enddate: 1214722366,
+		currentdate: 1214681078,
+		el: "cityCountdown"
+		});
+    tmpCnt.subscribe("finished", function() {
+		setTimeout(function() {
+    	location.href="?view=city&id=82966";
+			},2000);
+		});
+</script>
+
+
                </li>
                   <li id="position4" class="barracks">
     				<div class="buildingimg"></div>
@@ -268,8 +283,8 @@
 	<div id="globalResources">
 		<h3>Resources of your Empire</h3>
 		<ul>
-			<li class="transporters" title="Trade ships Available/Total"><a href="?view=merchantNavy"><span class="textLabel">Trade ships: </span><span id="value_transAvail" class="transAvail">56</span><span id="value_transSum" class="transSum">(56)</span></a></li>
-			<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">1,242k</span></a></li>
+			<li class="transporters" title="Trade ships Available/Total"><a href="?view=merchantNavy"><span class="textLabel">Trade ships: </span><span id="value_transAvail" class="transAvail">0</span><span id="value_transSum" class="transSum">(56)</span></a></li>
+			<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">1,274k</span></a></li>
 			<li class="goldBalance negative"><span class="textLabel">Income: </span>234</li>
 		</ul>
 	</div>
@@ -285,21 +300,21 @@
 			</li>
             <li class="actions" title="Action Points">
 				<span class="textLabel">Action Points: </span>
-				<span id="value_maxActionPoints">5</span>
+				<span id="value_maxActionPoints">3</span>
 			</li>
             <li class="wood" title="Building material">
 							<span class="textLabel">Building material: </span>
-							<span id="value_wood" class="storage_full">44,520</span>
+							<span id="value_wood" class="storage_danger">40,041</span>
 							<div class="tooltip"><span class="textLabel">Storage capacity: </span>44,520</div>
 						</li>
             <li class="wine" title="Wine">
 							<span class="textLabel">Wine: </span>
-							<span id="value_wine" class="storage_full">20,328</span>
+							<span id="value_wine" class="">10,976</span>
 							<div class="tooltip"><span class="textLabel">Storage capacity: </span>20,328</div>
 						</li>
             <li class="marble" title="Marble">
 							<span class="textLabel">Marble: </span>
-							<span id="value_marble" class="">10,317</span>
+							<span id="value_marble" class="">8,208</span>
 							<div class="tooltip"><span class="textLabel">Storage capacity: </span>20,328</div>
 						</li>
             <li class="glass" title="Crystal Glass">
@@ -320,15 +335,15 @@ var startServerTime = localTime.getTime() - (7200000) - localTime.getTimezoneOff
 var startTime = localTime.getTime();
 
 
-var startResources = 44520;
-var startResourcesDelta = 0.075625;
+var startResources = 40041.705;
+var startResourcesDelta = 0.0804166666667;
 var resourcesStorage = 44520;
 
-var startTradegood = 20328;
+var startTradegood = 10976.1366667;
 var startTradegoodDelta = 0.0455555555556;
 var tradegoodStorage = 20328;
 var tradegoodSub = 11;
-var tradegoodSubTime = 525;
+var tradegoodSubTime = 278;
 
 function updateResources() {
 	//global:  startTime, Dom, resourcesStorage
@@ -380,7 +395,7 @@ Event.onDOMReady(function() {
 });
 function updateServerTime() {
     var currTime = new Date();
-    currTime.setTime((1214638125000-startServerTime)+ currTime.getTime()) ;
+    currTime.setTime((1214681078000-startServerTime)+ currTime.getTime()) ;
     str = getFormatedDate(currTime.getTime(), 'd.m.Y G:i:s');
     obj_ServerTime.innerHTML = str;
 }
@@ -390,7 +405,7 @@ function updateServerTime() {
 		<h3>Overviews</h3>
 		<ul>
 			<li id="advCities">
-				<a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normal"><span class="textLabel">Towns</span></a>
+				<a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normalactive"><span class="textLabel">Towns</span></a>
 				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
 			<li id="advMilitary">
 				<a href="?view=militaryAdvisorCombatReports&amp;oldView=city&amp;id=82966" title="Military overview" class="normal">
@@ -431,7 +446,7 @@ function updateServerTime() {
         <li class="forum"><a href="http://board.ikariam.org" title="Message Board" target="_blank"><span class="textLabel">Board</span></a></li>
 		<li class="logout"><a href="/index.php?action=loginAvatar&function=logout" title="End game session"><span class="textLabel">Logout</span></a></li>
         <li class="version"><a href="?view=version" title="Version"><span class="textLabel">v.0.2.5</span></a></li>
-		<li class="serverTime"><a><span class="textLabel" id="servertime">28.06.2008 9:28:45</span></a></li>
+		<li class="serverTime"><a><span class="textLabel" id="servertime">28.06.2008 21:24:38</span></a></li>
 
 	</ul>
 </div>
