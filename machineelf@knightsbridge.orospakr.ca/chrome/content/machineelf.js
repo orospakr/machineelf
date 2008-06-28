@@ -53,12 +53,14 @@ var MachineElfToolbar = {
     },
 
     onPageLoad: function(aEvent) {
-
         var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
         // do something with the loaded page.
         // doc.location is a Location object (see below for a link).
         // You can use it to make your code executed on certain pages only.
-        if(doc.location.href.search("http://s3.ikariam.org") > -1) {
+        // HACK -- this should properly check for this being the hostname,
+        // rather than (and fetch hostnames on start from RESTful API, rather
+        // than this *ikariam.org* catch-all.
+        if(doc.location.href.search("ikariam.org") > -1) {
             // alert("a forum page is loaded: " + doc.location.href );
             // lol();
             //            alert("here!");
