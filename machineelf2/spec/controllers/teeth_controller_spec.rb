@@ -29,7 +29,7 @@ describe TeethController do
       korps_person_logged_in
     end
 
-    describe "receiving HTML uploads from Ikariam" do
+    describe "receiving HTML uploads from Machine Elf Toolbar" do
 
       def ikariam_page(page_name)
         results = ''
@@ -75,19 +75,20 @@ describe TeethController do
         @town = mock_model(Town)
         @island = mock_model(Island)
         @player = mock_model(Player)
+        @server = mock_model(Server)
 
         Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
         Island.should_receive(:by_ikariam_id).with(3909).and_return(@island)
-        #Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
+        Server.should_receive(:by_hostname).with('s3.ikariam.org').and_return(@server)
 
         @town.should_receive(:save!)
         @town.should_receive(:player).and_return(@player)
-        expects(@town, { :name => 'Mobotropolis', :island => @island })
+        expects(@town, { :name => 'Mobotropolis', :island => @island, :server => @server })
 
-        expects(@island, { :name => 'Issayos'})
+        expects(@island, { :name => 'Issayos', :server => @server})
         @island.should_receive(:save!)
 
-        expects(@player, { :ikariam_login => 'orospakr'})
+        expects(@player, { :ikariam_login => 'orospakr', :server => @server})
         @player.should_receive(:save!)
 
         # now to test data point creation...

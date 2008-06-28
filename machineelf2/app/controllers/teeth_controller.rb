@@ -1,5 +1,7 @@
 require 'hpricot'
 
+require 'uri'
+
 class TeethController < ApplicationController
   protect_from_forgery :except => [:scree]
 
@@ -51,8 +53,12 @@ class TeethController < ApplicationController
     pos = island_url.index('id=')
     island_id = island_url[pos+3..-1].to_i
 
+    print island_url
+    s = Server.by_hostname(URI.parse(params[:ikariam_url]).host)
+
     i = Island.by_ikariam_id(island_id)
     i.name = island_name
+    i.server = s
     i.save!
 
     b = parsed_contents.at('body#city')
@@ -60,6 +66,7 @@ class TeethController < ApplicationController
 
     t = Town.by_ikariam_id(find_arg_by_name(:id).to_i)
     t.island = i
+    t.server = s
     t.name = city.inner_html
     t.save!
 
@@ -68,6 +75,7 @@ class TeethController < ApplicationController
     # view_city page.  WRONG -- if you spy out a town, this isn't true
 
     owner = t.player
+    owner.server = s
     # broken window!  there is no unit test for the nil case.
     if not owner.nil?
       owner.ikariam_login = parsed_contents.at("//li[@class='owner']").inner_html.split()[-1].split('>')[-1]
