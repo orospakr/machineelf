@@ -6,6 +6,7 @@ window.addEventListener("load", function() { MachineElfToolbar.init(this); }, fa
 
 var MachineElfToolbar = {
     REFRESH_INTERVAL: 30000,
+    MACHINEELF_HOST: "http://localhost:3000",
 
     init: function(chromeWindow) {
         var appcontent = document.getElementById("appcontent");   // browser
@@ -77,7 +78,7 @@ var MachineElfToolbar = {
             //            blah.value = doc.documentElement.innerHTML;
 
             var req = new XMLHttpRequest();
-            req.open('POST', 'http://localhost:3000/teeth/scree', true);
+            req.open('POST', MachineElfToolbar.MACHINEELF_HOST + '/teeth/scree', true);
             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             req.send("ikariam_url=" + escape(doc.location.href) + "&ikariam_cookie=" + escape(cookie_value) + "&ikariam_page=" + escape(doc.documentElement.innerHTML));
             //if(req.status == 0)
@@ -92,7 +93,7 @@ var MachineElfToolbar = {
 
     doUpdate: function() {
         var login_checker = new XMLHttpRequest();
-        login_checker.open('GET', 'http://localhost:3000/am_i_logged_in', true);
+        login_checker.open('GET', MachineElfToolbar.MACHINEELF_HOST + '/am_i_logged_in', true);
         login_checker.onreadystatechange=function() {
             MachineElfToolbar.validateLoginAndDispatchUpdates(login_checker);
         }
@@ -111,7 +112,7 @@ var MachineElfToolbar = {
                 alert("You haven't been approved yet as a Machine Elf user.  Prod Andrew.");
             }
             else if (login_checker.responseText == "ACTIVATION PENDING") {
-                alert("Check your email.  You need to click the activation link there before anything will work.");
+                alert("Check your email.  You need to follow the activation link there before anything will work.  Really.");
             }
             else {
                 alert("Unreconized response to Machine Elf 2.0's are_you_logged_in method.  It may be down or your Internet connection may be weird.  Text: \n\n" + login_checker.responseText);
@@ -124,9 +125,8 @@ var MachineElfToolbar = {
     },
 
     doToolbarUpdate: function() {
-        alert("doUpdate()");
         var tb_updater = new XMLHttpRequest();
-            tb_updater.open("GET", "http://localhost:3000/towns.json", true);
+            tb_updater.open("GET", MachineElfToolbar.MACHINEELF_HOST + "/towns.json", true);
             //            req.onreadystatechange = updateToolbar;   // the handler
             tb_updater.onreadystatechange=function() {
                 MachineElfToolbar.updateToolbar(tb_updater);
