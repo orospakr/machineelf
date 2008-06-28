@@ -1,9 +1,18 @@
-// Machine Elf 2 Toolbar.
+// Machine Elf 2.0 Toolbar.
 
 window.addEventListener("load", function() { MachineElf.init(this); }, false);
 
-// class defined in so-called 'literal' notation
+// TODO for tomorrow
 
+// I have to determine which Ikariam server by hostname I'm on BEFORE I can scree,
+// because I need to know which cookie to get and send along.
+
+// Add nice UI in the toolbar to show town stats, obviously
+
+// Cordon off the admin features (CRUD/scaffold operations that mutate things)
+
+
+// class defined in so-called 'literal' notation
 var MachineElf = {
     REFRESH_INTERVAL: 30000,
     MACHINEELF_HOST: "http://localhost:3000",
