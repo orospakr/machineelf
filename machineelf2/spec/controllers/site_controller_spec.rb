@@ -15,7 +15,7 @@ describe SiteController do
     it "YES when logged in" do
       korps_person_logged_in
       do_get
-      response.body.should == "YES"
+      response.body.should == "YES #{@current_user.id}"
     end
 
     it "NO when not logged in" do

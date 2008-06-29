@@ -11,11 +11,15 @@ class SiteController < ApplicationController
     if user.nil?
       render :text => "NO"
     elsif user.is_korps and user.state == "active"
-      render :text => "YES"
+      render :text => "YES #{user.id}"
     elsif user.state == "pending"
       render :text => "ACTIVATION PENDING"
     elsif
       render :text => "NOT APPROVED"
     end
+  end
+
+  def who_am_i
+    user = current_user
   end
 end

@@ -10,6 +10,7 @@ module AuthenticatedTestHelper
 
   def korps_person_logged_in
     current_user = mock_model User
+    @current_user = current_user
     current_user.stub!(:is_korps).and_return(true)
     current_user.stub!(:state).and_return('active')
     controller.should_receive(:current_user).once.and_return(current_user)

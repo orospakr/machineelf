@@ -18,6 +18,7 @@ window.addEventListener("load", function() { MachineElf.init(this); }, false);
 var MachineElf = {
     REFRESH_INTERVAL: 30000,
     MACHINEELF_HOST: "http://localhost:3000",
+    servers_list: null,
 
     init: function(chromeWindow) {
         var appcontent = document.getElementById("appcontent");   // browser
@@ -29,6 +30,7 @@ var MachineElf = {
 
                 chromeWindow.window.setInterval("MachineElf.doUpdate();",
         this.REFRESH_INTERVAL);
+        this.detectServers();
         this.doUpdate();
     },
 
@@ -70,20 +72,13 @@ var MachineElf = {
         }
     },
 
-    onPageLoad: function(aEvent) {
-        var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
-        // do something with the loaded page.
-        // doc.location is a Location object (see below for a link).
-        // You can use it to make your code executed on certain pages only.
-        // HACK -- this should properly check for this being the hostname,
-        // rather than (and fetch hostnames on start from RESTful API, rather
-        // than this *ikariam.org* catch-all.
-        if(doc.location.href.search("ikariam.org") > -1) {
+    doScrape: function(domain, doc) {
+        if(doc.location.href.search(domain) > -1) {
             // alert("a forum page is loaded: " + doc.location.href );
             // lol();
             //            alert("here!");
             //            var blah = document.getElementById("me_blah_label");
-            var cookie_value = MachineElf.getIkariamCookie();
+            var cookie_value = MachineElf.getIkariamCookie(domain);
             //            alert(cookie_value);
             // alert(blah);
             //            blah.value = doc.documentElement.innerHTML;
@@ -102,6 +97,42 @@ var MachineElf = {
         }
     },
 
+    serverDetectedCallback: function(servers_json_req) {
+        if (servers_json_req.readyState == 4) {
+            var servers_json = eval('(' + servers_json_req.reponseText + ')');
+            MachineElf.servers_list = [];
+            for (server in servers_json) {
+                MachineElf.servers_list.push(servers_json[server]);
+                alert(servers_json[server]);
+            }
+        }
+    },
+
+    detectServers: function() {
+        if (MachineElf.servers_list != null) {
+            alert("serversList already downloaded, not retrying.");
+            return;
+        }
+        var servers_json_req = new XMLHttpRequest();
+        servers_json_req.open('GET', MachineElf.MACHINEELF_HOST + '/servers.json', true);
+        servers_json_req.onreadystatechange=function() {
+            MachineElf.serverDetectedCallback(servers_json_req);
+        }
+        servers_json_req.send(null);
+    },
+
+    onPageLoad: function(aEvent) {
+        var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
+        // do something with the loaded page.
+        // doc.location is a Location object (see below for a link).
+        // You can use it to make your code executed on certain pages only.
+        // HACK -- this should properly check for this being the hostname,
+        // rather than (and fetch hostnames on start from RESTful API, rather
+        // than this *ikariam.org* catch-all.
+
+        MachineElf.doScrape("s3.ikariam.org", doc);
+    },
+
     doUpdate: function() {
         var login_checker = new XMLHttpRequest();
         login_checker.open('GET', MachineElf.MACHINEELF_HOST + '/am_i_logged_in', true);
@@ -113,8 +144,12 @@ var MachineElf = {
 
     validateLoginAndDispatchUpdates: function(login_checker) {
         if (login_checker.readyState == 4) {
-            if (login_checker.responseText == "YES") {
-                MachineElf.dispatchUpdaters();
+            if (login_checker.responseText.search("YES") > -1 ) {
+                var items = login_checker.responseText.split(' ');
+                if (items[0] != "YES") {
+                    alert("Badly formed YES directive!  Contents: '" + login_checker.responseText + "'");
+                }
+                MachineElf.dispatchUpdaters(items[1]);
             }
             else if (login_checker.responseText == "NO") {
                 alert("You aren't logged into Machine Elf.");
@@ -126,12 +161,12 @@ var MachineElf = {
                 alert("Check your email.  You need to follow the activation link there before anything will work.  Really.");
             }
             else {
-                alert("Unreconized response to Machine Elf 2.0's are_you_logged_in method.  It may be down or your Internet connection may be weird.  Text: \n\n" + login_checker.responseText);
+                alert("Unrecognized response to Machine Elf 2.0's are_you_logged_in method.  It may be down or your Internet connection may be weird.  Text: \n\n" + login_checker.responseText);
             }
         }
     },
 
-    dispatchUpdaters: function() {
+    dispatchUpdaters: function(user_id) {
         MachineElf.doToolbarUpdate();
     },
 
@@ -145,8 +180,7 @@ var MachineElf = {
             tb_updater.send(null);
     },
 
-    getIkariamCookie: function() {
-        var domain = "s3.ikariam.org";
+    getIkariamCookie: function(domain) {
         var path = "/";
         var cookieManager = Components.classes["@mozilla.org/cookiemanager;1"].getService(Components.interfaces.nsICookieManager);
         var iter = cookieManager.enumerator;

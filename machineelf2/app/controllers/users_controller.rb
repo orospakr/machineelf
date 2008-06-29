@@ -1,3 +1,4 @@
+
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
 #  include AuthenticatedSystem
@@ -5,11 +6,31 @@ class UsersController < ApplicationController
   layout 'standard'
 
   # Protect these actions behind an admin login
-#  before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
-  before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
+  before_filter :is_korps?, :only => [:suspend, :unsuspend, :destroy, :purge, :index, :show]
+  before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge, :index, :show]
 
   # render new.rhtml
   def new
+  end
+
+  def index
+    @users = User.find(:all)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users.to_xml(:except => User.excluded_from_serialization) }
+      format.json { render :json => @users.to_json(:except => User.excluded_from_serialization) }
+    end
+  end
+
+  def show
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @user.to_xml(:except => User.excluded_from_serialization) }
+      format.json { render :json => @user.to_json(:except => User.excluded_from_serialization) }
+    end
   end
 
   def create
