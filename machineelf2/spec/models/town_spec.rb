@@ -12,14 +12,6 @@ describe Town do
     @town.should_not be_valid
   end
 
-  it "should be valid if it has an ikariam id, server, and name, that does not already exist in the database" do
-    gamma = mock_model(Server)
-    @town.ikariam_id = 9999
-    @town.server = gamma
-    @town.name = 'Not Mobotropolis'
-    @town.should be_valid
-  end
-
   it "should not be valid if it specifies a town that already exists" do
     @town.ikariam_id = towns(:mobotropolis).ikariam_id
     @town.name = "Should not matter what the name is"
@@ -45,6 +37,35 @@ describe Town do
     mobo.new_record?.should_not be_true
   end
 
+  describe "a valid town" do
+    before :each do
+      @town = Town.new
+      gamma = mock_model(Server)
+      @town.ikariam_id = 9999
+      @town.server = gamma
+      @town.name = 'Not Mobotropolis'
+    end
+
+    it "is valid when it has all of the required fields" do
+      @town.should be_valid
+    end
+
+    it "should return the an existing building by flavour" do
+      @tavern = mock_model(Building)
+      Building.should_receive(:find).with(:first, :conditions => ["flavour = ? AND town_id = ?", 'tavern', @town.id]).and_return(@tavern)
+      @town.building_by_flavour('tavern').should == @tavern
+    end
+
+    it "should return a new building by flavour" do
+      @museum = mock_model(Building)
+      Building.should_receive(:find).with(:first, :conditions => ["flavour = ? AND town_id = ?", 'museum', @town.id]).and_return(nil)
+      Building.should_receive(:new).and_return(@museum)
+      @museum.should_receive(:town=).with(@town)
+      @museum.should_receive(:flavour=).with("museum")
+      @town.building_by_flavour('museum').should == @museum
+    end
+  end
+
   it "should return the most recent value for a given Event column" do
     mobo = towns(:mobotropolis)
     mobo.get_most_recent_event_value("wood").should == 9001
@@ -60,7 +81,7 @@ describe Town do
     mobo.get_stats.should == expected
   end
 
-    describe "should calculate the time of completion from the remaining time value" do
+  describe "should calculate the time of completion from the remaining time value" do
     before :each do
       @now_time = Time.parse("Sat Jun 28 16:29:14 -0400 2008")
       Time.stub!(:now).and_return(@now_time)

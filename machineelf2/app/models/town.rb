@@ -63,12 +63,13 @@ class Town < ActiveRecord::Base
   end
 
   def building_by_flavour(flavour)
-    existing_town = Town.find(:first, :conditions => ["flavour = ? AND town_id = ?", flavour, self.id])
-    if !existing_town.nil?
-      return existing_town
+    existing_building = Building.find(:first, :conditions => ["flavour = ? AND town_id = ?", flavour, self.id])
+    if !existing_building.nil?
+      return existing_building
     end
-    new_town = Town.new()
-    new_town.town = self
-    return new_town
+    new_building = Building.new()
+    new_building.flavour = flavour
+    new_building.town = self
+    return new_building
   end
 end

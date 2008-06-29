@@ -129,15 +129,15 @@ class TeethController < ApplicationController
 
       #t_event.send("#{building.to_s}=", level_number)
       building = t.building_by_flavour(building_sym.to_s)
-
-      building.write_event(level_number)
-
       time_elem = aref.at("//div[@class='timetofinish']")
       if !time_elem.nil?
         upgrade_finish_time = Town.remaining_finished_at(time_elem.at('#cityCountdown').inner_html)
         building.ready_at = upgrade_finish_time
       end
+
+
       building.save!
+      building.write_event(level_number)
     end
     t_event.save!
   end

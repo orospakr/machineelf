@@ -2,10 +2,11 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/servers/show.html.erb" do
   include ServersHelper
-  
+
   before(:each) do
     @server = mock_model(Server)
     @server.stub!(:hostname).and_return("MyString")
+    @server.stub!(:name).and_return("MyString")
 
     assigns[:server] = @server
   end

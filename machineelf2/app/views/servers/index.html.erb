@@ -3,11 +3,13 @@
 <table>
   <tr>
     <th>Hostname</th>
+    <th>Name</th>
   </tr>
 
 <% for server in @servers %>
   <tr>
     <td><%=h server.hostname %></td>
+    <td><%=h server.name %></td>
     <td><%= link_to 'Show', server %></td>
     <td><%= link_to 'Edit', edit_server_path(server) %></td>
     <td><%= link_to 'Destroy', server, :confirm => 'Are you sure?', :method => :delete %></td>

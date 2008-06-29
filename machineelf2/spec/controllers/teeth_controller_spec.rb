@@ -124,7 +124,6 @@ describe TeethController do
         b_events = []
         expected_buildings.each_pair do |flavour, level|
           building = mock_model(Building)
-          print "Building for flavour #{flavour} is #{building}\n"
           building.stub!(:town).and_return(@town)
           @town.should_receive(:building_by_flavour).with(flavour.to_s).and_return(building)
           if flavour == :tavern
