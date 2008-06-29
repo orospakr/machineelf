@@ -13,6 +13,8 @@ class Town < ActiveRecord::Base
 
   has_many :town_events
 
+  has_many :buildings
+
   validates_presence_of :ikariam_id, :name, :server
   validates_uniqueness_of :ikariam_id
 
@@ -60,4 +62,13 @@ class Town < ActiveRecord::Base
     return time_now
   end
 
+  def building_by_flavour(flavour)
+    existing_town = Town.find(:first, :conditions => ["flavour = ? AND town_id = ?", flavour, self.id])
+    if !existing_town.nil?
+      return existing_town
+    end
+    new_town = Town.new()
+    new_town.town = self
+    return new_town
+  end
 end

@@ -9,7 +9,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 7) do
+ActiveRecord::Schema.define(:version => 9) do
+
+  create_table "building_events", :force => true do |t|
+    t.integer  "building_id"
+    t.integer  "level"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "buildings", :force => true do |t|
+    t.string   "flavour"
+    t.datetime "ready_at"
+    t.integer  "town_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "islands", :force => true do |t|
     t.integer  "ikariam_id"
@@ -55,34 +70,6 @@ ActiveRecord::Schema.define(:version => 7) do
     t.integer  "population_capacity"
     t.integer  "population"
     t.integer  "available_mans"
-    t.integer  "town_hall"
-    t.integer  "trading_port"
-    t.integer  "shipyard"
-    t.integer  "tavern"
-    t.integer  "barracks"
-    t.integer  "academy"
-    t.integer  "warehouse"
-    t.integer  "hideout"
-    t.integer  "museum"
-    t.integer  "trading_post"
-    t.integer  "embassy"
-    t.integer  "palace"
-    t.integer  "town_wall"
-    t.integer  "workshop"
-    t.integer  "town_hall_remaining"
-    t.integer  "trading_port_remaining"
-    t.integer  "shipyard_remaining"
-    t.integer  "tavern_remaining"
-    t.integer  "barracks_remaining"
-    t.integer  "academy_remaining"
-    t.integer  "warehouse_remaining"
-    t.integer  "hideout_remaining"
-    t.integer  "museum_remaining"
-    t.integer  "trading_post_remaining"
-    t.integer  "embassy_remaining"
-    t.integer  "palace_remaining"
-    t.integer  "town_wall_remaining"
-    t.integer  "workshop_remaining"
     t.datetime "created_at"
   end
 

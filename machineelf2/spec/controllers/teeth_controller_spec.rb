@@ -93,20 +93,46 @@ describe TeethController do
 
         # now to test data point creation...
 
-        @town_event = mock_model(TownEvent)
-        TownEvent.should_receive(:new).and_return(@town_event)
+#         @town_event = mock_model(TownEvent)
+#         TownEvent.should_receive(:new).and_return(@town_event)
+#         Time.stub!(:now).and_return(Time.parse("Sun Jun 28 17:35:21 -0400 2008"))
+#         expects(@town_event, { :town => @town,
+#                   :town_hall => 17, :trading_port => 5,
+#                   :shipyard => 2, :tavern => 11,
+#                   :barracks => 4, :academy => 12,
+#                   :warehouse => 13, :hideout => 5,
+#                   :museum => 4, :trading_post => 6,
+#                   :embassy => 1, :palace => 2,
+#                   :town_wall => 8, :workshop => 1,
+#                   :tavern_remaining => Time.parse("Sun Jun 29 05:03:21 -0400 2008")
+        #                 })
+        #         @town_event.should_receive(:save!)
+
+        # these have to be ordered by their incidence in the view_city fixture file.
+        # that's just the way it is (making this code not require ordering
+        # is just a massive pain).
+        expected_buildings = {  :town_hall => 17, :trading_port => 5,
+          :shipyard => 2, :tavern => 11,
+          :barracks => 4, :academy => 12,
+          :warehouse => 13, :hideout => 5,
+          :museum => 4, :trading_post => 6,
+          :embassy => 1, :workshop => 1, :palace => 2,
+          :town_wall => 8 }
+
         Time.stub!(:now).and_return(Time.parse("Sun Jun 28 17:35:21 -0400 2008"))
-        expects(@town_event, { :town => @town,
-                  :town_hall => 17, :trading_port => 5,
-                  :shipyard => 2, :tavern => 11,
-                  :barracks => 4, :academy => 12,
-                  :warehouse => 13, :hideout => 5,
-                  :museum => 4, :trading_post => 6,
-                  :embassy => 1, :palace => 2,
-                  :town_wall => 8, :workshop => 1,
-                  :tavern_remaining => Time.parse("Sun Jun 29 05:03:21 -0400 2008")
-                })
-        @town_event.should_receive(:save!)
+
+        b_events = []
+        expected_buildings.each_pair do |flavour, level|
+          building = mock_model(Building)
+          print "Building for flavour #{flavour} is #{building}\n"
+          building.stub!(:town).and_return(@town)
+          @town.should_receive(:building_by_flavour).with(flavour.to_s).and_return(building)
+          if flavour == :tavern
+            building.should_receive(:ready_at=).with(Time.parse("Sun Jun 29 05:03:21 -0400 2008"))
+          end
+          building.should_receive(:save!)
+          building.should_receive(:write_event).ordered.with(level)
+        end
 
         do_scrape_contents_only :view_city
       end
@@ -123,7 +149,7 @@ describe TeethController do
         Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
         expects(@town, { :name => 'Mobotropolis', :player => @player,
-                :server => @server})
+                  :server => @server})
         expects(@player, { :server => @server})
         @town.should_receive(:save!)
         @player.should_receive(:save!)

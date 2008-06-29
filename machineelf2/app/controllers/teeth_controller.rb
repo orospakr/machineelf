@@ -119,20 +119,25 @@ class TeethController < ApplicationController
         building_name += word + ' '
       end
 
-
-
-      building = building_names[building_name[0..-2]] # slice is to get rid of extra space
-      if building.nil?
+      building_sym = building_names[building_name[0..-2]] # slice is to get rid of extra space
+      if building_sym.nil?
         next
       end
-      t_event.send("#{building.to_s}=", level_number)
+
+     # print "BUILDING: #{building_sym}\n"
+     # next
+
+      #t_event.send("#{building.to_s}=", level_number)
+      building = t.building_by_flavour(building_sym.to_s)
+
+      building.write_event(level_number)
 
       time_elem = aref.at("//div[@class='timetofinish']")
       if !time_elem.nil?
         upgrade_finish_time = Town.remaining_finished_at(time_elem.at('#cityCountdown').inner_html)
-        t_event.send("#{building.to_s}_remaining=", upgrade_finish_time)
+        building.ready_at = upgrade_finish_time
       end
-
+      building.save!
     end
     t_event.save!
   end

@@ -3,7 +3,6 @@ class CreateBuildingEvents < ActiveRecord::Migration
     create_table :building_events do |t|
       t.integer :building_id
       t.integer :level
-
       t.timestamps
     end
   end

@@ -1,11 +1,11 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-one:
-  flavour: MyString
+mobo_tavern:
+  flavour: tavern
   ready_at: 2008-06-28 17:49:59
-  town_id: 1
+  town: mobotropolis
 
-two:
-  flavour: MyString
+ivarion_port:
+  flavour: trading port
   ready_at: 2008-06-28 17:49:59
-  town_id: 1
+  town: ivarion
