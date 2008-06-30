@@ -2,7 +2,7 @@
 
 one:
   building: mobo_tavern
-  level: 1
+  level: 15
 
 two:
   building: ivarion_port

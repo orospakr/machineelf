@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(:version => 9) do
     t.integer  "building_id"
     t.integer  "level"
     t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "buildings", :force => true do |t|

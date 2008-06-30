@@ -115,7 +115,7 @@ var MachineElf = {
 
         town_button_tooltip.appendChild(wine_hbox);
         wine_label.setAttribute("value", "Wine");
-        wine_label_value.setAttribute("value", town.wine);
+        wine_label_value.setAttribute("value", town.current_stats.wine);
         wine_hbox.appendChild(wine_label);
         wine_hbox.appendChild(wine_label_value);
 
@@ -240,7 +240,8 @@ var MachineElf = {
                 MachineElf.setStatusMessage("Check your email.  You need to follow the activation link there before anything will work.  Really.");
             }
             else {
-                MachineElf.setStatusMessage("Unrecognized response to Machine Elf 2.0's are_you_logged_in method.  It may be down or your Internet connection may be weird.  Text: \n\n" + login_checker.responseText);
+                MachineElf.setStatusMessage("BROKEN  (No connectivity or Machine Elf server down?)");
+                MachineElf.log("Weird or broken reply to /am_i_logged_in. responseText: \n\n" + login_checker.responseText);
             }
         }
     },

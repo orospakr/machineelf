@@ -11,8 +11,8 @@ class TownsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @towns.to_xml }
-      format.json { render :json => @towns.to_json }
+      format.xml  { render :xml => @towns.to_xml } # hash returned get_stats does not serialize to_xml
+      format.json { render :json => @towns.to_json({ :methods => [:current_stats]}) }
     end
   end
 
@@ -23,15 +23,15 @@ class TownsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @town }
-      format.json { render :json => @town.to_json }
+      format.xml  { render :xml => @town } # hash returned get_stats does not serialize to_xml
+      format.json { render :json => @town.to_json({ :methods => [:current_stats]}) }
     end
   end
 
   def stats
     @town = Town.find(params[:id])
 
-    stats = @town.get_stats
+    stats = @town.current_stats
 
     respond_to do |format|
       format.html

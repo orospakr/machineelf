@@ -3,6 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Town do
   fixtures :towns
   fixtures :town_events
+  fixtures :buildings
+  fixtures :building_events
 
   before(:each) do
     @town = Town.new
@@ -71,14 +73,15 @@ describe Town do
     mobo.get_most_recent_event_value("wood").should == 9001
   end
 
-  it "should return the most recent stats from the Town event table" do
+  it "should return the most recent stats from the Town event table, as well as building stats" do
     mobo = towns(:mobotropolis)
-
+    mobo_tavern = buildings(:mobo_tavern)
+    mobo_tavern.town.should == mobo
     expected = { :wood => 9001, :wine => 9473, :sulphur => 4567, :marble => 4568,
       :crystal => 5252, :population_capacity => 1000, :population => 900,
-      :available_mans => 200 }
+      :available_mans => 200, :buildings => { :tavern => { :level => 15}} }
 
-    mobo.get_stats.should == expected
+    mobo.current_stats.should == expected
   end
 
   describe "should calculate the time of completion from the remaining time value" do

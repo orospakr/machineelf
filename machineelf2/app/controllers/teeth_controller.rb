@@ -92,14 +92,7 @@ class TeethController < ApplicationController
     # and an IslandEvent to represent the temporal data we
     # have here.
 
-    building_names = { 'Town hall' => :town_hall,
-      'Trading port' => :trading_port,
-    'Shipyard' => :shipyard, 'Tavern' => :tavern,
-    'Barracks' => :barracks, 'Academy' => :academy,
-    'Warehouse' => :warehouse, 'Hideout' => :hideout,
-    'Museum' => :museum, 'Trading post' => :trading_post,
-    'Embassy' => :embassy, 'Palace' => :palace,
-    'Town wall' => :town_wall, "Workshop" => :workshop}
+    building_names = Building.building_types
 
     t_event = TownEvent.new
     t_event.town = t

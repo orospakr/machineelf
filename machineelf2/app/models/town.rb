@@ -32,7 +32,7 @@ class Town < ActiveRecord::Base
     return nil
   end
 
-  def get_stats
+  def current_stats
     should_not_get = [:id, :created_at, :town_id]
     results = { }
     #    pp TownEvent.columns
@@ -42,6 +42,16 @@ class Town < ActiveRecord::Base
       end
       results[col.name.intern] = get_most_recent_event_value(col.name)
     end
+
+    # breaking the usual RESTful paradigm here and including the building
+    # status data here too, for convenience.  Toolbar doesn't need to know
+    # about the separate building/buildingevent objects, either, and there's no
+    # point in having it roundtrip to /buildings/:id.json anyway.
+    bdings = { }
+    buildings.each do |building|
+      bdings[building.flavour.intern] = building.current_stats
+    end
+    results[:buildings] = bdings
     return results
   end
 

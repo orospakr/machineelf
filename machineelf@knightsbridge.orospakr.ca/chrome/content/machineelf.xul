@@ -9,23 +9,22 @@
         <stack flex="0">
 
           <hbox flex="0">
-            <toolbarbutton id="me_test_button" image="chrome://stumbleupon/skin/thumbup.png" label="stuff"/>
-            <toolbarseparator />
-            <toolbarbutton image="chrome://stumbleupon/skin/thumbup.png" label="stuff 2"/>
-            <toolbarseparator />
-            <vbox>
-              <spacer flex="1"/>
-              <label id="me_status_label" value="Waiting..."/>
-              <spacer flex="1"/>
-            </vbox>
-            <hbox id="me_cities_list">
-            </hbox>
             <toolbarbutton id="machineelf_warp_menu_button" type="menu" container="true" label="Warp" tooltiptext="Engage.">
               <menupopup id="machineelf_warp_menu">
                 <menuitem label="Towns" disabled="true"/>
                 <menuseparator />
               </menupopup>
             </toolbarbutton>
+            <toolbarseparator />
+            <vbox>
+              <spacer flex="1"/>
+              <label id="me_status_label" value="Waiting..."/>
+              <spacer flex="1"/>
+            </vbox>
+            <toolbarseparator />
+            <hbox id="me_cities_list">
+            </hbox>
+
           </hbox>
         </stack>
       </toolbaritem>
