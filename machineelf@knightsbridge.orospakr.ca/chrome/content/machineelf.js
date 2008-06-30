@@ -92,6 +92,8 @@ var MachineElf = {
 
     updateTownsOnToolbar: function(towns_json) {
         var me_cities_list = document.getElementById("me_cities_list");
+        // remove all of the pre-existing town info buttons on the toolbar
+        // placed by addTownToToolbar on the previous run...
         for (town_elem in MachineElf.toolbar_towns) {
             me_cities_list.removeChild(MachineElf.toolbar_towns[town_elem]);
         }
@@ -109,15 +111,17 @@ var MachineElf = {
         var town_button = document.createElement("toolbarbutton");
         var town_button_tooltip = document.createElement("tooltip");
         var town_button_tooltip_id = "town_tooltip_" + town.id;
-        var wine_label = document.createElement("label");
-        var wine_label_value = document.createElement("label");
-        var wine_hbox = document.createElement("hbox");
 
-        town_button_tooltip.appendChild(wine_hbox);
-        wine_label.setAttribute("value", "Wine");
-        wine_label_value.setAttribute("value", town.current_stats.wine);
-        wine_hbox.appendChild(wine_label);
-        wine_hbox.appendChild(wine_label_value);
+        for (resource in town.current_stats.resources) {
+            var res_label = document.createElement("label");
+            var res_label_value = document.createElement("label");
+            var res_hbox = document.createElement("hbox");
+            town_button_tooltip.appendChild(res_hbox);
+            res_label.setAttribute("value", resource);
+            res_label_value.setAttribute("value", town.current_stats.resources[resource]);
+            res_hbox.appendChild(res_label);
+            res_hbox.appendChild(res_label_value);
+        }
 
         town_hbox.appendChild(town_button_tooltip);
         town_button.setAttribute("label", town.name);
@@ -240,7 +244,7 @@ var MachineElf = {
                 MachineElf.setStatusMessage("Check your email.  You need to follow the activation link there before anything will work.  Really.");
             }
             else {
-                MachineElf.setStatusMessage("BROKEN  (No connectivity or Machine Elf server down?)");
+                MachineElf.setStatusMessage("BROKEN  (No connectivity or Machine Elf server down)");
                 MachineElf.log("Weird or broken reply to /am_i_logged_in. responseText: \n\n" + login_checker.responseText);
             }
         }

@@ -77,9 +77,9 @@ describe Town do
     mobo = towns(:mobotropolis)
     mobo_tavern = buildings(:mobo_tavern)
     mobo_tavern.town.should == mobo
-    expected = { :wood => 9001, :wine => 9473, :sulphur => 4567, :marble => 4568,
+    expected = { :resources => { :wood => 9001, :wine => 9473, :sulphur => 4567, :marble => 4568,
       :crystal => 5252, :population_capacity => 1000, :population => 900,
-      :available_mans => 200, :buildings => { :tavern => { :level => 15}} }
+        :available_mans => 200 }, :buildings => { :tavern => { :level => 15}}}
 
     mobo.current_stats.should == expected
   end

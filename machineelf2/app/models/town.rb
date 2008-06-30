@@ -35,14 +35,15 @@ class Town < ActiveRecord::Base
   def current_stats
     should_not_get = [:id, :created_at, :town_id]
     results = { }
+    resources = { }
     #    pp TownEvent.columns
     TownEvent.columns.each do |col|
       if should_not_get.include?(col.name.intern)
         next
       end
-      results[col.name.intern] = get_most_recent_event_value(col.name)
+      resources[col.name.intern] = get_most_recent_event_value(col.name)
     end
-
+    results[:resources] = resources
     # breaking the usual RESTful paradigm here and including the building
     # status data here too, for convenience.  Toolbar doesn't need to know
     # about the separate building/buildingevent objects, either, and there's no
