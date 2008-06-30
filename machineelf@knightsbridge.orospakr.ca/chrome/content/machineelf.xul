@@ -15,16 +15,17 @@
             <toolbarseparator />
             <vbox>
               <spacer flex="1"/>
-              <label id="me_blah_label" value="Blaahalallh:"/>
+              <label id="me_status_label" value="Waiting..."/>
               <spacer flex="1"/>
             </vbox>
+            <hbox id="me_cities_list">
+            </hbox>
             <toolbarbutton id="machineelf_warp_menu_button" type="menu" container="true" label="Warp" tooltiptext="Engage.">
               <menupopup id="machineelf_warp_menu">
                 <menuitem label="Towns" disabled="true"/>
                 <menuseparator />
               </menupopup>
             </toolbarbutton>
-            <notification label="This is a warning"/>
           </hbox>
         </stack>
       </toolbaritem>

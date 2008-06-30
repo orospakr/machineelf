@@ -1,5 +1,6 @@
 // Machine Elf 2.0 Toolbar.
 
+
 window.addEventListener("load", function() { MachineElf.init(this); }, false);
 
 // TODO for tomorrow
@@ -12,6 +13,9 @@ window.addEventListener("load", function() { MachineElf.init(this); }, false);
 // Cordon off the admin features (CRUD/scaffold operations that mutate things)
 
 // Implement remaining-build time feature for buildings
+
+// Create an action for building level retrieval, like /towns/:id/stats,
+// that returns building levels... or should I perhaps be using that new way of including computed values in activerecord serialization?
 
 
 // class defined in so-called 'literal' notation
@@ -34,10 +38,26 @@ var MachineElf = {
         this.doUpdate();
     },
 
+    logger: Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService),
+
     warp_zone_items: [],
+
+    toolbar_towns: [],
+
+    // nativeJSON: Components.classes["@mozilla.org/dom/json;1"].createInstance(Components.interfaces.nsIJSON),
+
 
     lol: function() {
         alert("lol internets");
+    },
+
+    log: function(string) {
+        MachineElf.logger.logStringMessage("Machine Elf says: " + string);
+    },
+
+    setStatusMessage: function(message) {
+        var me_status_label = document.getElementById("me_status_label");
+        me_status_label.value = message;
     },
 
     updateWarpMenu: function(towns_json) {
@@ -55,38 +75,80 @@ var MachineElf = {
         }
     },
 
-    updateToolbar: function(towns_json_req) {
-        var blah = document.getElementById("me_blah_label");
-        blah.value = 'UNMODIFIED FROG';
-
+    updateToolbarTowns: function(towns_json_req) {
         var towns_json;
 
         if (towns_json_req.readyState == 4) {
             towns_json = eval('(' + towns_json_req.responseText + ')');
-            blah.value = towns_json[0].name;
+            //blah.value = towns_json[0].name;
+            MachineElf.updateTownsOnToolbar(towns_json);
             MachineElf.updateWarpMenu(towns_json);
         }
         else {
-            blah.value = "FAILURE";
+            //blah.value = "FAILURE";
             return;
         }
     },
 
-    doScrape: function(domain, doc) {
-        if(doc.location.href.search(domain) > -1) {
-            // alert("a forum page is loaded: " + doc.location.href );
-            // lol();
-            //            alert("here!");
-            //            var blah = document.getElementById("me_blah_label");
-            var cookie_value = MachineElf.getIkariamCookie(domain);
-            //            alert(cookie_value);
-            // alert(blah);
-            //            blah.value = doc.documentElement.innerHTML;
+    updateTownsOnToolbar: function(towns_json) {
+        var me_cities_list = document.getElementById("me_cities_list");
+        for (town_elem in MachineElf.toolbar_towns) {
+            me_cities_list.removeChild(MachineElf.toolbar_towns[town_elem]);
+        }
+        MachineElf.toolbar_towns = [];
+
+        for (town in towns_json) {
+            var town = towns_json[town];
+            MachineElf.addTownToToolbar(town);
+        }
+    },
+
+    addTownToToolbar: function(town) {
+        var me_cities_list = document.getElementById("me_cities_list");
+        var town_hbox = document.createElement("hbox");
+        var town_button = document.createElement("toolbarbutton");
+        var town_button_tooltip = document.createElement("tooltip");
+        var town_button_tooltip_id = "town_tooltip_" + town.id;
+        var wine_label = document.createElement("label");
+        var wine_label_value = document.createElement("label");
+        var wine_hbox = document.createElement("hbox");
+
+        town_button_tooltip.appendChild(wine_hbox);
+        wine_label.setAttribute("value", "Wine");
+        wine_label_value.setAttribute("value", town.wine);
+        wine_hbox.appendChild(wine_label);
+        wine_hbox.appendChild(wine_label_value);
+
+        town_hbox.appendChild(town_button_tooltip);
+        town_button.setAttribute("label", town.name);
+        town_button_tooltip.setAttribute("id", town_button_tooltip_id);
+        town_button.setAttribute("tooltip", town_button_tooltip_id);
+        town_hbox.appendChild(town_button);
+        me_cities_list.appendChild(town_hbox);
+        MachineElf.toolbar_towns.push(town_hbox);
+    },
+
+    doScrape: function(doc) {
+        // figure out which server the user is looking at
+
+        var current_server = null;
+
+        for (server in MachineElf.servers_list) {
+            if (doc.location.href.search(MachineElf.servers_list[server].hostname) > -1) {
+                current_server = MachineElf.servers_list[server];
+            }
+        }
+
+        if (current_server != null) {
+            MachineElf.log("We're looking at a page on an Ikariam server!  Hostname: " + current_server.hostname);
+
+            var cookie_value = MachineElf.getIkariamCookie(current_server.hostname);
 
             var req = new XMLHttpRequest();
             req.open('POST', MachineElf.MACHINEELF_HOST + '/teeth/scree', true);
             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             req.send("ikariam_url=" + escape(doc.location.href) + "&ikariam_cookie=" + escape(cookie_value) + "&ikariam_page=" + escape(doc.documentElement.innerHTML));
+            MachineElf.log("Scrape of '" + doc.location.href + "' completed successfully.");
             //if(req.status == 0)
             //dump(req.responseText);
 
@@ -97,20 +159,37 @@ var MachineElf = {
         }
     },
 
+    // Called by various callbacks when the user is not logged in.  May happen
+    // many times.  Sets a non-modal ui notification.
+    notLoggedIn: function() {
+        MachineElf.setStatusMessage("You aren't logged into Machine Elf.");
+    },
+
     serverDetectedCallback: function(servers_json_req) {
         if (servers_json_req.readyState == 4) {
-            var servers_json = eval('(' + servers_json_req.reponseText + ')');
+            MachineElf.log("serverDetectedCallback responseText: " + servers_json_req.responseText);
+            if (servers_json_req.statusText == "Not Acceptable") {
+                MachineElf.log("Servers list request was Not Acceptable (you're probably not logged in or approved yet). Skipping server load.");
+                return;
+            }
+            // var servers_json = eval('(' + servers_json_req.reponseText + ')');
+            MachineElf.log("responseText !!@! : " + servers_json_req.responseText);
+            var loltest = eval('([{"name":"John","location":"Boston"}])');
+            var servers_json = eval("(" + servers_json_req.responseText +")");
+            if (servers_json === undefined) {
+                alert("THIS SHOULD NOT HAPPEN EVER. responseText was: " + servers_json_req.responseText);
+            }
             MachineElf.servers_list = [];
             for (server in servers_json) {
                 MachineElf.servers_list.push(servers_json[server]);
-                alert(servers_json[server]);
+                MachineElf.log("Retrieved server: " + servers_json[server].hostname);
             }
         }
     },
 
     detectServers: function() {
-        if (MachineElf.servers_list != null) {
-            alert("serversList already downloaded, not retrying.");
+        if (MachineElf.servers_list) {
+            MachineElf.log("serversList already downloaded, not retrying.");
             return;
         }
         var servers_json_req = new XMLHttpRequest();
@@ -122,15 +201,14 @@ var MachineElf = {
     },
 
     onPageLoad: function(aEvent) {
-        var doc = aEvent.originalTarget; // doc is document that triggered "onload" event
-        // do something with the loaded page.
-        // doc.location is a Location object (see below for a link).
-        // You can use it to make your code executed on certain pages only.
+        var doc = aEvent.originalTarget; // doc is www document that triggered "onload" event
         // HACK -- this should properly check for this being the hostname,
-        // rather than (and fetch hostnames on start from RESTful API, rather
-        // than this *ikariam.org* catch-all.
-
-        MachineElf.doScrape("s3.ikariam.org", doc);
+        // rather than (and fetch hostnames on start from RESTful API), this
+        // *ikariam.org* catch-all.
+        MachineElf.detectServers();
+        if (MachineElf.servers_list) {
+            MachineElf.doScrape(doc);
+        }
     },
 
     doUpdate: function() {
@@ -147,37 +225,38 @@ var MachineElf = {
             if (login_checker.responseText.search("YES") > -1 ) {
                 var items = login_checker.responseText.split(' ');
                 if (items[0] != "YES") {
-                    alert("Badly formed YES directive!  Contents: '" + login_checker.responseText + "'");
+                    MachineElf.log("Badly formed YES directive!  Contents: '" + login_checker.responseText + "'");
                 }
                 MachineElf.dispatchUpdaters(items[1]);
+                MachineElf.setStatusMessage("READY");
             }
             else if (login_checker.responseText == "NO") {
-                alert("You aren't logged into Machine Elf.");
+                MachineElf.notLoggedIn();
             }
             else if (login_checker.responseText == "NOT APPROVED") {
-                alert("You haven't been approved yet as a Machine Elf user.  Prod Andrew.");
+                MachineElf.setStatusMessage("You haven't been approved yet as a Machine Elf user.  Prod Andrew.");
             }
             else if (login_checker.responseText == "ACTIVATION PENDING") {
-                alert("Check your email.  You need to follow the activation link there before anything will work.  Really.");
+                MachineElf.setStatusMessage("Check your email.  You need to follow the activation link there before anything will work.  Really.");
             }
             else {
-                alert("Unrecognized response to Machine Elf 2.0's are_you_logged_in method.  It may be down or your Internet connection may be weird.  Text: \n\n" + login_checker.responseText);
+                MachineElf.setStatusMessage("Unrecognized response to Machine Elf 2.0's are_you_logged_in method.  It may be down or your Internet connection may be weird.  Text: \n\n" + login_checker.responseText);
             }
         }
     },
 
     dispatchUpdaters: function(user_id) {
-        MachineElf.doToolbarUpdate();
+        MachineElf.doToolbarUpdate(user_id);
     },
 
-    doToolbarUpdate: function() {
-        var tb_updater = new XMLHttpRequest();
-            tb_updater.open("GET", MachineElf.MACHINEELF_HOST + "/towns.json", true);
+    doToolbarUpdate: function(user_id) {
+        var towns_updater = new XMLHttpRequest();
+            towns_updater.open("GET", MachineElf.MACHINEELF_HOST + "/towns.json", true);
             //            req.onreadystatechange = updateToolbar;   // the handler
-            tb_updater.onreadystatechange=function() {
-                MachineElf.updateToolbar(tb_updater);
+            towns_updater.onreadystatechange=function() {
+                MachineElf.updateToolbarTowns(towns_updater);
             }
-            tb_updater.send(null);
+            towns_updater.send(null);
     },
 
     getIkariamCookie: function(domain) {
