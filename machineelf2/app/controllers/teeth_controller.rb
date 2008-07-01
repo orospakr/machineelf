@@ -171,6 +171,11 @@ class TeethController < ApplicationController
         my_town = Town.by_ikariam_id(city['value'].to_i)
         island_coordinates = city.inner_html.split(']')[0]
         town_name = city.inner_html.split(']')[1][1..-1]
+        if !my_town.island.nil?
+          my_town.island.x = island_coordinates.split('[')[1].split(':')[0].to_i
+          my_town.island.y = island_coordinates.split('[')[1].split(':')[1].split(']')[0].to_i
+          my_town.island.save!
+        end
         my_town.name = town_name
       end
     end

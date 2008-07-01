@@ -140,6 +140,7 @@ describe TeethController do
         @town = mock_model(Town)
         @player = mock_model(Player)
         @server = mock_model(Server)
+        @island = mock_model(Island)
         @town_event = mock_model(TownEvent)
         @player_event = mock_model(PlayerEvent)
 
@@ -147,10 +148,14 @@ describe TeethController do
         Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
         Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
+        @town.stub!(:island).and_return(@island)
         expects(@town, { :name => 'Mobotropolis', :player => @player,
                   :server => @server})
         expects(@player, { :server => @server})
+        expects(@island, { :x => 95, :y => 65})
+
         @town.should_receive(:save!)
+        @island.should_receive(:save!)
         @player.should_receive(:save!)
 
         PlayerEvent.should_receive(:new).and_return(@player_event)

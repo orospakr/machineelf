@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(:version => 9) do
   create_table "islands", :force => true do |t|
     t.integer  "ikariam_id"
     t.integer  "server_id"
+    t.integer  "x"
+    t.integer  "y"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"

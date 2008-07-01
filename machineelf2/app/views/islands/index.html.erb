@@ -4,12 +4,16 @@
   <tr>
     <th>Ikariam</th>
     <th>Name</th>
+    <th>X</th>
+    <th>Y</th>
   </tr>
 
 <% for island in @islands %>
   <tr>
     <td><%=h island.ikariam_id %></td>
     <td><%=h island.name %></td>
+    <td><%=h island.x %></td>
+    <td><%=h island.y %></td>
     <td><%= link_to 'Show', island %></td>
     <td><%= link_to 'Edit', edit_island_path(island) %></td>
     <td><%= link_to 'Destroy', island, :confirm => 'Are you sure?', :method => :delete %></td>
