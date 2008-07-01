@@ -3,6 +3,8 @@ class CreateIslands < ActiveRecord::Migration
     create_table :islands do |t|
       t.integer :ikariam_id
       t.integer :server_id
+      t.integer :x
+      t.integer :y
       t.string :name
       t.timestamps
     end

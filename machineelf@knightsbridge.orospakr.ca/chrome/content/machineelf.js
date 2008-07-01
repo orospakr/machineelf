@@ -6,16 +6,21 @@ window.addEventListener("load", function() { MachineElf.init(this); }, false);
 // TODO for tomorrow
 
 // I have to determine which Ikariam server by hostname I'm on BEFORE I can scree,
-// because I need to know which cookie to get and send along.
+// because I need to know which cookie to get and send along.  DONE
 
-// Add nice UI in the toolbar to show town stats, obviously
+// Add nice UI in the toolbar to show town stats, obviously...
+// ... mm, I need to fetch the Player's JSON (which I have an id for through User),
+// ... and from there acquire their global props (gold, etc.) as well as their towns
 
 // Cordon off the admin features (CRUD/scaffold operations that mutate things)
 
-// Implement remaining-build time feature for buildings
+// Implement remaining-build time feature for buildings DONE
 
 // Create an action for building level retrieval, like /towns/:id/stats,
 // that returns building levels... or should I perhaps be using that new way of including computed values in activerecord serialization?
+// DONE
+
+// figure out why population_capacity isn't showing up
 
 
 // class defined in so-called 'literal' notation
@@ -121,6 +126,17 @@ var MachineElf = {
             res_label_value.setAttribute("value", town.current_stats.resources[resource]);
             res_hbox.appendChild(res_label);
             res_hbox.appendChild(res_label_value);
+        }
+
+        for (building in town.current_stats.buildings) {
+            var building_label = document.createElement("label");
+            var building_label_value = document.createElement("label");
+            var building_hbox = document.createElement("hbox");
+            town_button_tooltip.appendChild(building_hbox);
+            building_label.setAttribute("value", building);
+            building_label_value.setAttribute("value", town.current_stats.buildings[building].level);
+            building_hbox.appendChild(building_label);
+            building_hbox.appendChild(building_label_value);
         }
 
         town_hbox.appendChild(town_button_tooltip);
