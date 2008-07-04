@@ -42,9 +42,9 @@ describe Town do
   describe "a valid town" do
     before :each do
       @town = Town.new
-      gamma = mock_model(Server)
+      @gamma = mock_model(Server)
       @town.ikariam_id = 9999
-      @town.server = gamma
+      @town.server = @gamma
       @town.name = 'Not Mobotropolis'
     end
 
@@ -65,6 +65,27 @@ describe Town do
       @museum.should_receive(:town=).with(@town)
       @museum.should_receive(:flavour=).with("museum")
       @town.building_by_flavour('museum').should == @museum
+    end
+
+    describe "when saved" do
+      before :each do
+        @island = mock_model(Island)
+
+        @gamma.should_receive(:hostname).and_return('s3.ikariam.org')
+        @town.island = @island
+        @town.save!
+      end
+
+      describe "it should provide a URL" do
+        it "to the island with town highlighted for public users" do
+          @island.should_receive(:ikariam_id).and_return(7694)
+          @town.public_url.should == "http://s3.ikariam.org/index.php?view=island&id=7694&selectCity=9999"
+        end
+
+        it "to the town for use for the owner or spy users" do
+          @town.url.should == "http://s3.ikariam.org/index.php?view=city&id=9999"\
+        end
+      end
     end
   end
 

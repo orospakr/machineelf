@@ -32,6 +32,17 @@ class Town < ActiveRecord::Base
     return nil
   end
 
+  def public_url
+    if island.nil?
+      return nil
+    end
+    return "http://#{server.hostname}/index.php?view=island&id=#{island.ikariam_id}&selectCity=#{ikariam_id}"
+  end
+
+  def url
+    return "http://#{server.hostname}/index.php?view=city&id=#{ikariam_id}"
+  end
+
   def current_stats
     should_not_get = [:id, :created_at, :town_id]
     results = { }

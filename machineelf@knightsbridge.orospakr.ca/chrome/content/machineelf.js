@@ -49,9 +49,6 @@ var MachineElf = {
 
     toolbar_towns: [],
 
-    // nativeJSON: Components.classes["@mozilla.org/dom/json;1"].createInstance(Components.interfaces.nsIJSON),
-
-
     lol: function() {
         alert("lol internets");
     },
@@ -110,12 +107,20 @@ var MachineElf = {
         }
     },
 
+    openLink: function(url) {
+        gBrowser.selectedTab = gBrowser.addTab(url);
+    },
+
     addTownToToolbar: function(town) {
         var me_cities_list = document.getElementById("me_cities_list");
         var town_hbox = document.createElement("hbox");
         var town_button = document.createElement("toolbarbutton");
         var town_button_tooltip = document.createElement("tooltip");
         var town_button_tooltip_id = "town_tooltip_" + town.id;
+
+        town_button.onclick = function() {
+            MachineElf.openLink(town.url);
+        };
 
         for (resource in town.current_stats.resources) {
             var res_label = document.createElement("label");

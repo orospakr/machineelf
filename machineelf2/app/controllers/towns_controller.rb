@@ -12,7 +12,7 @@ class TownsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @towns.to_xml } # hash returned get_stats does not serialize to_xml
-      format.json { render :json => @towns.to_json({ :methods => [:current_stats]}) }
+      format.json { render :json => @towns.to_json({ :methods => [:current_stats, :url]}) }
     end
   end
 
@@ -24,7 +24,7 @@ class TownsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @town } # hash returned get_stats does not serialize to_xml
-      format.json { render :json => @town.to_json({ :methods => [:current_stats]}) }
+      format.json { render :json => @town.to_json({ :methods => [:current_stats, :url]}) }
     end
   end
 
