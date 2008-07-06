@@ -17,8 +17,8 @@
         <meta name="Revisit" content="After 14 days" />
         <title>Ikariam - World Gamma </title>
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-		<link href="/skin/complete-0.2.5.css" rel="stylesheet" type="text/css" media="screen" />
-		<script type="text/javascript" src="/js/complete-0.2.5.js"></script>
+		<link href="/skin/complete-0.2.6.css" rel="stylesheet" type="text/css" media="screen" />
+		<script type="text/javascript" src="/js/complete-0.2.6.js"></script>
 				<script type="text/javascript">
 		/* <![CDATA[ */
 		var Event = YAHOO.util.Event,
@@ -185,23 +185,8 @@
     				<a href="?view=shipyard&amp;id=82966&amp;position=2" title="Shipyard Level 2"><span class="textLabel">Shipyard Level 2</span></a>
                </li>
                   <li id="position3" class="tavern">
-    				<div class="constructionSite"></div>
-    				<a href="?view=tavern&amp;id=82966&amp;position=3" title="Tavern Level 11"><span class="textLabel">Tavern Level 11 (Under construction)</span></a>
-    				<div class="timetofinish"><span class="before"></span><span class="textLabel">Time till completion: </span><span id="cityCountdown">11h 28m</span><span class="after"></span></div>
-<script type="text/javascript">
-var tmpCnt =	getCountdown({
-		enddate: 1214722366,
-		currentdate: 1214681078,
-		el: "cityCountdown"
-		});
-    tmpCnt.subscribe("finished", function() {
-		setTimeout(function() {
-    	location.href="?view=city&id=82966";
-			},2000);
-		});
-</script>
-
-
+    				<div class="buildingimg"></div>
+    				<a href="?view=tavern&amp;id=82966&amp;position=3" title="Tavern Level 12"><span class="textLabel">Tavern Level 12</span></a>
                </li>
                   <li id="position4" class="barracks">
     				<div class="buildingimg"></div>
@@ -213,7 +198,7 @@ var tmpCnt =	getCountdown({
                </li>
                   <li id="position6" class="warehouse">
     				<div class="buildingimg"></div>
-    				<a href="?view=warehouse&amp;id=82966&amp;position=6" title="Warehouse Level 13"><span class="textLabel">Warehouse Level 13</span></a>
+    				<a href="?view=warehouse&amp;id=82966&amp;position=6" title="Warehouse Level 15"><span class="textLabel">Warehouse Level 15</span></a>
                </li>
                   <li id="position7" class="safehouse">
     				<div class="buildingimg"></div>
@@ -232,8 +217,23 @@ var tmpCnt =	getCountdown({
     				<a href="?view=embassy&amp;id=82966&amp;position=10" title="Embassy Level 1"><span class="textLabel">Embassy Level 1</span></a>
                </li>
                   <li id="position11" class="workshop-army">
-    				<div class="buildingimg"></div>
-    				<a href="?view=workshop-army&amp;id=82966&amp;position=11" title="Workshop Level 1"><span class="textLabel">Workshop Level 1</span></a>
+    				<div class="constructionSite"></div>
+    				<a href="?view=workshop-army&amp;id=82966&amp;position=11" title="Workshop Level 1"><span class="textLabel">Workshop Level 1 (Under construction)</span></a>
+    				<div class="timetofinish"><span class="before"></span><span class="textLabel">Time till completion: </span><span id="cityCountdown">33m 27s</span><span class="after"></span></div>
+<script type="text/javascript">
+var tmpCnt =	getCountdown({
+		enddate: 1215308375,
+		currentdate: 1215306368,
+		el: "cityCountdown"
+		});
+    tmpCnt.subscribe("finished", function() {
+		setTimeout(function() {
+    	location.href="?view=city&id=82966";
+			},2000);
+		});
+</script>
+
+
                </li>
                   <li id="position12" class="palace">
     				<div class="buildingimg"></div>
@@ -252,270 +252,249 @@ var tmpCnt =	getCountdown({
 		</ul>
 	</div><!-- END mainview -->
 
-<!-- Navigational elements for changing the city or the view. May perform different actions on every screen. -->
-	<div id="cityNav">
-    	<form id="changeCityForm" action="index.php" method="POST">
-    	<fieldset style="display:none;">
-            <input type="hidden" name="action" value="header" /><a title="Imprint" href="http://impressum.gameforge.de/index.php?lang=de&art=impress&special=&&f_text=000000&f_text_hover=804000&f_text_h=9ebde4&f_text_hr=DED3B9&f_text_hrbg=DED3B9&f_text_hrborder=804000&f_text_font=verdana%2C+arial%2C+helvetica%2C+sans-serif&f_bg=DED3B9">Imprint</a>
-            <input type="hidden" name="function" value="changeCurrentCity" />
-            <input type="hidden" name="oldView" value="city" />
-            <input type="hidden" name="id" value="82966" />
-        </fieldset>
-        <h3>Town navigation</h3>
-		<ul>
-			<li>
-				<label for="citySelect">Current town:</label>
-				<select id="citySelect" class="citySelect smallFont" name="cityId" tabindex="1" onchange="this.form.submit()">
-    <option class="avatarCities" value="82966" selected="selected"> [95:65] Mobotropolis</option>
-    <option class="avatarCities" value="91576"> [94:65] Ivarion</option>
-    <option class="avatarCities" value="101627"> [75:54] Knothole</option>
-                </select>
-			</li>
-			<li class="previousCity"><a href="#changeCityPrevious" tabindex="2" title="Switch to the last town"><span class="textLabel">Previous Town</span></a></li>
-			<li class="nextCity"><a href="#changeCityNext" tabindex="3" title="Switch to the following town"><span class="textLabel">Next Town</span></a></li>
-			<li class="viewWorldmap"><a href="?view=worldmap_iso" tabindex="4" title="Centre the selected town on the World Map"><span class="textLabel">Show World</span></a></li>
-			<li class="viewIsland"><a href="?view=island&amp;id=3909" tabindex="5" title="Switch to the island map of the selected town"><span class="textLabel">Show Island</span></a></li>
-			<li class="viewCity"><a href="?view=city&amp;id=82966" tabindex="6" title="Inspect the selected town"><span class="textLabel">Show Town</span></a></li>
-		</ul>
-	</form>
-	</div>
-	<!-- TODO Goldbalance... -->
-	<div id="globalResources">
-		<h3>Resources of your Empire</h3>
-		<ul>
-			<li class="transporters" title="Trade ships Available/Total"><a href="?view=merchantNavy"><span class="textLabel">Trade ships: </span><span id="value_transAvail" class="transAvail">0</span><span id="value_transSum" class="transSum">(56)</span></a></li>
-			<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">1,274k</span></a></li>
-			<li class="goldBalance negative"><span class="textLabel">Income: </span>234</li>
-		</ul>
-	</div>
-	<!-- Resources of the city. Finished. Identical on every page. -->
-	<div id="cityResources">
-
-
-        <h3>Town&#xB4;s resources</h3>
-        <ul class="resources">
-            <li class="population" title="Population">
-				<span class="textLabel">Population: </span>
-				<span id="value_inhabitants" style="display:block;width:80px;">693 (1,541)</span>
-			</li>
-            <li class="actions" title="Action Points">
-				<span class="textLabel">Action Points: </span>
-				<span id="value_maxActionPoints">3</span>
-			</li>
-            <li class="wood" title="Building material">
+					<div id="cityNav">
+				    	<form id="changeCityForm" action="index.php" method="POST">
+				    	<fieldset style="display:none;">
+				            <input type="hidden" name="action" value="header" /><a title="Imprint" href="http://impressum.gameforge.de/index.php?lang=de&art=impress&special=&&f_text=000000&f_text_hover=804000&f_text_h=9ebde4&f_text_hr=DED3B9&f_text_hrbg=DED3B9&f_text_hrborder=804000&f_text_font=verdana%2C+arial%2C+helvetica%2C+sans-serif&f_bg=DED3B9">Imprint</a>
+				            <input type="hidden" name="function" value="changeCurrentCity" />
+				            <input type="hidden" name="oldView" value="city" />
+	            			<input type="hidden" name="id" value="82966" />
+    	    			</fieldset>
+				        <h3>Town navigation</h3>
+						<ul>
+							<li>
+								<label for="citySelect">Current town:</label>
+								<select id="citySelect" class="citySelect smallFont" name="cityId" tabindex="1" onchange="this.form.submit()">
+<option class="avatarCities coords" value="82966" selected="selected" title="Trade good: Wine" >[95:65] Mobotropolis</option><option class="avatarCities coords" value="91576" title="Trade good: Marble" >[94:65] Ivarion</option><option class="avatarCities coords" value="101627" title="Trade good: Crystal Glass" >[75:54] Knothole</option>								</select>
+							</li>
+							<li class="previousCity"><a href="#changeCityPrevious" tabindex="2" title="Switch to the last town"><span class="textLabel">Previous Town</span></a></li>
+							<li class="nextCity"><a href="#changeCityNext" tabindex="3" title="Switch to the following town"><span class="textLabel">Next Town</span></a></li>
+							<li class="viewWorldmap"><a href="?view=worldmap_iso" tabindex="4" title="Centre the selected town on the World Map"><span class="textLabel">Show World</span></a></li>
+							<li class="viewIsland"><a href="?view=island&amp;id=3909" tabindex="5" title="Switch to the island map of the selected town"><span class="textLabel">Show Island</span></a></li>
+							<li class="viewCity"><a href="?view=city&amp;id=82966" tabindex="6" title="Inspect the selected town"><span class="textLabel">Show Town</span></a></li>
+						</ul>
+					</form>
+				</div>
+				<div id="globalResources">
+					<h3>Resources of your Empire</h3>
+					<ul>
+						<li class="transporters" title="Trade ships Available/Total"><a href="?view=merchantNavy"><span class="textLabel">Trade ships: </span><span id="value_transAvail" class="transAvail">21</span><span id="value_transSum" class="transSum">(56)</span></a></li>
+						<li class="gold" title="Gold"><a href="?view=finances"><span class="textLabel">Gold: </span><span id="value_gold">2,079k</span></a></li>
+						<li class="goldBalance negative"><span class="textLabel">Income: </span>234</li>
+					</ul>
+				</div>
+				<div id="cityResources">
+			        <h3>Town&#xB4;s resources</h3>
+			        <ul class="resources">
+			            <li class="population" title="Population">
+							<span class="textLabel">Population: </span>
+							<span id="value_inhabitants" style="display:block;width:80px;">693 (1,541)</span>
+						</li>
+			            <li class="actions" title="Action Points">
+							<span class="textLabel">Action Points: </span>
+							<span id="value_maxActionPoints">5</span>
+						</li>
+			            <li class="wood" title="Building material">
 							<span class="textLabel">Building material: </span>
-							<span id="value_wood" class="storage_danger">40,041</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>44,520</div>
+							<span id="value_wood" class="storage_danger">55,497</span>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>67,528</div>
 						</li>
-            <li class="wine" title="Wine">
+			            <li class="wine" title="Wine">
 							<span class="textLabel">Wine: </span>
-							<span id="value_wine" class="">10,976</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>20,328</div>
+							<span id="value_wine" class="storage_danger">26,487</span>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>27,784</div>
 						</li>
-            <li class="marble" title="Marble">
+			            <li class="marble" title="Marble">
 							<span class="textLabel">Marble: </span>
-							<span id="value_marble" class="">8,208</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>20,328</div>
+							<span id="value_marble" class="">2,906</span>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>27,784</div>
 						</li>
-            <li class="glass" title="Crystal Glass">
+			            <li class="glass" title="Crystal Glass">
 							<span class="textLabel">Crystal Glass: </span>
 							<span id="value_crystal" class="">9,385</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>20,328</div>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>27,784</div>
 						</li>
-            <li class="sulfur" title="Sulphur">
+			            <li class="sulfur" title="Sulphur">
 							<span class="textLabel">Sulphur: </span>
 							<span id="value_sulfur" class="">36</span>
-							<div class="tooltip"><span class="textLabel">Storage capacity: </span>20,328</div>
+							<div class="tooltip"><span class="textLabel">Storage capacity: </span>27,784</div>
 						</li>
-        </ul>
-
-<script type="text/javascript">
-var localTime = new Date();
-var startServerTime = localTime.getTime() - (7200000) - localTime.getTimezoneOffset()*60*1000; // GMT+1+Sommerzeit - offset 
-var startTime = localTime.getTime();
-
-
-var startResources = 40041.705;
-var startResourcesDelta = 0.0804166666667;
-var resourcesStorage = 44520;
-
-var startTradegood = 10976.1366667;
-var startTradegoodDelta = 0.0455555555556;
-var tradegoodStorage = 20328;
-var tradegoodSub = 11;
-var tradegoodSubTime = 278;
-
-function updateResources() {
-	//global:  startTime, Dom, resourcesStorage
-	var currTime = new Date();
-	deltaTime = (currTime.getTime() - startTime)/1000;
-	var currResources = startResources + (deltaTime * startResourcesDelta);
-    Dom.get('value_wood').innerHTML = number_format(Math.floor(Math.min(currResources, resourcesStorage)));
-	var ratio = currResources / resourcesStorage;
-	if (ratio >= 1) {
-		Dom.get('value_wood').className = "storage_full";
-	} else if (ratio >= 0.75) {
-		Dom.get('value_wood').className = "storage_danger";
-	}
-
-	var currTradegood = startTradegood + (deltaTime * startTradegoodDelta);
-	if (tradegoodSub) {
-		currTradegood -= Math.floor(tradegoodSub * Math.floor((tradegoodSubTime+deltaTime)/1200) );
-	}
-
-	Dom.get('value_wine').innerHTML = number_format(Math.floor(Math.min(currTradegood, tradegoodStorage)));
-	var ratio = currTradegood / tradegoodStorage;
-	if (ratio >= 1) {
-		Dom.get('value_wine').className = "storage_full";
-	} else if (ratio >= 0.75) {
-		Dom.get('value_wine').className = "storage_danger";
-	}
-}
-var ev_updateResources = setInterval("updateResources()", 2000);
-
-function shortenValue(val, to) {
-        val = Math.floor(val).toString();
-        var unit = '';
-        if (val.length > to) {
-            if (val.length - 3 < to) {
-                val = Math.floor(val / Math.pow(10, 3));
-                unit = 'k';
-            } else if (val.length - 6 < to) {
-                val = Math.floor(val / Math.pow(10, 6));
-                unit = 'm';
-            }
-        }
-        return number_format(Math.floor(val), 0, ',', '.') + unit;
-}
-
-var obj_ServerTime = 0;
-Event.onDOMReady(function() {
-    var ev_updateServerTime = setInterval("updateServerTime()", 500);
-    obj_ServerTime = document.getElementById('servertime');
-});
-function updateServerTime() {
-    var currTime = new Date();
-    currTime.setTime((1214681078000-startServerTime)+ currTime.getTime()) ;
-    str = getFormatedDate(currTime.getTime(), 'd.m.Y G:i:s');
-    obj_ServerTime.innerHTML = str;
-}
-</script>
-	</div>
-	<div id="advisors">
-		<h3>Overviews</h3>
-		<ul>
-			<li id="advCities">
-				<a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normalactive"><span class="textLabel">Towns</span></a>
-				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
-			<li id="advMilitary">
-				<a href="?view=militaryAdvisorCombatReports&amp;oldView=city&amp;id=82966" title="Military overview" class="normal">
-						<span class="textLabel">Military</span>
-				</a>
-				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
-			<li id="advResearch">
-				<a href="?view=researchAdvisor&amp;oldView=city&amp;id=82966" title="Research overview" class="normal"><span class="textLabel">Research</span></a>
-				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
-			<li id="advDiplomacy">
-				<a href="?view=diplomacyAdvisor&amp;oldView=city&amp;id=82966" title="Overview of messages and diplomacy" class="normal"><span class="textLabel">Diplomacy</span></a>
-				<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>			</li>
-		</ul>
-	</div>
-	<div id="footer">
-		<span class="copyright">&copy; 2008 by <a title="Gameforge" id="gflink" target="_blank" href="http://www.gameforge.de">Gameforge</a><a href="/index.php?view=credits" style="margin:0px;">.</a> All rights reserved.</span>
-		<a target="_blank" href="http://ikariam.org/rules.php" title="Rules">Rules</a>
-		<a target="_blank" href="http://impressum.gameforge.de/index.php?lang=en&art=tac&special=&&f_text=000000&f_text_hover=804000&f_text_h=9ebde4&f_text_hr=DED3B9&f_text_hrbg=DED3B9&f_text_hrborder=804000&f_text_font=verdana%2C+arial%2C+helvetica%2C+sans-serif&f_bg=DED3B9" title="T&Cs">T&Cs</a>
-		<a target="_blank" href="http://impressum.gameforge.de/index.php?lang=en&art=impress&special=&&f_text=000000&f_text_hover=804000&f_text_h=9ebde4&f_text_hr=DED3B9&f_text_hrbg=DED3B9&f_text_hrborder=804000&f_text_font=verdana%2C+arial%2C+helvetica%2C+sans-serif&f_bg=DED3B9" title="Imprint">Imprint</a>
-	</div>
-	<!-- Some generic Divs for styling purposes. -->
-	<div id="conExtraDiv1"><span></span></div>
-	<div id="conExtraDiv2"><span></span></div>
-	<div id="conExtraDiv3"><span></span></div>
-	<div id="conExtraDiv4"><span></span></div>
-	<div id="conExtraDiv5"><span></span></div>
-	<div id="conExtraDiv6"><span></span></div>
-</div>
-</div>
-<!-- Top-tolbar with extragame options. Finished. -->
-<div id="GF_toolbar">
-	<h3>Other Options</h3>
-	<ul>
-		<li class="help"><a href="/index.php?view=informations&articleId=10000&mainId=10000" title="Help"><span class="textLabel">Help</span></a></li>
-                    <li class="premium"><a href="/index.php?view=premium" title="Ikariam PLUS"><span class="textLabel">Ikariam PLUS (0)</span></a></li>
-        		<li class="highscore"><a href="/index.php?view=highscore&showMe=1" title="Highscore"><span class="textLabel">Highscore</span></a></li>
-		<li class="options"><a href="/index.php?view=options" title="Settings"><span class="textLabel">Options</span></a></li>
-        <li class="forum"><a href="http://board.ikariam.org" title="Message Board" target="_blank"><span class="textLabel">Board</span></a></li>
-		<li class="logout"><a href="/index.php?action=loginAvatar&function=logout" title="End game session"><span class="textLabel">Logout</span></a></li>
-        <li class="version"><a href="?view=version" title="Version"><span class="textLabel">v.0.2.5</span></a></li>
-		<li class="serverTime"><a><span class="textLabel" id="servertime">28.06.2008 21:24:38</span></a></li>
-
-	</ul>
-</div>
-<!-- Even more generic Divs for styling purposes. -->
-<div id="extraDiv1"><span></span></div>
-<div id="extraDiv2"><span></span></div>
-<div id="extraDiv3"><span></span></div>
-<div id="extraDiv4"><span></span></div>
-<div id="extraDiv5"><span></span></div>
-<div id="extraDiv6"><span></span></div>
-
-<script type="text/javascript">
-function makeButton(ele) {
-    var Event = YAHOO.util.Event;
-    var Dom = YAHOO.util.Dom;
-    Event.addListener(ele, "mousedown", function() {
-        YAHOO.util.Dom.addClass(ele, "down");
-    });
-    Event.addListener(ele, "mouseup", function() {
-        YAHOO.util.Dom.removeClass(ele, "down");
-    });
-    Event.addListener(ele, "mouseout", function() {
-        YAHOO.util.Dom.removeClass(ele, "down");
-    });
-}
-
-function showToolTips() {
-    var tooltips = Dom.getElementsByClassName ( "tooltip" , "div" , document , function() {
-        Dom.setStyle(this, "display", "none");
-    })
-    for(i=0;i<tooltips.length;i++) {
-        Event.addListener ( tooltips[i].parentNode , "mouseover" , function() {
-            Dom.getElementsByClassName ( "tooltip" , "div" , this , function() {
-                Dom.setStyle(this, "display", "block");
-            });
-        });
-        Event.addListener ( tooltips[i].parentNode , "mouseout" , function() {
-            Dom.getElementsByClassName ( "tooltip" , "div" , this , function() {
-                Dom.setStyle(this, "display", "none");
-            });
-        });
-    }
-    var childTooltips = Dom.getElementsByClassName ( "childTooltip" , "div" , document , function() {
-       // Dom.setStyle(this, "display", "none");
-    })
-    for(i=0;i<childTooltips.length;i++) {
-        Event.addListener ( childTooltips[i].parentNode , "mouseover" , function() {
-            Dom.getElementsByClassName ( "childTooltip" , "div" , this , function() {
-                Dom.setStyle(this, "display", "block");
-            });
-        });
-        Event.addListener ( childTooltips[i].parentNode , "mouseout" , function() {
-            Dom.getElementsByClassName ( "childTooltip" , "div" , this , function() {
-                Dom.setStyle(this, "display", "none");
-            });
-        });
-    }
-}
-
-Event.onDOMReady( function() {
-    var links = document.getElementsByTagName("a");
-    for(i=0; i<links.length; i++) {
-        makeButton(links[i]);
-    }
-    showToolTips();
-    replaceSelect(Dom.get("citySelect"));
-});
-</script>
-
-
-</body>
+			        </ul>
+					<script type="text/javascript">
+					var localTime = new Date();
+					var startServerTime = localTime.getTime() - (7200000) - localTime.getTimezoneOffset()*60*1000; // GMT+1+Sommerzeit - offset 
+					var startTime = localTime.getTime();
+					var startResources = 55497.0041667;
+					var startResourcesDelta = 0.0804166666667;
+					var resourcesStorage = 67528;
+					var startTradegood = 26487.4400001;
+					var startTradegoodDelta = 0.0455555555556;
+					var tradegoodStorage = 27784;
+					var tradegoodSub = 11;
+					var tradegoodSubTime = 368;
+					
+					function updateResources() {
+						//global:  startTime, Dom, resourcesStorage
+						var currTime = new Date();
+						deltaTime = (currTime.getTime() - startTime)/1000;
+						var currResources = startResources + (deltaTime * startResourcesDelta);
+					    Dom.get('value_wood').innerHTML = number_format(Math.floor(Math.min(currResources, resourcesStorage)));
+						var ratio = currResources / resourcesStorage;
+						if (ratio >= 1) {
+							Dom.get('value_wood').className = "storage_full";
+						} else if (ratio >= 0.75) {
+							Dom.get('value_wood').className = "storage_danger";
+						}
+					
+						var currTradegood = startTradegood + (deltaTime * startTradegoodDelta);
+						if (tradegoodSub) {
+							currTradegood -= Math.floor(tradegoodSub * Math.floor((tradegoodSubTime+deltaTime)/1200) );
+						}
+					
+						Dom.get('value_wine').innerHTML = number_format(Math.floor(Math.min(currTradegood, tradegoodStorage)));
+						var ratio = currTradegood / tradegoodStorage;
+						if (ratio >= 1) {
+							Dom.get('value_wine').className = "storage_full";
+						} else if (ratio >= 0.75) {
+							Dom.get('value_wine').className = "storage_danger";
+						}
+					}
+					var ev_updateResources = setInterval("updateResources()", 2000);
+					
+					function shortenValue(val, to) {
+					        val = Math.floor(val).toString();
+					        var unit = '';
+					        if (val.length > to) {
+					            if (val.length - 3 < to) {
+					                val = Math.floor(val / Math.pow(10, 3));
+					                unit = 'k';
+					            } else if (val.length - 6 < to) {
+					                val = Math.floor(val / Math.pow(10, 6));
+					                unit = 'm';
+					            }
+					        }
+					        return number_format(Math.floor(val), 0, ',', '.') + unit;
+					}
+					
+					var obj_ServerTime = 0;
+					Event.onDOMReady(function() {
+					    var ev_updateServerTime = setInterval("updateServerTime()", 500);
+					    obj_ServerTime = document.getElementById('servertime');
+					});
+					function updateServerTime() {
+					    var currTime = new Date();
+					    currTime.setTime((1215306368000-startServerTime)+ currTime.getTime()) ;
+					    str = getFormatedDate(currTime.getTime(), 'd.m.Y G:i:s');
+					    obj_ServerTime.innerHTML = str;
+					}
+					</script>
+				</div>
+				<div id="advisors">
+					<h3>Overviews</h3>
+					<ul>
+						<li id="advCities">
+							<a href="?view=tradeAdvisor&amp;oldView=city&amp;id=82966" title="Overview of towns and finances" class="normalactive"><span class="textLabel">Towns</span></a>
+<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>						</li>
+						<li id="advMilitary">
+							<a href="?view=militaryAdvisorCombatReports&amp;oldView=city&amp;id=82966" title="Military overview" class="normal"><span class="textLabel">Military</span></a>
+<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>						</li>
+						<li id="advResearch">
+							<a href="?view=researchAdvisor&amp;oldView=city&amp;id=82966" title="Research overview" class="normal"><span class="textLabel">Research</span></a>
+<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>						</li>
+						<li id="advDiplomacy">
+							<a href="?view=diplomacyAdvisor&amp;oldView=city&amp;id=82966" title="Overview of messages and diplomacy" class="normal"><span class="textLabel">Diplomacy</span></a>
+<a class="plusteaser" href="?view=premiumDetails" title="To Overview"><span class="textLabel">To Overview</span></a>						</li>
+					</ul>
+				</div>
+				<div id="footer">
+					<span class="copyright">&copy; 2008 by <a title="Gameforge" id="gflink" target="_blank" href="http://www.gameforge.de">Gameforge</a><a href="/index.php?view=credits" style="margin:0px;">.</a> All rights reserved.</span>
+					<a target="_blank" href="http://ikariam.org/rules.php" title="Rules">Rules</a>
+					<a target="_blank" href="http://impressum.gameforge.de/index.php?lang=en&art=tac&special=&&f_text=000000&f_text_hover=804000&f_text_h=9ebde4&f_text_hr=DED3B9&f_text_hrbg=DED3B9&f_text_hrborder=804000&f_text_font=verdana%2C+arial%2C+helvetica%2C+sans-serif&f_bg=DED3B9" title="T&Cs">T&Cs</a>
+					<a target="_blank" href="http://impressum.gameforge.de/index.php?lang=en&art=impress&special=&&f_text=000000&f_text_hover=804000&f_text_h=9ebde4&f_text_hr=DED3B9&f_text_hrbg=DED3B9&f_text_hrborder=804000&f_text_font=verdana%2C+arial%2C+helvetica%2C+sans-serif&f_bg=DED3B9" title="Imprint">Imprint</a>
+				</div>
+				<div id="conExtraDiv1"><span></span></div>
+				<div id="conExtraDiv2"><span></span></div>
+				<div id="conExtraDiv3"><span></span></div>
+				<div id="conExtraDiv4"><span></span></div>
+				<div id="conExtraDiv5"><span></span></div>
+				<div id="conExtraDiv6"><span></span></div>
+			</div>
+		</div>
+		<div id="GF_toolbar">
+			<h3>Other Options</h3>
+			<ul>
+				<li class="help"><a href="/index.php?view=informations&articleId=10000&mainId=10000" title="Help"><span class="textLabel">Help</span></a></li>
+				<li class="premium"><a href="/index.php?view=premium" title="Ikariam PLUS"><span class="textLabel">Ikariam PLUS (0)</span></a></li>
+				<li class="highscore"><a href="/index.php?view=highscore&showMe=1" title="Highscore"><span class="textLabel">Highscore</span></a></li>
+				<li class="options"><a href="/index.php?view=options" title="Settings"><span class="textLabel">Options</span></a></li>
+		        <li class="forum"><a href="http://board.ikariam.org" title="Message Board" target="_blank"><span class="textLabel">Board</span></a></li>
+				<li class="logout"><a href="/index.php?action=loginAvatar&function=logout" title="End game session"><span class="textLabel">Logout</span></a></li>
+		        <li class="version"><a href="?view=version" title="Version"><span class="textLabel">v.0.2.6</span></a></li>
+				<li class="serverTime"><a><span class="textLabel" id="servertime">06.07.2008 3:06:08</span></a></li>
+			</ul>
+		</div>
+		<div id="extraDiv1"><span></span></div>
+		<div id="extraDiv2"><span></span></div>
+		<div id="extraDiv3"><span></span></div>
+		<div id="extraDiv4"><span></span></div>
+		<div id="extraDiv5"><span></span></div>
+		<div id="extraDiv6"><span></span></div>
+		<script type="text/javascript">
+		function makeButton(ele) {
+		    var Event = YAHOO.util.Event;
+		    var Dom = YAHOO.util.Dom;
+		    Event.addListener(ele, "mousedown", function() {
+		        YAHOO.util.Dom.addClass(ele, "down");
+		    });
+		    Event.addListener(ele, "mouseup", function() {
+		        YAHOO.util.Dom.removeClass(ele, "down");
+		    });
+		    Event.addListener(ele, "mouseout", function() {
+		        YAHOO.util.Dom.removeClass(ele, "down");
+		    });
+		}
+		
+		function showToolTips() {
+		    var tooltips = Dom.getElementsByClassName ( "tooltip" , "div" , document , function() {
+		        Dom.setStyle(this, "display", "none");
+		    })
+		    for(i=0;i<tooltips.length;i++) {
+		        Event.addListener ( tooltips[i].parentNode , "mouseover" , function() {
+		            Dom.getElementsByClassName ( "tooltip" , "div" , this , function() {
+		                Dom.setStyle(this, "display", "block");
+		            });
+		        });
+		        Event.addListener ( tooltips[i].parentNode , "mouseout" , function() {
+		            Dom.getElementsByClassName ( "tooltip" , "div" , this , function() {
+		                Dom.setStyle(this, "display", "none");
+		            });
+		        });
+		    }
+		    var childTooltips = Dom.getElementsByClassName ( "childTooltip" , "div" , document , function() {
+		       // Dom.setStyle(this, "display", "none");
+		    })
+		    for(i=0;i<childTooltips.length;i++) {
+		        Event.addListener ( childTooltips[i].parentNode , "mouseover" , function() {
+		            Dom.getElementsByClassName ( "childTooltip" , "div" , this , function() {
+		                Dom.setStyle(this, "display", "block");
+		            });
+		        });
+		        Event.addListener ( childTooltips[i].parentNode , "mouseout" , function() {
+		            Dom.getElementsByClassName ( "childTooltip" , "div" , this , function() {
+		                Dom.setStyle(this, "display", "none");
+		            });
+		        });
+		    }
+		}
+		
+		Event.onDOMReady( function() {
+		    var links = document.getElementsByTagName("a");
+		    for(i=0; i<links.length; i++) {
+		        makeButton(links[i]);
+		    }
+		    showToolTips();
+		    replaceSelect(Dom.get("citySelect"));
+		});
+		</script>
+	</body>
 </html>

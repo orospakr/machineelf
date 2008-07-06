@@ -128,7 +128,6 @@ class TeethController < ApplicationController
         building.ready_at = upgrade_finish_time
       end
 
-
       building.save!
       building.write_event(level_number)
     end

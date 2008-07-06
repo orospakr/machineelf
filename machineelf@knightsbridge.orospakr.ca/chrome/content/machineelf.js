@@ -26,7 +26,7 @@ window.addEventListener("load", function() { MachineElf.init(this); }, false);
 // class defined in so-called 'literal' notation
 var MachineElf = {
     REFRESH_INTERVAL: 30000,
-    MACHINEELF_HOST: "http://localhost:3000",
+    MACHINEELF_HOST: "http://machineelf.orospakr.ca",
     servers_list: null,
 
     init: function(chromeWindow) {

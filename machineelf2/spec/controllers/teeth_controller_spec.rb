@@ -45,7 +45,7 @@ describe TeethController do
       end
 
       def ikariam_cookie(page_name)
-        cookies = { :view_city => '57667_%241%24IB9rEhZ6%24qlO9SH0R3SGe4BzL.t3rN1'}
+        cookies = { :view_city => '%241%24fkzgGMDu%24ExEXpGhR8JZUA7qnK1GTP.'}
         return cookies[page_name]
       end
 
@@ -112,9 +112,9 @@ describe TeethController do
         # that's just the way it is (making this code not require ordering
         # is just a massive pain).
         expected_buildings = {  :town_hall => 17, :trading_port => 5,
-          :shipyard => 2, :tavern => 11,
+          :shipyard => 2, :tavern => 12,
           :barracks => 4, :academy => 12,
-          :warehouse => 13, :hideout => 5,
+          :warehouse => 15, :hideout => 5,
           :museum => 4, :trading_post => 6,
           :embassy => 1, :workshop => 1, :palace => 2,
           :town_wall => 8 }
@@ -126,8 +126,8 @@ describe TeethController do
           building = mock_model(Building)
           building.stub!(:town).and_return(@town)
           @town.should_receive(:building_by_flavour).with(flavour.to_s).and_return(building)
-          if flavour == :tavern
-            building.should_receive(:ready_at=).with(Time.parse("Sun Jun 29 05:03:21 -0400 2008"))
+          if flavour == :workshop
+            building.should_receive(:ready_at=).with(Time.parse("Sat Jun 28 18:08:48 -0400 2008"))
           end
           building.should_receive(:save!)
           building.should_receive(:write_event).ordered.with(level)
@@ -160,14 +160,14 @@ describe TeethController do
 
         PlayerEvent.should_receive(:new).and_return(@player_event)
         expects(@player_event,
-                { :player => @player, :available_ships => 0,
-                  :ships => 56, :gold => 1274000})
+                { :player => @player, :available_ships => 21,
+                  :ships => 56, :gold => 2079000})
         @player_event.should_receive(:save!)
 
         TownEvent.should_receive(:new).and_return(@town_event)
         expects(@town_event,
-                { :town => @town, :wood => 40041,
-                  :wine => 10976, :marble => 8208,
+                { :town => @town, :wood => 55497,
+                  :wine => 26487, :marble => 2906,
                   :crystal => 9385, :sulphur => 36,
                   :population => 1541,
                   :available_mans => 693})
