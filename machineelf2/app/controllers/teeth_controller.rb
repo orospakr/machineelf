@@ -152,10 +152,6 @@ class TeethController < ApplicationController
     @scary = params[:ikariam_url]
   end
 
-  def get_player_id_from_cookie
-    params[:ikariam_cookie].split('_')[0].to_i
-  end
-
   def scree_menu
     my_town = nil
     server = get_server
@@ -179,21 +175,22 @@ class TeethController < ApplicationController
       end
     end
 
-    owner_id = get_player_id_from_cookie
-    owner = Player.by_ikariam_id(owner_id)
-    owner.server = server
-    owner.save!
+    owner = my_town.player
+
+    # this is also a broken window, as it does not have the nil case checked
+    if !owner.nil?
+      owner.server = server
+      owner.save!
+
+      owner_event = PlayerEvent.new
+      owner_event.player = owner
+      owner_event.available_ships = parse_number(page.at('span#value_transAvail').inner_html)
+      owner_event.ships = parse_number(page.at('span#value_transSum').inner_html.split('(')[1].split(')')[0])
+      owner_event.gold = parse_number(page.at('span#value_gold').inner_html)
+      owner_event.save!
+    end
 
     my_town.server = server
-    my_town.player = owner
-    my_town.save!
-
-    owner_event = PlayerEvent.new
-    owner_event.player = owner
-    owner_event.available_ships = parse_number(page.at('span#value_transAvail').inner_html)
-    owner_event.ships = parse_number(page.at('span#value_transSum').inner_html.split('(')[1].split(')')[0])
-    owner_event.gold = parse_number(page.at('span#value_gold').inner_html)
-    owner_event.save!
 
     tevent = TownEvent.new
     tevent.town = my_town

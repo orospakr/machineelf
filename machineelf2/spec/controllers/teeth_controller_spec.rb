@@ -146,17 +146,15 @@ describe TeethController do
 
         Server.should_receive(:by_hostname).with('s3.ikariam.org').and_return(@server)
         Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
-        Player.should_receive(:by_ikariam_id).with(57667).and_return(@player)
 
         @town.stub!(:island).and_return(@island)
-        expects(@town, { :name => 'Mobotropolis', :player => @player,
-                  :server => @server})
+        expects(@town, { :name => 'Mobotropolis', :server => @server})
         expects(@player, { :server => @server})
         expects(@island, { :x => 95, :y => 65})
 
-        @town.should_receive(:save!)
         @island.should_receive(:save!)
         @player.should_receive(:save!)
+        @town.should_receive(:player).and_return(@player)
 
         PlayerEvent.should_receive(:new).and_return(@player_event)
         expects(@player_event,
