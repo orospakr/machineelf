@@ -1,6 +1,6 @@
 class Player < ActiveRecord::Base
-  validates_presence_of :ikariam_id, :server
-  validates_uniqueness_of :ikariam_id
+  validates_presence_of :server #, :ikariam_id
+#  validates_uniqueness_of :ikariam_id
 
   has_many :player_events
 
@@ -10,8 +10,8 @@ class Player < ActiveRecord::Base
 
   acts_as_ikariam
 
-  def self.by_ikariam_login(ikariam_login)
-    already_exists = self.find(:first, :conditions => ["ikariam_login = ?", ikariam_login])
+  def self.by_ikariam_login(server, ikariam_login)
+    already_exists = self.find(:first, :conditions => ["ikariam_login = ? AND server_id = ?", ikariam_login, server.id])
     if already_exists.nil?
       new_town = self.new
       new_town.ikariam_id = ikariam_id

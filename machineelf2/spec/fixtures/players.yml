@@ -3,7 +3,9 @@
 orospakr:
   ikariam_id: 57667
   ikariam_login: orospakr
+  server: gamma
 
 sieg:
   ikariam_id: 1
   ikariam_login: sieg
+  server: gamma

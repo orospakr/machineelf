@@ -82,13 +82,14 @@ describe TeethController do
         Server.should_receive(:by_hostname).with('s3.ikariam.org').and_return(@server)
 
         @town.should_receive(:save!)
-        @town.should_receive(:player).and_return(@player)
+#        @town.should_receive(:player).and_return(@player)
+        Player.should_receive(:by_ikariam_login).with(@server, "orospakr").and_return(@player)
         expects(@town, { :name => 'Mobotropolis', :island => @island, :server => @server })
 
         expects(@island, { :name => 'Issayos', :server => @server})
         @island.should_receive(:save!)
 
-        expects(@player, { :ikariam_login => 'orospakr', :server => @server})
+        expects(@player, { :server => @server})
         @player.should_receive(:save!)
 
         # now to test data point creation...
