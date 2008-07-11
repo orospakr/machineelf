@@ -1,15 +1,29 @@
 <h1>Machine Elf 2.0</h1>
 
-<head>
-<title>Machine Elf 2.0</title>
-</head>
+<html>
 
-<body>
-<% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
+  <head>
+    <title>Machine Elf 2.0</title>
+  </head>
 
-<% if flash[:error] %><div class="error"><%= flash[:error] %></div><% end %>
+  <body>
 
-<%= @content_for_layout %>
+    <p>
+      <i>Notes:</i>
+      <li>
+        Players must be created manually!
+      </li>
+    </p>
 
-</body>
+    <% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
+
+    <% if flash[:error] %><div class="error"><%= flash[:error] %></div><% end %>
+
+    <%= @content_for_layout %>
+
+    <div id="footer">
+      <i>Download the Machine Elf 2.0 Firefox toolbar <a href="/toolbars/machineelf-0.1-r124.xpi">here</a></i>.
+    </div>
+
+  </body>
 </html>
