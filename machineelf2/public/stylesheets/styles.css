@@ -8,3 +8,8 @@ div#footer {
     position: absolute;
     bottom: 1em;
 }
+
+div#logout {
+    background-color: lightGoldenRodYellow;
+    text-align: right;
+}

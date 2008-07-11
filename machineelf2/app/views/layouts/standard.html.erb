@@ -10,11 +10,17 @@
   <body>
 
     <div id="toolbar">
-      <% if !current_user.nil? %>
-      <% if current_user.is_korps? %>
-      <a href="/towns">Towns</a>
-      <a href="/islands">Islands</a>
-      <a href="/players">Players</a>
+      <div id="toolbar_entries">
+        <% if !current_user.nil? %>
+        <% if current_user.is_korps? %>
+        <a href="/">Main</a>
+        <a href="/towns">Towns</a>
+        <a href="/islands">Islands</a>
+        <a href="/players">Players</a>
+      </div>
+      <div id="logout">
+        <%= link_to 'Logout', logout_path %>
+      </div>
       <% end %>
       <% end %>
     </div>
