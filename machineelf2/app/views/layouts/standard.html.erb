@@ -18,27 +18,29 @@
         <a href="/islands">Islands</a>
         <a href="/players">Players</a>
         <a href="/servers">Servers</a>
+        <% end %>
       </div>
       <div id="logout">
         <%= link_to 'Logout', logout_path %>
       </div>
-      <% end %>
-      <% end %>
-    </div>
 
-    <% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
-
-    <% if flash[:error] %><div class="error"><%= flash[:error] %></div><% end %>
-
-    <%= @content_for_layout %>
-
-    <div id="footer">
-      <% if !current_user.nil? %>
-      <% if current_user.is_korps? %>
-      <i>Download the Machine Elf 2.0 Firefox toolbar <a href="/toolbars/machineelf-0.1-r<%= get_bzr_revno %>.xpi">here</a></i>.
-      <% end %>
       <% end %>
     </div>
+</div>
 
-  </body>
+<% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
+
+<% if flash[:error] %><div class="error"><%= flash[:error] %></div><% end %>
+
+<%= @content_for_layout %>
+
+<div id="footer">
+  <% if !current_user.nil? %>
+  <% if current_user.is_korps? %>
+  <i>Download the Machine Elf 2.0 Firefox toolbar <a href="/toolbars/machineelf-0.1-r<%= get_bzr_revno %>.xpi">here</a></i>.
+  <% end %>
+  <% end %>
+</div>
+
+</body>
 </html>
