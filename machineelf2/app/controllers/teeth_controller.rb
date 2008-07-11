@@ -60,7 +60,7 @@ class TeethController < ApplicationController
     print island_url
     s = get_server
 
-    i = Island.by_ikariam_id(island_id)
+    i = Island.by_ikariam_id(s, island_id)
     i.name = island_name
     i.server = s
     i.save!
@@ -68,7 +68,7 @@ class TeethController < ApplicationController
     b = parsed_contents.at('body#city')
     city = b.at("//span[@class='city']")
 
-    t = Town.by_ikariam_id(find_arg_by_name(:id).to_i)
+    t = Town.by_ikariam_id(s, find_arg_by_name(:id).to_i)
     t.island = i
     t.server = s
     t.name = city.inner_html
@@ -164,7 +164,7 @@ class TeethController < ApplicationController
     city_options = city_select/"option.avatarCities"
     for city in city_options
       if (city['selected'] == 'selected')
-        my_town = Town.by_ikariam_id(city['value'].to_i)
+        my_town = Town.by_ikariam_id(server, city['value'].to_i)
         island_coordinates = city.inner_html.split(']')[0]
         town_name = city.inner_html.split(']')[1][1..-1]
         if !my_town.island.nil?

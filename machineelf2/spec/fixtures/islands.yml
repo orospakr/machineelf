@@ -8,5 +8,15 @@
 
 issayos:
   ikariam_id: 3909
+  server: gamma
   name: Issayos
 
+leeiland:
+  ikariam_id: 6763
+  server: gamma
+  name: leeiland
+
+alphaland:
+  ikariam_id: 99963
+  server: alpha
+  name: Alphaland

@@ -77,8 +77,8 @@ describe TeethController do
         @player = mock_model(Player)
         @server = mock_model(Server)
 
-        Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
-        Island.should_receive(:by_ikariam_id).with(3909).and_return(@island)
+        Town.should_receive(:by_ikariam_id).with(@server, 82966).and_return(@town)
+        Island.should_receive(:by_ikariam_id).with(@server, 3909).and_return(@island)
         Server.should_receive(:by_hostname).with('s3.ikariam.org').and_return(@server)
 
         @town.should_receive(:save!)
@@ -146,7 +146,7 @@ describe TeethController do
         @player_event = mock_model(PlayerEvent)
 
         Server.should_receive(:by_hostname).with('s3.ikariam.org').and_return(@server)
-        Town.should_receive(:by_ikariam_id).with(82966).and_return(@town)
+        Town.should_receive(:by_ikariam_id).with(@server, 82966).and_return(@town)
 
         @town.stub!(:island).and_return(@island)
         expects(@town, { :name => 'Mobotropolis', :server => @server})

@@ -20,13 +20,14 @@ describe Player do
 #   end
 
   it "should return a new player if asked for one with a new Ikariam player id" do
-    dude = Player.by_ikariam_id(players(:orospakr).ikariam_id)
-    dude.server = @server
+    gamma = servers(:gamma)
+    dude = Player.by_ikariam_id(gamma, players(:orospakr).ikariam_id)
     dude.id.should == players(:orospakr).id
   end
 
   it "should return an existing player if asked for one by login name and server" do
-    dude = Player.by_ikariam_login(players(:orospakr).server, players(:orospakr).ikariam_login)
+    gamma = servers(:gamma)
+    dude = Player.by_ikariam_login(gamma, players(:orospakr).ikariam_login)
     dude.id.should == players(:orospakr).id
   end
 end

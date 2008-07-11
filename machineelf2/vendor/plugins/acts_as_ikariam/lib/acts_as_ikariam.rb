@@ -32,8 +32,8 @@ module Acts
 
       module ClassMethods
         # Class methods
-        def by_ikariam_id(ikariam_id)
-          already_exists = self.find(:first, :conditions => ["ikariam_id = ?", ikariam_id])
+        def by_ikariam_id(server, ikariam_id)
+          already_exists = self.find(:first, :conditions => ["ikariam_id = ? AND server_id = ?", ikariam_id, server.id])
           if already_exists.nil?
             new_town = self.new
             new_town.ikariam_id = ikariam_id

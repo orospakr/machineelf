@@ -2,10 +2,12 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Island do
   fixtures :islands
+  fixtures :servers
 
   before(:each) do
     @island = Island.new
     @server = mock_model(Server)
+    @gamma = servers(:gamma)
   end
 
   it "should not be valid if blank" do
@@ -26,14 +28,14 @@ describe Island do
   end
 
   it "should return a new island if asked for one with a new Ikariam island id" do
-    nowhere = Island.by_ikariam_id(12345)
+    nowhere = Island.by_ikariam_id(@gamma, 12345)
     nowhere.new_record?.should be_true
     nowhere.ikariam_id.should == 12345
     nowhere.name.should be_nil
   end
 
   it "should return an existing island if asked for one with an existing Ikariam town id" do
-    issa = Island.by_ikariam_id(islands(:issayos).ikariam_id)
+    issa = Island.by_ikariam_id(@gamma, islands(:issayos).ikariam_id)
     issa.id.should == islands(:issayos).id
     issa.new_record?.should_not be_true
   end

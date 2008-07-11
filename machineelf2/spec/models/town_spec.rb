@@ -5,6 +5,7 @@ describe Town do
   fixtures :town_events
   fixtures :buildings
   fixtures :building_events
+  fixtures :servers
 
   before(:each) do
     @town = Town.new
@@ -26,17 +27,31 @@ describe Town do
     @town.should_not be_valid # lulz... I have had a should where I should have had a should not.  Durr.
   end
 
-  it "should return a new town if asked for one with a new Ikariam town id" do
-    nowhere = Town.by_ikariam_id(12345)
-    nowhere.new_record?.should be_true
-    nowhere.ikariam_id.should == 12345
-    nowhere.name.should be_nil
-  end
+  describe "for a given server" do
+    before :each do
+      @server = mock_model(Server)
+      @gamma = servers(:gamma)
+    end
 
-  it "should return an existing town if asked for one with an existing Ikariam town id" do
-    mobo = Town.by_ikariam_id(towns(:mobotropolis).ikariam_id)
-    mobo.id.should == towns(:mobotropolis).id
-    mobo.new_record?.should_not be_true
+    it "should return a new town if asked for one with a new Ikariam town id" do
+      nowhere = Town.by_ikariam_id(@gamma, 12345)
+      nowhere.new_record?.should be_true
+      nowhere.ikariam_id.should == 12345
+      nowhere.name.should be_nil
+    end
+
+    it "should return an existing town if asked for one with an existing Ikariam town id" do
+      mobo = Town.by_ikariam_id(@gamma, towns(:mobotropolis).ikariam_id)
+      mobo.id.should == towns(:mobotropolis).id
+      mobo.new_record?.should_not be_true
+    end
+
+    it "should NOT return a town that exists on another server" do
+      # start here!
+      # add new fixtures!
+      mobo = Town.by_ikariam_id(@gamma, towns(:alphaopolis))
+      mobo.id.should_not == towns(:alphaopolis).id
+    end
   end
 
   describe "a valid town" do

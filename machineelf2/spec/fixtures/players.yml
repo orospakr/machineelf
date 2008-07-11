@@ -6,6 +6,16 @@ orospakr:
   server: gamma
 
 sieg:
-  ikariam_id: 1
+  ikariam_id: 9377
   ikariam_login: sieg
   server: gamma
+
+hale:
+  ikariam_id: 957453
+  ikariam_login: hale
+  server: gamma
+
+alphaman:
+  ikariam_id: 99654440
+  server: alpha
+  ikariam_login: alphaman
