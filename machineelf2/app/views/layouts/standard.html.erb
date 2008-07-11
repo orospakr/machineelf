@@ -4,16 +4,20 @@
 
   <head>
     <title>Machine Elf 2.0</title>
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
   </head>
 
   <body>
 
-    <p>
-      <i>Notes:</i>
-      <li>
-        Players must be created manually!
-      </li>
-    </p>
+    <div id="toolbar">
+      <% if !current_user.nil? %>
+      <% if current_user.is_korps? %>
+      <a href="/towns">Towns</a>
+      <a href="/islands">Islands</a>
+      <a href="/players">Players</a>
+      <% end %>
+      <% end %>
+    </div>
 
     <% if flash[:notice] %><div class="notice"><%= flash[:notice] %></div><% end %>
 
@@ -22,7 +26,11 @@
     <%= @content_for_layout %>
 
     <div id="footer">
-      <i>Download the Machine Elf 2.0 Firefox toolbar <a href="/toolbars/machineelf-0.1-r124.xpi">here</a></i>.
+      <% if !current_user.nil? %>
+      <% if current_user.is_korps? %>
+      <i>Download the Machine Elf 2.0 Firefox toolbar <a href="/toolbars/machineelf-0.1-r<%= get_bzr_revno %>.xpi">here</a></i>.
+      <% end %>
+      <% end %>
     </div>
 
   </body>
