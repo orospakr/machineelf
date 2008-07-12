@@ -58,6 +58,8 @@ describe Town do
     before :each do
       @town = Town.new
       @gamma = mock_model(Server)
+      @issayos = mock_model(Island)
+      @town.island = @issayos
       @town.ikariam_id = 9999
       @town.server = @gamma
       @town.name = 'Not Mobotropolis'

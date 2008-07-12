@@ -1,7 +1,7 @@
 class Player < ActiveRecord::Base
   belongs_to :server
 
-  validates_presence_of :server #, :ikariam_id
+  validates_presence_of :server, :ikariam_login #, :ikariam_id
 #  validates_uniqueness_of :ikariam_id
 
   has_many :player_events

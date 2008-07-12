@@ -15,7 +15,11 @@
 
 <p>
   <b>Owner:</b>
+  <% if @town.player.nil? %>
+  This town does not have an associated owner.
+  <% else %>
   <%=link_to @town.player.ikariam_login, edit_player_path(@town.player) %>
+  <% end %>
 </p>
 
 
