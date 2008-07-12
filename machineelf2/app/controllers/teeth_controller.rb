@@ -72,7 +72,7 @@ class TeethController < ApplicationController
     t.island = i
     t.server = s
     t.name = city.inner_html
-    t.save!
+
 
     # we can safely assume here that the owner displayed on this page is also
     # the one logged in, since no other player can look at someone else's
@@ -87,6 +87,8 @@ class TeethController < ApplicationController
       owner.server = s
       owner.save!
     end
+    t.owner = owner
+    t.save!
 
     # OK, now that we've ensured that the Town and Island
     # records are up to date, we can now create a TownEvent
