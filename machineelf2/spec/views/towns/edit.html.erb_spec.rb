@@ -2,13 +2,15 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "/towns/edit.html.erb" do
   include TownsHelper
-  
+
   before do
     @town = mock_model(Town)
     @town.stub!(:island_id).and_return("1")
+    @town.stub!(:ikariam_id).and_return(764375)
     @town.stub!(:found_at).and_return(Time.now)
     @town.stub!(:updated_at).and_return(Time.now)
     @town.stub!(:name).and_return("MyString")
+    @town.stub!(:server_id).and_return(46499)
     @town.stub!(:owner_id).and_return("1")
     @town.stub!(:wood).and_return("1")
     @town.stub!(:wine).and_return("1")
@@ -21,7 +23,7 @@ describe "/towns/edit.html.erb" do
 
   it "should render edit form" do
     render "/towns/edit.html.erb"
-    
+
     response.should have_tag("form[action=#{town_path(@town)}][method=post]") do
       with_tag('input#town_name[name=?]', "town[name]")
       with_tag('input#town_wood[name=?]', "town[wood]")
