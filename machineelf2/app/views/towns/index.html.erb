@@ -10,7 +10,7 @@
 
 <% for town in @towns %>
   <tr>
-    <td><%=h town.island_id %></td>
+    <td><%=link_to town.island.name, edit_island_path(town.island) %></td>
     <td><%=h town.updated_at %></td>
     <td><%=h town.name %></td>
     <td><%=h town.owner_id %></td>

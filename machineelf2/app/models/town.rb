@@ -15,7 +15,7 @@ class Town < ActiveRecord::Base
 
   has_many :buildings
 
-  validates_presence_of :ikariam_id, :name, :server
+  validates_presence_of :ikariam_id, :name, :server, :island
   validates_uniqueness_of :ikariam_id
 
   acts_as_ikariam
