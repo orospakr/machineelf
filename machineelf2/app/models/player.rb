@@ -14,7 +14,8 @@ class Player < ActiveRecord::Base
     already_exists = self.find(:first, :conditions => ["ikariam_login = ? AND server_id = ?", ikariam_login, server.id])
     if already_exists.nil?
       new_town = self.new
-      new_town.ikariam_id = ikariam_id
+      new_town.server = server
+      new_town.ikariam_login = ikariam_login
       return new_town
     else
       return already_exists
