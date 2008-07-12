@@ -84,7 +84,7 @@ describe TeethController do
         @town.should_receive(:save!)
 #        @town.should_receive(:player).and_return(@player)
         Player.should_receive(:by_ikariam_login).with(@server, "orospakr").and_return(@player)
-        expects(@town, { :name => 'Mobotropolis', :island => @island, :owner => @player,
+        expects(@town, { :name => 'Mobotropolis', :island => @island, :player => @player,
                   :server => @server })
 
         expects(@island, { :name => 'Issayos', :server => @server})

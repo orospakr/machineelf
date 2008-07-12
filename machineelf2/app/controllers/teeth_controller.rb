@@ -87,7 +87,7 @@ class TeethController < ApplicationController
       owner.server = s
       owner.save!
     end
-    t.owner = owner
+    t.player = owner
     t.save!
 
     # OK, now that we've ensured that the Town and Island
