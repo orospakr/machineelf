@@ -9,10 +9,16 @@
         <stack flex="0">
 
           <hbox flex="0">
-            <toolbarbutton id="machineelf_warp_menu_button" type="menu" container="true" label="Warp" tooltiptext="Engage.">
+            <toolbarbutton id="machineelf_warp_menu_button" type="menu" container="true" label="Warp" tooltiptext="Engage">
               <menupopup id="machineelf_warp_menu">
                 <menuitem label="Towns" disabled="true"/>
                 <menuseparator />
+              </menupopup>
+            </toolbarbutton>
+            <toolbarbutton id="machineelf_tools_menu_button" type="menu" container="true" label="Tools" tooltiptext="Useful facilities">
+              <menupopup id="machineelf_tools_menu">
+                <menuitem id="machineelf_web_interface_item" label="Web Interface" />
+                <menuitem id="machineelf_resource_conversion_item" label="Resource Conversion" />
               </menupopup>
             </toolbarbutton>
             <toolbarseparator />

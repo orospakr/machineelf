@@ -24,6 +24,6 @@
     <em:creator>Andrew Clunis</em:creator>
     <em:homepageURL>http://knightsbridge.orospakr.ca/</em:homepageURL>
     <em:updateKey></em:updateKey>
-    <em:iconURL>chrome://machineelf/content/images/korps.jpg</em:iconURL>
+    <em:iconURL>chrome://machineelf/content/images/korps-icon.png</em:iconURL>
   </Description>
 </RDF>

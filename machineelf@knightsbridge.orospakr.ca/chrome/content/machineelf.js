@@ -38,7 +38,15 @@ var MachineElf = {
             messagepane.addEventListener("load", function () { MachineElfPageLoadListener.onPageLoad(); }, true);
 
                 chromeWindow.window.setInterval("MachineElf.doUpdate();",
-        this.REFRESH_INTERVAL);
+        MachineElf.REFRESH_INTERVAL);
+        var resource_conversion_item = document.getElementById("machineelf_resource_conversion_item");
+        resource_conversion_item.onclick = function() {
+            MachineElf.rickRoll();
+        };
+        var web_interface_item = document.getElementById("machineelf_web_interface_item");
+        web_interface_item.onclick = function() {
+            MachineElf.openLink(MachineElf.MACHINEELF_HOST);
+        }
         this.detectServers();
         this.doUpdate();
     },
@@ -51,6 +59,10 @@ var MachineElf = {
 
     lol: function() {
         alert("lol internets");
+    },
+
+    rickRoll: function() {
+        MachineElf.openLink("http://youtube.com/watch?v=eBGIQ7ZuuiU");
     },
 
     log: function(string) {
