@@ -1,0 +1,35 @@
+<% form_for(@town) do |f| %>
+  <p>
+    <b>Ikariam ID</b><br />
+    <%= f.text_field :ikariam_id %>
+  </p>
+
+  <p>
+    <b>Island</b><br />
+    <%= f.collection_select :island_id, Island.find(:all), :id, :name %>
+  </p>
+
+  <p>
+    <b>Updated at</b><br />
+    <%= f.datetime_select :updated_at %>
+  </p>
+
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Owner</b><br />
+    <%= f.collection_select :owner_id, Player.find(:all), :id, :ikariam_login %>
+  </p>
+
+  <p>
+    <b>Server</b><br />
+    <%= f.collection_select :server_id, Server.find(:all), :id, :name %>
+  </p>
+
+  <p>
+    <%= f.submit mode %>
+  </p>
+<% end %>

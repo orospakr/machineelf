@@ -1,25 +1,27 @@
-<h1>Listing players</h1>
+<h1>Listing Players</h1>
 
-<b>NB:  players need to be ADDED MANUALLY, because Ikariam pulled any means to see the logged in player's ID number.</b>
+<p>NB:  players need to be <b>added manually</b>, because Ikariam pulled any means to see the logged in player's ID number.</p>
 
-<table>
-  <tr>
-    <th>Ikariam</th>
-    <th>Ikariam login</th>
-    <th>Server</th>
-  </tr>
+<p>
+  <table>
+    <tr>
+      <th>Ikariam</th>
+      <th>Ikariam login</th>
+      <th>Server</th>
+    </tr>
 
-<% for player in @players %>
-  <tr>
-    <td><%=h player.ikariam_id %></td>
-    <td><%=h player.ikariam_login %></td>
-    <td><%= link_to player.server.name, edit_server_path(player.server) %></td>
-    <td><%= link_to 'Show', player %></td>
-    <td><%= link_to 'Edit', edit_player_path(player) %></td>
-    <td><%= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+    <% for player in @players %>
+    <tr>
+      <td><%=h player.ikariam_id %></td>
+      <td><%=h player.ikariam_login %></td>
+      <td><%= link_to player.server.name, edit_server_path(player.server) %></td>
+      <td><%= link_to 'Show', player %></td>
+      <td><%= link_to 'Edit', edit_player_path(player) %></td>
+      <td><%= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+    <% end %>
+  </table>
+</p>
 
 <br />
 

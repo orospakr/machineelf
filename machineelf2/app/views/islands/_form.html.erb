@@ -1,0 +1,21 @@
+<% form_for(@island) do |f| %>
+  <p>
+    <b>Ikariam ID</b><br />
+    <%= f.text_field :ikariam_id %>
+  </p>
+
+  <p>
+    <b>Name</b><br />
+    <%= f.text_field :name %>
+  </p>
+
+  <p>
+    <b>Server</b><br />
+    <%= f.collection_select :server_id, Server.find(:all), :id, :name %>
+  </p>
+
+
+  <p>
+    <%= f.submit mode %>
+  </p>
+<% end %>

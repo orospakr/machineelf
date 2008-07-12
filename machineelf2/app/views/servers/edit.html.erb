@@ -1,23 +1,8 @@
-<h1>Editing server</h1>
+<h1>Editing Server</h1>
 
 <%= error_messages_for :server %>
 
-<% form_for(@server) do |f| %>
-  <p>
-    <b>Hostname</b><br />
-    <%= f.text_field :hostname %>
-  </p>
-
-  <p>
-    <b>Name</b><br />
-    <%= f.text_field :name %>
-  </p>
-
-
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+<%= render :partial => "form", :locals => { :mode => "Update" } %>
 
 <%= link_to 'Show', @server %> |
 <%= link_to 'Back', servers_path %>

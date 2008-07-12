@@ -2,20 +2,6 @@
 
 <%= error_messages_for :server %>
 
-<% form_for(@server) do |f| %>
-  <p>
-    <b>Hostname</b><br />
-    <%= f.text_field :hostname %>
-  </p>
-
-  <p>
-    <b>Name</b><br />
-    <%= f.text_field :name %>
-  </p>
-
-  <p>
-    <%= f.submit "Create" %>
-  </p>
-<% end %>
+<%= render :partial => "form", :locals => { :mode => "Create" } %>
 
 <%= link_to 'Back', servers_path %>

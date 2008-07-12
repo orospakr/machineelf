@@ -1,22 +1,8 @@
-<h1>Editing island</h1>
+<h1>Editing Island</h1>
 
 <%= error_messages_for :island %>
 
-<% form_for(@island) do |f| %>
-  <p>
-    <b>Ikariam</b><br />
-    <%= f.text_field :ikariam_id %>
-  </p>
-
-  <p>
-    <b>Name</b><br />
-    <%= f.text_field :name %>
-  </p>
-
-  <p>
-    <%= f.submit "Update" %>
-  </p>
-<% end %>
+<%= render :partial => "form", :locals => {:mode => "Update"} %>
 
 <%= link_to 'Show', @island %> |
 <%= link_to 'Back', islands_path %>
