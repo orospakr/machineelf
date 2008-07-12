@@ -1,6 +1,6 @@
 <p>
   <b>Island:</b>
-  <%=h @town.island_id %>
+  <%=link_to @town.island.name, edit_island_path(@town.island) %>
 </p>
 
 <p>
@@ -15,7 +15,7 @@
 
 <p>
   <b>Owner:</b>
-  <%=h @town.owner_id %>
+  <%=link_to @town.player.ikariam_login, edit_player_path(@town.player) %>
 </p>
 
 

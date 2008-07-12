@@ -13,7 +13,7 @@
     <td><%=link_to town.island.name, edit_island_path(town.island) %></td>
     <td><%=h town.updated_at %></td>
     <td><%=h town.name %></td>
-    <td><%=h town.owner_id %></td>
+    <td><%=link_to town.player.ikariam_login, edit_player_path(town.player) %></td>
     <td><%= link_to 'Show', town %></td>
     <td><%= link_to 'Edit', edit_town_path(town) %></td>
     <td><%= link_to 'Destroy', town, :confirm => 'Are you sure?', :method => :delete %></td>
