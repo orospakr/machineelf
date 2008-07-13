@@ -11,7 +11,8 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @players }
+      format.xml  { render :xml => @players.to_xml( { :methods => [:towns]}) }
+      format.json  { render :json => @players.to_json( { :methods => [:towns]}) }
     end
   end
 
@@ -22,7 +23,8 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @player }
+      format.xml  { render :xml => @player.to_xml( { :methods => [:towns]}) }
+      format.json  { render :json => @player.to_json( { :methods => [:towns]}) }
     end
   end
 

@@ -26,7 +26,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :islands
 
-  map.resource :session
+  map.connect '/sessions/subscriptions', :controller => 'sessions', :action => 'subscriptions'
+  map.connect '/sessions/subscriptions.:format', :controller => 'sessions', :action => 'subscriptions'
+  map.resource :sessions
 
   map.resources :towns
 

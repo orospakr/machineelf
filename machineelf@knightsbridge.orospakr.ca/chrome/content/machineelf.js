@@ -22,11 +22,11 @@ window.addEventListener("load", function() { MachineElf.init(this); }, false);
 
 // figure out why population_capacity isn't showing up
 
-
 // class defined in so-called 'literal' notation
+
 var MachineElf = {
     REFRESH_INTERVAL: 30000,
-    MACHINEELF_HOST: "http://machineelf.orospakr.ca",
+    MACHINEELF_HOST: "http://localhost:3000",
     servers_list: null,
 
     init: function(chromeWindow) {
@@ -92,19 +92,9 @@ var MachineElf = {
         }
     },
 
-    updateToolbarTowns: function(towns_json_req) {
-        var towns_json;
-
-        if (towns_json_req.readyState == 4) {
-            towns_json = eval('(' + towns_json_req.responseText + ')');
-            //blah.value = towns_json[0].name;
-            MachineElf.updateTownsOnToolbar(towns_json);
-            MachineElf.updateWarpMenu(towns_json);
-        }
-        else {
-            //blah.value = "FAILURE";
-            return;
-        }
+    updateToolbarTowns: function(towns) {
+            MachineElf.updateTownsOnToolbar(towns);
+            MachineElf.updateWarpMenu(towns); /* this should be elsewhere */
     },
 
     updateTownsOnToolbar: function(towns_json) {
@@ -117,8 +107,8 @@ var MachineElf = {
         MachineElf.toolbar_towns = [];
 
         for (town in towns_json) {
-            var town = towns_json[town];
-            MachineElf.addTownToToolbar(town);
+            var t = towns_json[town];
+            MachineElf.addTownToToolbar(t);
         }
     },
 
@@ -287,17 +277,36 @@ var MachineElf = {
     },
 
     dispatchUpdaters: function(user_id) {
-        MachineElf.doToolbarUpdate(user_id);
+        /* instead of directly calling doToolbarUpdate here, this should call doUpdateCurrentPlayerTowns
+         */
+        MachineElf.doUpdateCurrentPlayerTowns();
     },
 
-    doToolbarUpdate: function(user_id) {
-        var towns_updater = new XMLHttpRequest();
-            towns_updater.open("GET", MachineElf.MACHINEELF_HOST + "/towns.json", true);
-            //            req.onreadystatechange = updateToolbar;   // the handler
-            towns_updater.onreadystatechange=function() {
-                MachineElf.updateToolbarTowns(towns_updater);
+    doUpdateCurrentPlayerTowns: function() {
+        /* ANDREW, START HERE AND...
+          do XHR on /sessions/subscriptions, and call doToolbarUpdate with array of town ids, and make
+           an individual town fetcher and item creator function that doToolbarUpdate will call for each.
+        */
+        var subscription_getter = new XMLHttpRequest();
+        subscription_getter.open("GET", MachineElf.MACHINEELF_HOST + "/sessions/subscriptions.json", true);
+        subscription_getter.onreadystatechange=function() {
+            MachineElf.receiveSubscribedPlayers(subscription_getter);
+        };
+        subscription_getter.send(null);
+
+    },
+
+    receiveSubscribedPlayers: function(subscription_req) {
+        var subscribed_towns = [];
+        if (subscription_req.readyState == 4) {
+            alert(subscription_req.responseText);
+            subscribed_players = eval("(" + subscription_req.responseText + ")");
+            for (player in subscribed_players) {
+                subscribed_towns = subscribed_towns.concat(subscribed_players[player].towns);
             }
-            towns_updater.send(null);
+            alert(subscribed_towns);
+            MachineElf.updateToolbarTowns(subscribed_towns);
+        }
     },
 
     getIkariamCookie: function(domain) {

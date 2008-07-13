@@ -20,6 +20,10 @@ class Town < ActiveRecord::Base
 
   acts_as_ikariam
 
+  def test_array
+    [0, 1, 2, 3]
+  end
+
   def get_most_recent_event_value(column)
     events = TownEvent.find(:all, :conditions => ['town_id = ?', self.id], :order => 'created_at DESC')
     events.each do |event|

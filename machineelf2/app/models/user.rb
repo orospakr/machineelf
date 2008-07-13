@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
   # Virtual attribute for the unencrypted password
   attr_accessor :password
 
-  has_many :players
+  has_many :subscriptions
+  has_many :players, :through => :subscriptions
 
   @@excluded_from_serialization_list = [:crypted_password, :activation_code, :remember_token, :salt]
   def User.excluded_from_serialization; @@excluded_from_serialization_list end

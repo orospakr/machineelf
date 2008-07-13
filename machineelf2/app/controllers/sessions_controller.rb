@@ -30,4 +30,15 @@ class SessionsController < ApplicationController
     flash[:notice] = "You have been logged out."
     redirect_back_or_default('/')
   end
+
+  # displays players that the ogged in player looks at, along with the associated towns
+
+#  @towns.to_json({ :methods => [:current_stats, :url, :public_url]}) }
+
+  def subscriptions
+    respond_to do |format|
+      format.json { render :json => self.current_user.players.to_json({ :include => { :towns => { :methods => [:current_stats, :url, :public_url]}  } })}
+      format.xml { render :xml => self.current_user.players.to_xml({ :include => :towns }) }
+    end
+  end
 end
