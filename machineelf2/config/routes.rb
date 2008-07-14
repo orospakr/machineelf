@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :buildings
 
-  map.resources :servers
+  map.resources :servers, :active_scaffold => true
 
 #  map.resources :users
 
@@ -22,15 +22,14 @@ ActionController::Routing::Routes.draw do |map|
                                      :unsuspend => :put,
                                      :purge     => :delete }
 
-  map.resources :players
-
-  map.resources :islands
+  map.resources :players, :active_scaffold => true
+  map.resources :islands, :active_scaffold => true
 
   map.connect '/sessions/subscriptions', :controller => 'sessions', :action => 'subscriptions'
   map.connect '/sessions/subscriptions.:format', :controller => 'sessions', :action => 'subscriptions'
   map.resource :session
 
-  map.resources :towns
+  map.resources :towns, :active_scaffold => true
 
 
   # The priority is based upon order of creation: first created -> highest priority.
