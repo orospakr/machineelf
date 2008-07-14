@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'towns/:id/stats.:format', :controller => 'towns', :action => 'stats'
 
 
-  map.resources :users, :member => { :suspend   => :put,
+  map.resources :users, :active_scaffold => true, :member => { :suspend   => :put,
                                      :unsuspend => :put,
                                      :purge     => :delete }
 
