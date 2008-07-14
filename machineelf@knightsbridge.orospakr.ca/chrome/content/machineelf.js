@@ -299,12 +299,10 @@ var MachineElf = {
     receiveSubscribedPlayers: function(subscription_req) {
         var subscribed_towns = [];
         if (subscription_req.readyState == 4) {
-            alert(subscription_req.responseText);
             subscribed_players = eval("(" + subscription_req.responseText + ")");
             for (player in subscribed_players) {
                 subscribed_towns = subscribed_towns.concat(subscribed_players[player].towns);
             }
-            alert(subscribed_towns);
             MachineElf.updateToolbarTowns(subscribed_towns);
         }
     },
