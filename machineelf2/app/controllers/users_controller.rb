@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   # Protect these actions behind an admin login
   before_filter :is_korps?, :only => [:suspend, :unsuspend, :destroy, :purge, :index, :show]
-  before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge, :index, :show]
+#  before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge, :index, :show]
 
   # render new.rhtml
   def new
