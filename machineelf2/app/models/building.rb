@@ -1,4 +1,5 @@
 class Building < ActiveRecord::Base
+
   @@building_types_hash = { 'Town hall' => :town_hall,
     'Trading port' => :trading_port,
     'Shipyard' => :shipyard, 'Tavern' => :tavern,
@@ -47,5 +48,19 @@ class Building < ActiveRecord::Base
       results[col.name.intern] = get_most_recent_event_value(col.name)
     end
     return results
+  end
+
+  def Building.name_from_flavour(f)
+    result = ""
+    Building.building_types.each_pair do |key, value|
+      if value.to_s == f
+        result = key
+      end
+    end
+    return result
+  end
+
+  def to_label
+    return "#{Building.name_from_flavour(flavour)}: #{current_stats[:level]}"
   end
 end

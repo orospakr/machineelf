@@ -10,6 +10,10 @@ class Player < ActiveRecord::Base
 
   acts_as_ikariam
 
+  def to_label
+    return ikariam_login
+  end
+
   def self.by_ikariam_login(server, ikariam_login)
     already_exists = self.find(:first, :conditions => ["ikariam_login = ? AND server_id = ?", ikariam_login, server.id])
     if already_exists.nil?

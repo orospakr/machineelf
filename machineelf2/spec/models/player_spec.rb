@@ -30,4 +30,10 @@ describe Player do
     dude = Player.by_ikariam_login(gamma, players(:orospakr).ikariam_login)
     dude.id.should == players(:orospakr).id
   end
+
+  it "should return a human-readable name for ActiveScaffold" do
+    gamma = servers(:gamma)
+    dude = Player.by_ikariam_login(gamma, players(:orospakr).ikariam_login)
+    dude.to_label.should == "orospakr"
+  end
 end

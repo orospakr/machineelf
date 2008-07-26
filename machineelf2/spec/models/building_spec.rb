@@ -42,4 +42,9 @@ describe Building do
 
     mobo_tavern.current_stats.should == expected
   end
+
+  it "should return a human-readable ActiveScaffold label with building type and level" do
+    mobo_tavern = buildings(:mobo_tavern)
+    mobo_tavern.to_label.should == "Tavern: 15"
+  end
 end
