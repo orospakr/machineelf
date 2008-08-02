@@ -29,4 +29,10 @@ class ApplicationController < ActionController::Base
 
   # TODO is_admin? as well, that checks both is_admin and is_korps
 
+  protected
+
+  def self.active_scaffold_controller_for(klass)
+#    return FooController if klass == Bar
+    return "#{klass}EditorController".constantize rescue super
+  end
 end
