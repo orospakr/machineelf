@@ -3,14 +3,14 @@ class UserMailer < ActionMailer::Base
     setup_email(user)
     @subject    += 'Account Activation'
 
-    @body[:url]  = "https://machineelf.orospakr.ca/activate/#{user.activation_code}"
+    @body[:url]  = "http://machineelf.orospakr.ca/activate/#{user.activation_code}"
 
   end
 
   def activation(user)
     setup_email(user)
     @subject    += 'Your account has been activated!'
-    @body[:url]  = "https://machineelf.orospakr.ca/"
+    @body[:url]  = "http://machineelf.orospakr.ca/"
   end
 
   protected
