@@ -84,8 +84,9 @@ var MachineElf = {
         for (town in towns_json) {
             var new_item = document.createElement("menuitem");
             new_item.setAttribute("label", towns_json[town].name);
+            new_item.town_public_url = towns_json[town].public_url;
             new_item.onclick = function() {
-                MachineElf.openLink(towns_json[town].public_url);
+                MachineElf.openLink(this.town_public_url);
             };
             warp_menu.appendChild(new_item);
             MachineElf.warp_zone_items.push(new_item);
