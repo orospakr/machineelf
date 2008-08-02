@@ -94,7 +94,6 @@ var MachineElf = {
 
     updateToolbarTowns: function(towns) {
             MachineElf.updateTownsOnToolbar(towns);
-            MachineElf.updateWarpMenu(towns); /* this should be elsewhere */
     },
 
     updateTownsOnToolbar: function(towns_json) {
@@ -294,6 +293,21 @@ var MachineElf = {
         };
         subscription_getter.send(null);
 
+        var all_towns_getter = new XMLHttpRequest();
+        all_towns_getter.open("GET", MachineElf.MACHINEELF_HOST + "/towns.json", true);
+        all_towns_getter.onreadystatechange=function() {
+            MachineElf.receiveAllTowns(all_towns_getter);
+        };
+        all_towns_getter.send(null);
+    },
+
+    receiveAllTowns: function(towns_json_req) {
+        var all_towns_json;
+        if (towns_json_req.readyState == 4) {
+            /*      alert(towns_json_req.responseText); */
+            all_towns_json = eval("(" + towns_json_req.responseText + ")");
+            MachineElf.updateWarpMenu(all_towns_json);
+        }
     },
 
     receiveSubscribedPlayers: function(subscription_req) {

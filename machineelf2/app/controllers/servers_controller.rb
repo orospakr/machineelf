@@ -28,6 +28,14 @@ class ServersController < ApplicationController
     end
   end
 
+  def towns
+    @server = Server.find(params[:id])
+
+    respond_to do |format|
+      format.json {  render :json => @server.towns.to_json({ :methods => [:current_stats, :url, :public_url]}) }
+    end
+  end
+
   # GET /servers/new
   # GET /servers/new.xml
   def new

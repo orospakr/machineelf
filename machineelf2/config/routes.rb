@@ -17,6 +17,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'towns/:id/stats', :controller => 'towns', :action => 'stats'
   map.connect 'towns/:id/stats.:format', :controller => 'towns', :action => 'stats'
 
+  map.connect 'servers/:id/towns', :controller => 'servers', :action => 'towns'
+  map.connect 'servers/:id/towns.:format', :controller => 'servers', :action => 'towns'
 
   map.resources :users, :member => { :suspend   => :put,
                                      :unsuspend => :put,
