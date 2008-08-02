@@ -1,28 +1,21 @@
-// Machine Elf 2.0 Toolbar.
+/* Machine Elf 2.0 Firefox Extension
+   Copyright (C) 2007-2008 Andrew Clunis
 
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 window.addEventListener("load", function() { MachineElf.init(this); }, false);
-
-// TODO for tomorrow
-
-// I have to determine which Ikariam server by hostname I'm on BEFORE I can scree,
-// because I need to know which cookie to get and send along.  DONE
-
-// Add nice UI in the toolbar to show town stats, obviously...
-// ... mm, I need to fetch the Player's JSON (which I have an id for through User),
-// ... and from there acquire their global props (gold, etc.) as well as their towns
-
-// Cordon off the admin features (CRUD/scaffold operations that mutate things)
-
-// Implement remaining-build time feature for buildings DONE
-
-// Create an action for building level retrieval, like /towns/:id/stats,
-// that returns building levels... or should I perhaps be using that new way of including computed values in activerecord serialization?
-// DONE
-
-// figure out why population_capacity isn't showing up
-
-// class defined in so-called 'literal' notation
 
 var MachineElf = {
     REFRESH_INTERVAL: 30000,
