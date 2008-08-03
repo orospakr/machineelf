@@ -17,6 +17,10 @@ class SiteController < ApplicationController
     render :text => get_bzr_revno
   end
 
+  def toolbar_updates
+    render :text => "BUTT\n\n\n\n"
+  end
+
   def am_i_logged_in
     user = current_user
     if user.nil?

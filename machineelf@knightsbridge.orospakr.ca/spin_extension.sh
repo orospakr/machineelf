@@ -2,6 +2,7 @@ REVNO=`bzr revno`
 VERSION=$(( $REVNO + 1 ))
 XPI_FILENAME="../machineelf2/public/toolbars/machineelf-0.1-r$VERSION.xpi"
 sed s/REVNO/$VERSION/ install.rdf.in > install.rdf
+sed s/REVNO/$VERSION/ chrome/content/machineelf.in.js > chrome/content/machineelf.js
 zip -r $XPI_FILENAME *
 bzr add $XPI_FILENAME
 

@@ -23,6 +23,7 @@
     <em:description>From your friends, the Vigilant Statisticians of The Knightsbridge Pact.</em:description>
     <em:creator>Andrew Clunis</em:creator>
     <em:homepageURL>http://knightsbridge.orospakr.ca/</em:homepageURL>
+    <em:updateURL>http://localhost:3000/toolbar_updates</em:updateURL>
     <em:updateKey></em:updateKey>
     <em:iconURL>chrome://machineelf/content/images/korps-icon.png</em:iconURL>
   </Description>

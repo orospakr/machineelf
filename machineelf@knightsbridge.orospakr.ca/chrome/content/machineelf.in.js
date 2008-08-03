@@ -40,9 +40,34 @@ var MachineElf = {
         web_interface_item.onclick = function() {
             MachineElf.openLink(MachineElf.MACHINEELF_HOST);
         }
+        //        this.checkForUpdates();
         this.detectServers();
         this.doUpdate();
     },
+
+    // checkForUpdates: function() {
+    //     var updateChecker = new XMLHttpRequest();
+    //     updateChecker.open("GET", MachineElf.MACHINEELF_HOST + "/toolbar_version", true);
+    //     updateChecker.onreadystatechange = function() {
+    //         MachineElf.updateVersionReceived(updateChecker);
+    //     };
+    //     updateChecker.send(null);
+    // },
+
+    // updateVersionReceived: function(update_req) {
+    //     if (update_req.readyState == 4) {
+    //         MachineElf.log("updateVersion received with: " + update_req.responseText);
+    //         alert("VERSION IS: " + update_req.responseText);
+
+    //         var me_toolbaritem = document.getElementById("me_toolbaritem");
+    //         var update_button = document.createElement("toolbarbutton");
+    //         update_button.onclick = function() {
+    //             MachineElf.openLink("www.google.com");
+    //         };
+    //         update_button.setAttribute("label", update_req.responseText);
+    //         me_toolbaritem.appendChild(update_button);
+    //     }
+    // },
 
     logger: Components.classes["@mozilla.org/consoleservice;1"].getService(Components.interfaces.nsIConsoleService),
 
@@ -217,9 +242,9 @@ var MachineElf = {
         }
         var servers_json_req = new XMLHttpRequest();
         servers_json_req.open('GET', MachineElf.MACHINEELF_HOST + '/servers.json', true);
-        servers_json_req.onreadystatechange=function() {
+        servers_json_req.onreadystatechange = function() {
             MachineElf.serverDetectedCallback(servers_json_req);
-        }
+        };
         servers_json_req.send(null);
     },
 
