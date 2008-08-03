@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :players, :through => :subscriptions
 
+  def to_label
+    return login
+  end
+
   @@excluded_from_serialization_list = [:crypted_password, :activation_code, :remember_token, :salt]
   def User.excluded_from_serialization; @@excluded_from_serialization_list end
 
