@@ -129,8 +129,9 @@ class TeethController < ApplicationController
       if !time_elem.nil?
         upgrade_finish_time = Town.remaining_finished_at(time_elem.at('#cityCountdown').inner_html)
         building.ready_at = upgrade_finish_time
+      else
+        building.ready_at = nil
       end
-
       building.save!
       building.write_event(level_number)
     end
