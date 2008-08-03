@@ -11,7 +11,7 @@ class Player < ActiveRecord::Base
   acts_as_ikariam
 
   def to_label
-    return ikariam_login
+    return "#{ikariam_login} (#{server.name})"
   end
 
   def self.by_ikariam_login(server, ikariam_login)

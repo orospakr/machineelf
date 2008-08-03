@@ -3,7 +3,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :player
 
   def to_label
-    return player.ikariam_login
+    return player.to_label
   end
 
 end
