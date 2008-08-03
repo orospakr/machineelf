@@ -47,6 +47,7 @@ class Building < ActiveRecord::Base
       end
       results[col.name.intern] = get_most_recent_event_value(col.name)
     end
+    results[:ready_at] = ready_at
     return results
   end
 
