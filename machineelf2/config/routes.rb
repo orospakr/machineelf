@@ -6,6 +6,7 @@ ActionController::Routing::Routes.draw do |map|
 #  map.resources :users
 
   map.home '', :controller => 'site', :action => 'welcome'
+  map.connect '/toolbar_version', :controller => 'site', :action => 'toolbar_version'
 
   map.connect '/am_i_logged_in', :controller => 'site', :action => 'am_i_logged_in'
 
