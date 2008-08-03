@@ -1,5 +1,7 @@
 class UsersEditorController < ApplicationController
-  active_scaffold :user
+  active_scaffold :user do |config|
+    config.columns.exclude :players
+  end
 
   layout 'standard'
 
