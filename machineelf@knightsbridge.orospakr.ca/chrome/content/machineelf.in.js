@@ -156,15 +156,31 @@ var MachineElf = {
             res_hbox.appendChild(res_label_value);
         }
 
+        var building_grid = document.createElement("grid");
+        var building_columns = document.createElement("columns");
+        var i = 0;
+        for (i=0;i<=3;i++) {
+            var col = document.createElement("column");
+            col.setAttribute("flex", 1);
+            building_columns.appendChild(col);
+        }
+        building_grid.appendChild(building_columns);
+        var building_table = document.createElement("rows");
+        building_grid.appendChild(building_table);
+
+        town_button_tooltip.appendChild(building_grid);
+
         for (building in town.current_stats.buildings) {
             var building_label = document.createElement("label");
-            var building_label_value = document.createElement("label");
-            var building_hbox = document.createElement("hbox");
-            town_button_tooltip.appendChild(building_hbox);
+            var building_label_value = documegnt.createElement("label");
+            //var building_hbox = document.createElement("hbox");
+            var building_row = document.createElement("row");
+            building_table.appendChild(building_row);
+            town_button_tooltip.appendChild(building_table);
             building_label.setAttribute("value", building);
-            building_label_value.setAttribute("value", town.current_stats.buildings[building].level);
-            building_hbox.appendChild(building_label);
-            building_hbox.appendChild(building_label_value);
+            building_label_value.setAttribute("value", town.current_stats.buildings[building].level + " DONE AT " + town.current_stats.buildings[building].ready_at);
+            building_row.appendChild(building_label);
+            building_row.appendChild(building_label_value);
         }
 
         town_hbox.appendChild(town_button_tooltip);
