@@ -2,6 +2,7 @@
 <overlay id="machineelf"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
 
+
   <toolbox id="navigator-toolbox">
     <toolbar id="machineelf" class="chromeclass-toolbar" iconsize="small" persist="collapsed,hidden" inherits="hidden" toolbarname="Knightsbridge Pact Machine Elf Ikariam Toolbar (Ctrl+F11)" savedtoolbarname="Knightsbridge Pact Machine Elf Ikariam Toolbar (Ctrl-F11)" accesskey="S" context="toolbar-context-menu" customizable="true" fullscreentoolbar="true" hidden="false">
       <toolbaritem id="me_toolbaritem" width="927px">
@@ -35,16 +36,15 @@
       </toolbaritem>
     </toolbar>
   </toolbox>
-  <!--  <statusbar id="status-bar">
-        <statusbarpanel id="machineelfbar" label="Machine Elf, reporting!">
-          <deck id="machineelfdeck">
-            <box id="machineelfbox">
-              <button label="I'm a button!"/>
-            </box>
-          </deck>
-        </statusbarpanel>
+<!--  <statusbar id="status-bar">
+    <statusbarpanel id="machineelfbar" label="Machine Elf, reporting!">
+      <deck id="machineelfdeck">
+        <box id="machineelfbox">
+          <button label="I'm a button!"/>
+        </box>
+      </deck>
+    </statusbarpanel>
   </statusbar> -->
-  <script src="chrome://machineelf/content/toolbar_town.js" type="application/x-javascript" />
   <script src="chrome://machineelf/content/machineelf.js" type="application/x-javascript" />
 </overlay>
 
