@@ -172,7 +172,7 @@ var MachineElf = {
 
         for (building in town.current_stats.buildings) {
             var building_label = document.createElement("label");
-            var building_label_value = documegnt.createElement("label");
+            var building_label_value = document.createElement("label");
             //var building_hbox = document.createElement("hbox");
             var building_row = document.createElement("row");
             building_table.appendChild(building_row);
