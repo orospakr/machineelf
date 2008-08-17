@@ -130,6 +130,8 @@ describe TeethController do
           @town.should_receive(:building_by_flavour).with(flavour.to_s).and_return(building)
           if flavour == :workshop
             building.should_receive(:ready_at=).with(Time.parse("Sat Jun 28 18:08:48 -0400 2008"))
+          else
+            building.should_receive(:ready_at=).with(nil)
           end
           building.should_receive(:save!)
           building.should_receive(:write_event).ordered.with(level)

@@ -69,7 +69,7 @@ describe Town do
       @town.should be_valid
     end
 
-    it "should return the an existing building by flavour" do
+    it "should return an existing building by flavour" do
       @tavern = mock_model(Building)
       Building.should_receive(:find).with(:first, :conditions => ["flavour = ? AND town_id = ?", 'tavern', @town.id]).and_return(@tavern)
       @town.building_by_flavour('tavern').should == @tavern
@@ -117,7 +117,7 @@ describe Town do
     mobo_tavern.town.should == mobo
     expected = { :resources => { :wood => 9001, :wine => 9473, :sulphur => 4567, :marble => 4568,
       :crystal => 5252, :population_capacity => 1000, :population => 900,
-        :available_mans => 200 }, :buildings => { :tavern => { :level => 15}}}
+        :available_mans => 200 }, :buildings => { :tavern => { :level => 15, :ready_at => Time.parse("Sat Jun 28 17:49:59 -0400 2008") }}}
 
     mobo.current_stats.should == expected
   end

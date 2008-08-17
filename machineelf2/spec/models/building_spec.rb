@@ -38,7 +38,7 @@ describe Building do
   it "should return the most recent stats from the Building event table" do
     mobo_tavern = buildings(:mobo_tavern)
 
-    expected = { :level => 15 }
+    expected = { :level => 15, :ready_at => Time.parse("Sat Jun 28 17:49:59 -0400 2008") }
 
     mobo_tavern.current_stats.should == expected
   end
