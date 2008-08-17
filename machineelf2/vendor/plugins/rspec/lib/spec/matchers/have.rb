@@ -17,7 +17,9 @@ module Spec
     
       def method_missing(sym, *args, &block)
         @collection_name = sym
-        @plural_collection_name = Inflector.pluralize(sym.to_s) if Object.const_defined?(:Inflector)
+        if inflector = (defined?(ActiveSupport::Inflector) ? ActiveSupport::Inflector : (defined?(Inflector) ? Inflector : nil))
+          @plural_collection_name = inflector.pluralize(sym.to_s)
+        end
         @args = args
         @block = block
         self

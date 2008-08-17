@@ -26,7 +26,7 @@ module Spec
       
       unless Config::CONFIG['ruby_install_name'] == 'jruby'
         before(:all) do
-          DRb.start_service("druby://localhost:8989", CommandLineForSpec)
+          DRb.start_service("druby://127.0.0.1:8989", CommandLineForSpec)
           @@drb_example_file_counter = 0
         end
 
@@ -45,7 +45,7 @@ module Spec
 
         it "should run against local server" do
           out = run_spec_via_druby(['--version'])
-          out.should =~ /RSpec/n
+          out.should =~ /rspec version \d+\.\d+\.\d+.*/n
         end
 
         it "should output green colorized text when running with --colour option" do

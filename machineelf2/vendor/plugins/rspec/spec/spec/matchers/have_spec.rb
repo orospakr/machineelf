@@ -47,11 +47,40 @@ describe "should have(n).items" do
   end
 end
 
+describe 'should have(1).item when ActiveSupport::Inflector is defined' do
+  include HaveSpecHelper
+  
+  before(:each) do
+    unless defined?(ActiveSupport::Inflector)
+      @active_support_was_not_defined
+      module ActiveSupport
+        class Inflector
+          def self.pluralize(string)
+            string.to_s + 's'
+          end
+        end
+      end
+    end
+  end
+  
+  it 'should pluralize the collection name' do
+    owner = create_collection_owner_with(1)
+    owner.should have(1).item
+  end
+  
+  after(:each) do
+    if @active_support_was_not_defined
+      Object.send :remove_const, :ActiveSupport
+    end
+  end
+end
+
 describe 'should have(1).item when Inflector is defined' do
   include HaveSpecHelper
   
-  before do
-    unless Object.const_defined?(:Inflector)
+  before(:each) do
+    unless defined?(Inflector)
+      @inflector_was_not_defined
       class Inflector
         def self.pluralize(string)
           string.to_s + 's'
@@ -63,6 +92,12 @@ describe 'should have(1).item when Inflector is defined' do
   it 'should pluralize the collection name' do
     owner = create_collection_owner_with(1)
     owner.should have(1).item
+  end
+
+  after(:each) do
+    if @inflector_was_not_defined
+      Object.send :remove_const, :Inflector
+    end
   end
 end
 
