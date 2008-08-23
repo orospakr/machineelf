@@ -7,7 +7,7 @@
 
 development:
     adapter: postgresql
-    database: machineelf2_development
+    database: machineelf2_production
     host: localhost
     username: machineelf
     password: deadlock
@@ -30,6 +30,9 @@ test:
     password: deadlock
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  timeout: 5000
+  adapter: postgresql
+  database: machineelf2_production
+  host: localhost
+  username: machineelf
+  password: deadlock
+

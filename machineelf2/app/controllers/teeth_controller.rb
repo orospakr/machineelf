@@ -7,6 +7,8 @@ class TeethController < ApplicationController
 
   before_filter :is_korps?
 
+  cache_sweeper :town_sweeper
+
   def parse_number(num)
     magnitude = 1
     if num[-1].chr == 'k'

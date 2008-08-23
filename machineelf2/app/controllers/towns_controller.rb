@@ -6,6 +6,10 @@ class TownsController < ApplicationController
 
   before_filter :is_korps?
 
+  caches_page :index
+
+  cache_sweeper :town_sweeper
+
   def index
     @towns = Town.find(:all)
 
