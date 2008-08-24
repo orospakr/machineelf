@@ -32,7 +32,6 @@ class ApplicationController < ActionController::Base
   protected
 
   def self.active_scaffold_controller_for(klass)
-#    return FooController if klass == Bar
-    return "#{klass}EditorController".constantize rescue super
+    return "#{klass}sEditorController".constantize rescue super
   end
 end
