@@ -1,3 +1,5 @@
 semantic.cache
 *.sqlite3
 *.log
+*~
+*swp
